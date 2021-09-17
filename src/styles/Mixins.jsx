@@ -17,7 +17,7 @@ export const media = {
   desktop: `@media screen and (max-width: 2560px)`,
 };
 
-export const theme = {
+export const styledTheme = {
   error: '#ef476f',
   warning: '#ffd166',
   success: '#06d6a0',
@@ -25,4 +25,20 @@ export const theme = {
   primary: '#073b4c',
   textPrimary: '#f8f9fa',
   textSecondary: '#212529',
+  headerFont: `'Playfair Display', serif;`,
+  body: '16px',
+  bodyBig: '18px',
+  subHeader: '38px',
+  header: '56px',
+  headline: '68px',
+  heroHeadline: '96px',
+  superHero: '128px',
+};
+
+export const breakpoints = {
+  sm: 375,
+  md: 768,
+  lg: 1024,
+  xl: 1440,
+  xxl: 2560,
 };

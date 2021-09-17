@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper } from '../styles/GlobalComponents';
-import styled from 'styled-components';
-import { Container, Typography, IconButton } from '@mui/material';
 import useFetch from '../hooks/useFetch';
+import styled from 'styled-components';
+import { Wrapper } from '../styles/GlobalComponents';
 import { baseURL, request, imgPath } from '../utils/request';
+import { breakpoints } from '../styles/Mixins';
+import Banner from '../components/Banner/Banner';
 
 export const Wrap = styled(Wrapper)`
   background-color: ${({ theme }) => theme.textSecondary};
@@ -26,14 +27,17 @@ export const Image = styled.img`
 function Main() {
   const [url, setUrl] = useState(null);
   const { data: movies, loading, error } = useFetch(url);
+  const { xl } = breakpoints;
 
   useEffect(() => {
     setUrl(baseURL + request.fetchTrending);
   }, []);
 
-  console.log(movies);
-
-  return <Wrap height="100" width="100" justify="left"></Wrap>;
+  return (
+    <Wrapper width={xl} align="center">
+      <Banner />
+    </Wrapper>
+  );
 }
 
 export default Main;

@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, IconButton } from '@mui/material';
 import useFetch from '../hooks/useFetch';
 import { baseURL, request, imgPath } from '../utils/request';
 
 export const Wrap = styled(Wrapper)`
-  background-color: ${({ theme }) => theme.warning};
+  background-color: ${({ theme }) => theme.textSecondary};
+`;
+
+export const MovieCard = styled.div`
+  height: ${({ size }) => `calc(${size}rem * 4)`};
+  width: 450px;
+  border-radius: 0.5rem;
+  margin: 1rem 0.25rem;
+  overflow: hidden;
+`;
+
+export const Image = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 `;
 
 function Main() {
@@ -19,26 +33,7 @@ function Main() {
 
   console.log(movies);
 
-  return (
-    <Wrap padding="6" width="100">
-      <Typography color="primary" variant="h1">
-        Hello
-      </Typography>
-      {!loading && (
-        <div>
-          {movies?.map((movie) => {
-            return (
-              <img
-                height={200}
-                src={imgPath + movie.poster_path}
-                alt={movie.title}
-              />
-            );
-          })}
-        </div>
-      )}
-    </Wrap>
-  );
+  return <Wrap height="100" width="100" justify="left"></Wrap>;
 }
 
 export default Main;

@@ -14,4 +14,5 @@ export const request = {
   fetchQuerySearch: `3/search/movie?api_key=${API_KEY}&page=1`,
   fetchTvPopular: `3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`,
   fetchTvPopular2: `3/tv/popular?api_key=${API_KEY}&language=en-US&page=2`,
+  fetchGenre: `3/genre/movie/list?api_key=${API_KEY}&language=en-US`,
 };

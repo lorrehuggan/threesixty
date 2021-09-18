@@ -11,7 +11,7 @@ import {
   StyledBigBody,
 } from './Banner.Styles';
 
-function Banner() {
+function Banner({ opacity, hOpacity }) {
   const [url, setUrl] = useState(null);
   const { data: movies, loading, error } = useFetch(url);
   const { xl } = breakpoints;
@@ -20,17 +20,25 @@ function Banner() {
     setUrl(baseURL + request.fetchTrending);
   }, []);
 
+  console.log(movies);
+
   return (
-    <Wrapper width={xl} height="40" radius="2">
+    <Wrapper width={xl} height="38" radius="2">
       {error && <H1>Error</H1>}
       {movies &&
-        movies?.slice(7, 8).map((movie) => {
+        movies?.slice(19, 20).map((movie) => {
           return (
-            <Poster src={imgPath + movie?.backdrop_path}>
+            <Poster
+              opacity={opacity}
+              hOpacity={hOpacity}
+              src={imgPath + movie?.backdrop_path}
+            >
               <H1>
                 {loading
                   ? 'Loading...'
-                  : movie.title || movie.original_name || movie.original_title}
+                  : movie.title?.substring(0, 35) ||
+                    movie.original_name?.substring(0, 35) ||
+                    movie.original_title?.substring(0, 35)}
               </H1>
               <StyledWrapper
                 justify="left"
@@ -54,7 +62,7 @@ function Banner() {
                 width="10"
                 shadow
               />
-              <BottomGradient />
+              <BottomGradient bottom gradient />
             </Poster>
           );
         })}

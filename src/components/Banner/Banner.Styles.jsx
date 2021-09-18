@@ -14,7 +14,7 @@ export const Poster = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.6;
+    opacity: ${({ opacity }) => opacity};
     background-color: ${({ theme }) => theme.textSecondary};
     background-image: url(${({ src }) => src});
     background-repeat: no-repeat;
@@ -24,7 +24,7 @@ export const Poster = styled.div`
     transition: opacity 0.3s ease;
   }
   &:hover::before {
-    opacity: 0.5;
+    opacity: ${({ hOpacity }) => hOpacity};
   }
 `;
 
@@ -58,14 +58,15 @@ export const StyledBigBody = styled(BigBody)`
 
 export const BottomGradient = styled.div`
   background-image: linear-gradient(
-    to top,
+    to ${({ gradient }) => (gradient ? 'top' : 'bottom')},
     ${({ theme }) => theme.textSecondary},
     transparent
   );
   width: 100%;
   height: 10rem;
   position: absolute;
-  bottom: 0;
+  bottom: ${({ bottom }) => (bottom ? '0' : '')};
+  top: ${({ top }) => (top ? 0 : '')};
   left: 0;
   z-index: -1;
 `;

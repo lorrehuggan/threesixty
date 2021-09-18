@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wrapper, H5, BigBody, Image } from '../../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../../styles/Mixins';
+import { Link } from 'react-router-dom';
 
 function Nav() {
   const { xl } = breakpoints;
@@ -18,9 +19,11 @@ function Nav() {
         </H5>
       </Wrapper>
       <Wrapper direction="row" justify="space-between" width="350">
-        <BigBody uppercase weight="700" cursor hover space="5">
-          Home
-        </BigBody>
+        <Link to="/">
+          <BigBody uppercase weight="700" cursor hover space="5">
+            Home
+          </BigBody>
+        </Link>
         <BigBody uppercase weight="700" cursor hover space="5">
           Tv Show
         </BigBody>

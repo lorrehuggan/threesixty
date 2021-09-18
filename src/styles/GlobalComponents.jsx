@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { flex, styledTheme } from '../styles/Mixins';
+import { motion } from 'framer-motion';
 
 export const Wrapper = styled.div`
   padding: ${({ padding }) => (padding ? `${padding}rem` : '0rem')};
@@ -165,7 +166,7 @@ export const BigBody = styled.p`
   }
 `;
 
-export const Image = styled.img`
+export const Image = styled(motion.img)`
   width: ${({ width }) => `${width}rem`};
   height: ${({ height }) => `${height}rem`};
   object-fit: cover;

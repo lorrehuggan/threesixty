@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import useFetch from '../../hooks/useFetch';
 import { baseURL, imgPath } from '../../utils/request';
 import { breakpoints, styledTheme } from '../../styles/Mixins';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export const GridContainer = styled.div`
   display: grid;
@@ -12,12 +14,13 @@ export const GridContainer = styled.div`
   margin-top: 1rem;
 `;
 
-export const MovieCard = styled.div`
+export const MovieCard = styled(motion.div)`
   position: relative;
   width: 17.5rem;
   height: 30rem;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.secondaryText};
+  cursor: pointer;
   overflow: hidden;
   img {
     opacity: 0.9.3;
@@ -66,13 +69,20 @@ function MovieRow({ req, title }) {
         {movies &&
           movies?.slice(0, 5).map((movie) => {
             return (
-              <MovieCard>
-                <Image
-                  src={imgPath + movie.poster_path}
-                  style={{ height: '100%', width: '100%' }}
-                />
-                <BottomGradient />
-              </MovieCard>
+              <Link to={`/film/${movie.id}`}>
+                <MovieCard
+                  whileHover={{
+                    y: -16,
+                    transition: { duration: 0.5, ease: 'easeOut' },
+                  }}
+                >
+                  <Image
+                    src={imgPath + movie.poster_path}
+                    style={{ height: '100%', width: '100%' }}
+                  />
+                  <BottomGradient />
+                </MovieCard>
+              </Link>
             );
           })}
       </GridContainer>

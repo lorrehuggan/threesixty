@@ -16,3 +16,7 @@ export const request = {
   fetchTvPopular2: `3/tv/popular?api_key=${API_KEY}&language=en-US&page=2`,
   fetchGenre: `3/genre/movie/list?api_key=${API_KEY}&language=en-US`,
 };
+
+export const FETCH_ID = (id) => {
+  return `3/movie/${id}?api_key=${API_KEY}&language=en-US`;
+};

@@ -10,7 +10,7 @@ function Main() {
 
   return (
     <Wrapper width={xl} align="center">
-      <Banner />
+      <Banner opacity="0.3" hOpacity="0.5" />
       <MovieRow req={request.fetchTrending} title="Trending" />
       <MovieRow req={request.fetchSciFi} title="Sci-Fi" />
       <MovieRow req={request.fetchDocumentary} title="Documentary" />

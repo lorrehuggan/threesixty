@@ -41,6 +41,87 @@ export const H1 = styled.h1`
   margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
   margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
   margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
+  text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+  }
+`;
+export const H2 = styled.h2`
+  font-size: ${styledTheme.heroHeadline};
+  font-family: ${({ font }) =>
+    font === 'header' ? styledTheme.headerFont : ''};
+  font-weight: ${({ weight }) => weight};
+  color: ${({ color }) => (color ? color : '')};
+  margin: ${({ margin }) => (margin ? `${margin}rem` : 0)};
+  margin-right: ${({ right }) => (right ? `${right}rem` : 0)};
+  margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
+  margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
+  margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
+  text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+  }
+`;
+
+export const H3 = styled.h3`
+  font-size: ${styledTheme.headline};
+  font-family: ${({ font }) =>
+    font === 'header' ? styledTheme.headerFont : ''};
+  font-weight: ${({ weight }) => weight};
+  color: ${({ color }) => (color ? color : '')};
+  margin: ${({ margin }) => (margin ? `${margin}rem` : 0)};
+  margin-right: ${({ right }) => (right ? `${right}rem` : 0)};
+  margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
+  margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
+  margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
+  text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+  }
+`;
+
+export const H4 = styled.h4`
+  font-size: ${styledTheme.header};
+  font-family: ${({ font }) =>
+    font === 'header' ? styledTheme.headerFont : ''};
+  font-weight: ${({ weight }) => weight};
+  color: ${({ color }) => (color ? color : '')};
+  margin: ${({ margin }) => (margin ? `${margin}rem` : 0)};
+  margin-right: ${({ right }) => (right ? `${right}rem` : 0)};
+  margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
+  margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
+  margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
+  text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+  }
+`;
+
+export const H5 = styled.h5`
+  font-size: ${styledTheme.subHeader};
+  font-family: ${({ font }) =>
+    font === 'header' ? styledTheme.headerFont : ''};
+  font-weight: ${({ weight }) => weight};
+  color: ${({ color }) => (color ? color : '')};
+  margin: ${({ margin }) => (margin ? `${margin}rem` : 0)};
+  margin-right: ${({ right }) => (right ? `${right}rem` : 0)};
+  margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
+  margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
+  margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
+  text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+  }
 `;
 
 export const P = styled.p`
@@ -56,6 +137,12 @@ export const P = styled.p`
   margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
   margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
   margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
+  text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+  }
 `;
 
 export const BigBody = styled.p`
@@ -69,19 +156,12 @@ export const BigBody = styled.p`
   margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
   margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
   margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
-`;
-
-export const SubHeader = styled.h5`
-  font-size: ${styledTheme.subHeader};
-  font-family: ${({ font }) =>
-    font === 'header' ? styledTheme.headerFont : ''};
-  font-weight: ${({ weight }) => weight};
-  color: ${({ color }) => (color ? color : '')};
-  margin: ${({ margin }) => (margin ? `${margin}rem` : 0)};
-  margin-right: ${({ right }) => (right ? `${right}rem` : 0)};
-  margin-bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : 0)};
-  margin-left: ${({ left }) => (left ? `${left}rem` : 0)};
-  margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
+  text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
+  cursor: ${({ cursor }) => cursor && 'pointer'};
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ hover, theme }) => hover && theme.warning};
+  }
 `;
 
 export const Image = styled.img`
@@ -96,6 +176,16 @@ export const Image = styled.img`
   bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : '')};
   left: ${({ left }) => (left ? `${left}rem` : '')};
   margin: ${({ margin }) => (margin ? `${margin}rem` : '0rem auto')};
+  box-shadow: ${({ shadow }) =>
+    shadow
+      ? `
+  5.3px 5.3px 5.6px rgba(0, 0, 0, 0.034),
+  11.1px 11.1px 13.6px rgba(0, 0, 0, 0.048),
+  18.1px 18.1px 25.5px rgba(0, 0, 0, 0.06),
+  27.9px 27.9px 45.6px rgba(0, 0, 0, 0.072),
+  45.8px 45.8px 85.2px rgba(0, 0, 0, 0.086),
+  100px 100px 204px rgba(0, 0, 0, 0.12)`
+      : ''};
 `;
 
 export const MorphButton = styled.button`

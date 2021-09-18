@@ -24,7 +24,7 @@ function Banner() {
     <Wrapper width={xl} height="40" radius="2">
       {error && <H1>Error</H1>}
       {movies &&
-        movies?.slice(3, 4).map((movie) => {
+        movies?.slice(7, 8).map((movie) => {
           return (
             <Poster src={imgPath + movie?.backdrop_path}>
               <H1>

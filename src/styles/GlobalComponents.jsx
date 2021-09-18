@@ -158,6 +158,7 @@ export const BigBody = styled.p`
   margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
   text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
   cursor: ${({ cursor }) => cursor && 'pointer'};
+  letter-spacing: ${({ space }) => `${space}px`};
   transition: color 0.3s ease;
   &:hover {
     color: ${({ hover, theme }) => hover && theme.warning};

@@ -47,7 +47,7 @@ function Banner({
     <Wrapper width={xl} height="38" radius="2" style={{ cursor: 'pointer' }}>
       {error && <H1>Error</H1>}
       {movies &&
-        movies?.slice(10, 11).map((movie) => {
+        movies?.slice(11, 12).map((movie) => {
           return (
             <Poster
               opacity={opacity}

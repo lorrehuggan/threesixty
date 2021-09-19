@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { flex } from '../../styles/Mixins';
 
 export const MovieCard = styled(motion.div)`
   position: relative;
-  width: 17.5rem;
-  height: 30rem;
+  ${flex}
+  width: 22rem;
+  height: 32rem;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.secondaryText};
   cursor: pointer;

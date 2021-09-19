@@ -1,22 +1,30 @@
 import React from 'react';
 import { MovieCard, BottomGradient } from './Card.styles';
-import { Image } from '../../styles/GlobalComponents';
+import { Image, Wrapper } from '../../styles/GlobalComponents';
 
 function Card({ imgPath, movie, loading }) {
-  console.log(movie);
   return (
     <MovieCard
       whileHover={{
-        filter: 'brightness(1.15)',
+        filter: 'brightness(1.2)',
         y: -16,
         transition: { duration: 0.3, ease: 'easeOut' },
       }}
     >
-      <Image
-        src={imgPath + movie.poster_path}
-        style={{ height: '100%', width: '100%' }}
-        alt={movie.title}
-      />
+      {loading ? (
+        <Wrapper
+          style={{ width: '100%', height: '100%', backgroundColor: 'black' }}
+        ></Wrapper>
+      ) : (
+        <Image
+          src={imgPath + movie.poster_path}
+          alt={movie.title}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      )}
       <BottomGradient />
     </MovieCard>
   );

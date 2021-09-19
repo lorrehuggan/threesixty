@@ -3,10 +3,9 @@ import { Wrapper, H1 } from '../styles/GlobalComponents';
 import { breakpoints } from '../styles/Mixins';
 import Banner from '../components/Banner/HomeBanner/Banner';
 import MovieRow from '../components/MovieRow/MovieRow';
-import { request } from '../utils/request';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import { baseURL, API_KEY } from '../utils/request';
+import { baseURL, API_KEY, request } from '../utils/request';
 
 function Main() {
   const { xl } = breakpoints;
@@ -16,6 +15,7 @@ function Main() {
   const [error, setError] = useState(null);
   const [trailerURL, setTrailerURL] = useState('');
   const [trailerError, setTrailerError] = useState(false);
+  const [genre, setGenre] = useState(null);
 
   useEffect(() => {
     fetch(baseURL + `3/movie/${id}?api_key=${API_KEY}&language=en-US`)

@@ -32,9 +32,9 @@ function MovieRow({ req, title }) {
           More {title}
         </P>
       </Wrapper>
-      <GridContainer>
+      <GridContainer direction="row">
         {movies &&
-          movies?.slice(0, 5).map((movie) => {
+          movies?.slice(0, 4).map((movie) => {
             return (
               <Link to={`/film/${movie.id}`}>
                 <Card imgPath={imgPath} movie={movie} loading={loading} />

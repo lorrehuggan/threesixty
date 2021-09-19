@@ -63,7 +63,7 @@ export const BottomGradient = styled.div`
     transparent
   );
   width: 100%;
-  height: 10rem;
+  height: 20rem;
   position: absolute;
   bottom: ${({ bottom }) => (bottom ? '0' : '')};
   top: ${({ top }) => (top ? 0 : '')};

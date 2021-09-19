@@ -26,6 +26,7 @@ export const request = {
   fetchThriller: `3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&page=1&with_genres=53`,
   fetchWar: `3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&page=1&with_genres=10752`,
   fetchWestern: `3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&page=1&with_genres=37`,
+  fetchCategory: `3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&page=1&with_genres=`,
   //......
   fetchPopularPerson: `3/person/popular?api_key=${API_KEY}&language=en-US&page=1`,
   fetchQuerySearch: `3/search/movie?api_key=${API_KEY}&page=1`,

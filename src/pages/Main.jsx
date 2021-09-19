@@ -41,6 +41,29 @@ function Main() {
       });
   }, [id, setLoading, setError]);
 
+  useEffect(() => {
+    fetch(baseURL + request.fetchGenre)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error('Could not fetch resource');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setGenre(data.genres);
+      })
+
+      .catch((err) => {
+        if (err.name === 'AbortError') {
+          console.log('fetch aborted');
+        } else {
+          console.log('error');
+        }
+      });
+  }, []);
+
+  console.log(genre);
+
   return (
     <Wrapper width={xl} align="center">
       <Banner
@@ -60,10 +83,10 @@ function Main() {
         />
       )}
       {trailerError && <H1>Error</H1>}
-      <MovieRow req={request.fetchTrending} title="Trending" />
-      <MovieRow req={request.fetchSciFi} title="Sci-Fi" />
-      <MovieRow req={request.fetchDocumentary} title="Documentary" />
-      <MovieRow req={request.fetchTvPopular} title="Tv" />
+      {genre &&
+        genre?.map((g) => {
+          return <MovieRow req={request.fetchCategory + g.id} title={g.name} />;
+        })}
     </Wrapper>
   );
 }

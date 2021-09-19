@@ -55,7 +55,9 @@ function Banner({
           <H1>
             {loading
               ? 'Loading...'
-              : movie.title || movie.original_name || movie.original_title}
+              : `${movie.title.substring(0, 37)}...` ||
+                `${movie.original_name.substring(0, 10)}...` ||
+                `${movie.original_title.substring(0, 10)}...`}
           </H1>
           <StyledWrapper
             justify="left"

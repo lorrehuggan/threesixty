@@ -15,7 +15,7 @@ function Nav() {
     >
       <Wrapper margin="0">
         <H5 font="header" color={styledTheme.warning}>
-          ThreeSixtyFilms
+          ThreeSixtyTrailers
         </H5>
       </Wrapper>
       <Wrapper direction="row" justify="space-between" width="350">

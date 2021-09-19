@@ -8,7 +8,7 @@ import {
   InnerWrapper,
   BottomGradient,
   StyledBigBody,
-} from '../Banner.Styles';
+} from '../HomeBanner/Banner.Styles';
 import movieTrailer from 'movie-trailer';
 
 function Banner({
@@ -42,13 +42,14 @@ function Banner({
   };
 
   return (
-    <Wrapper width={xl} height="38" radius="2">
-      {error && <H1>Error</H1>}
+    <Wrapper width={xl} height="38" radius="2" style={{ cursor: 'pointer' }}>
+      {error && <H1>Oops Something Went Wrong...</H1>}
       {movie && (
         <Poster
           opacity={opacity}
           hOpacity={hOpacity}
           src={imgPath + movie?.backdrop_path}
+          onClick={() => handleClick()}
         >
           <BottomGradient top />
           <H1>
@@ -65,28 +66,32 @@ function Banner({
             left="0"
           >
             <InnerWrapper direction="column" padding="0" margin="2">
-              <H5 bottom="1">{movie.vote_average}</H5>
+              <H5 bottom="1">Rated {movie.vote_average}/10</H5>
               <P bottom="1">{movie.overview}</P>
-              <StyledBigBody
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                onClick={() => handleClick()}
-              >
-                {trailerURL ? 'Close' : 'Watch Trailer'}
-              </StyledBigBody>
+              {!error && (
+                <StyledBigBody
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  onClick={() => handleClick()}
+                >
+                  {trailerURL ? 'Stop' : 'Watch Trailer'}
+                </StyledBigBody>
+              )}
             </InnerWrapper>
           </StyledWrapper>
-          <Image
-            pos="absolute"
-            bottom="2"
-            right="2"
-            src={imgPath + movie.poster_path}
-            width="10"
-            shadow
-          />
+          {!error && (
+            <Image
+              pos="absolute"
+              bottom="2"
+              right="2"
+              src={imgPath + movie.poster_path}
+              width="10"
+              shadow
+            />
+          )}
           <BottomGradient bottom gradient />
         </Poster>
       )}

@@ -11,6 +11,11 @@ function Trailer({ movie, loading, error, trailerURL }) {
     height: '490',
     playerVars: {
       autoplay: 1,
+      controls: 0,
+      showinfo: 0,
+      modestbranding: 1,
+      enablejsapi: 1,
+      disablekb: 1,
     },
   };
 

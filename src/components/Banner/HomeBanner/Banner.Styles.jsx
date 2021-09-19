@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Wrapper, BigBody } from '../../styles/GlobalComponents';
+import { Wrapper, BigBody } from '../../../styles/GlobalComponents';
 
 export const Poster = styled.div`
   position: relative;

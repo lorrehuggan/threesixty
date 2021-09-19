@@ -52,12 +52,13 @@ function Banner({
           onClick={() => handleClick()}
         >
           <BottomGradient top />
+
           <H1>
             {loading
               ? 'Loading...'
               : `${movie.title.substring(0, 37)}...` ||
-                `${movie.original_name.substring(0, 10)}...` ||
-                `${movie.original_title.substring(0, 10)}...`}
+                `${movie.original_name.substring(0, 37)}...` ||
+                `${movie.original_title.substring(0, 37)}...`}
           </H1>
           <StyledWrapper
             justify="left"

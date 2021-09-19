@@ -5,7 +5,7 @@ import Banner from '../components/Banner/HomeBanner/Banner';
 import MovieRow from '../components/MovieRow/MovieRow';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import { baseURL, API_KEY, request } from '../utils/request';
+import { baseURL, API_KEY, request, FETCH_ID } from '../utils/request';
 
 function Main() {
   const { xl } = breakpoints;
@@ -18,7 +18,7 @@ function Main() {
   const [genre, setGenre] = useState(null);
 
   useEffect(() => {
-    fetch(baseURL + `3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+    fetch(baseURL + FETCH_ID(id))
       .then((res) => {
         if (!res.ok) {
           throw Error('Could not fetch resource');

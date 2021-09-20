@@ -1,8 +1,9 @@
 import React from 'react';
 import { MovieCard, BottomGradient } from './Card.styles';
 import { Image, Wrapper } from '../../styles/GlobalComponents';
+import { imgPath } from '../../utils/request';
 
-function Card({ imgPath, movie, loading }) {
+function Card({ title, poster, loading }) {
   return (
     <MovieCard
       whileHover={{
@@ -17,8 +18,8 @@ function Card({ imgPath, movie, loading }) {
         ></Wrapper>
       ) : (
         <Image
-          src={imgPath + movie.poster_path}
-          alt={movie.title}
+          src={imgPath + poster}
+          alt={title}
           style={{
             width: '100%',
             height: '100%',

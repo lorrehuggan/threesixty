@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { styledTheme } from './styles/Mixins';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Film from './pages/Film';
+import Genre from './pages/Genre';
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route path="/film/:id">
             <Film />
+          </Route>
+          <Route path="/genre/:id">
+            <Genre />
           </Route>
         </Switch>
       </ThemeProvider>

@@ -71,7 +71,7 @@ function Banner({
                 left="0"
               >
                 <InnerWrapper direction="column" padding="0" margin="2">
-                  <H5 bottom="1">Rated {movie.vote_average}/10</H5>
+                  <H5 bottom="1">Rated {movie.vote_average * 10}%</H5>
                   <P bottom="1">{`${movie.overview.substring(0, 170)}...`}</P>
                   <StyledBigBody
                     style={{

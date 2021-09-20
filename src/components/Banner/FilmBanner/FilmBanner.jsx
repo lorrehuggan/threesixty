@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { breakpoints } from '../../../styles/Mixins';
 import { imgPath } from '../../../utils/request';
 import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
@@ -56,9 +56,9 @@ function Banner({
           <H1>
             {loading
               ? 'Loading...'
-              : `${movie.title.substring(0, 37)}...` ||
-                `${movie.original_name.substring(0, 37)}...` ||
-                `${movie.original_title.substring(0, 37)}...`}
+              : `${movie.title?.substring(0, 34)}...` ||
+                `${movie.original_name?.substring(0, 34)}...` ||
+                `${movie.original_title?.substring(0, 34)}...`}
           </H1>
           <StyledWrapper
             justify="left"
@@ -69,8 +69,8 @@ function Banner({
             left="0"
           >
             <InnerWrapper direction="column" padding="0" margin="2">
-              <H5 bottom="1">Rated {movie.vote_average}/10</H5>
-              <P bottom="1">{movie.overview}</P>
+              <H5 bottom="1">Rated {movie.vote_average * 10}%</H5>
+              <P bottom="1">{`${movie.overview?.substring(0, 480)}...`}</P>
               {!error && (
                 <StyledBigBody
                   style={{

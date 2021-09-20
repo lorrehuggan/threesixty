@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { H5, P, Wrapper } from '../styles/GlobalComponents';
+import { H4, H5, P, Wrapper } from '../styles/GlobalComponents';
 import { breakpoints } from '../styles/Mixins';
 import FilmBanner from '../components/Banner/FilmBanner/FilmBanner';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import { baseURL, API_KEY } from '../utils/request';
+import { baseURL, FETCH_ID, FETCH_RECOMMENDATIONS } from '../utils/request';
 import styled from 'styled-components';
 import { FaPlay } from 'react-icons/fa';
 import movieTrailer from 'movie-trailer';
+import { Link } from 'react-router-dom';
+import Card from '../components/Card/Card';
+import { GridContainer } from '../components/MovieRow/MovieRow.styles';
 
 export const Play = styled(FaPlay)`
   color: #ffffff;
@@ -31,9 +34,12 @@ function Film() {
   const [error, setError] = useState(null);
   const [trailerURL, setTrailerURL] = useState('');
   const [trailerError, setTrailerError] = useState(false);
+  const [recommendation, setRecommendation] = useState(null);
+  const [recLoading, setRecLoading] = useState(true);
+  const [recError, setRecError] = useState(null);
 
   useEffect(() => {
-    fetch(baseURL + `3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+    fetch(baseURL + FETCH_ID(id))
       .then((res) => {
         if (!res.ok) {
           throw Error('Could not fetch resource');
@@ -56,6 +62,31 @@ function Film() {
       });
   }, [id, setLoading, setError]);
 
+  useEffect(() => {
+    fetch(baseURL + FETCH_RECOMMENDATIONS(id))
+      .then((res) => {
+        if (!res.ok) {
+          throw Error('Could not fetch resource');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setRecommendation(data.results);
+        setRecLoading(false);
+        setRecError(null);
+      })
+
+      .catch((err) => {
+        if (err.name === 'AbortError') {
+          console.log('fetch aborted');
+        } else {
+          setRecLoading(false);
+          setRecError(err.message);
+        }
+      });
+    return () => {};
+  }, [id, setRecLoading, setRecError]);
+
   const handleClick = () => {
     setTrailerError(false);
     if (trailerURL) {
@@ -76,6 +107,14 @@ function Film() {
     }
   };
 
+  const cardClick = () => {
+    if (trailerURL) {
+      setTrailerURL('');
+    } else {
+      return;
+    }
+  };
+
   return (
     <Wrapper width={xl} align="center">
       <FilmBanner
@@ -88,6 +127,7 @@ function Film() {
         setTrailerURL={setTrailerURL}
         setTrailerError={setTrailerError}
       />
+
       {!trailerURL && (
         <Wrapper
           width={xl}
@@ -124,6 +164,36 @@ function Film() {
           trailerURL={trailerURL}
         />
       )}
+      <Wrapper style={{ marginBottom: '1rem', marginTop: '1rem' }}>
+        <Wrapper
+          direction="row"
+          justify="space-between"
+          align="center"
+          width={xl}
+          style={{ marginBottom: '2rem', marginTop: '1rem' }}
+        >
+          <H4>Recommended</H4>
+        </Wrapper>
+        <GridContainer direction="row">
+          {recommendation &&
+            recommendation?.slice(0, 4).map((rec) => {
+              return (
+                <Link
+                  onClick={() => {
+                    cardClick();
+                  }}
+                  to={`/film/${rec.id}`}
+                >
+                  <Card
+                    poster={rec.poster_path}
+                    title={rec.title}
+                    loading={recLoading}
+                  />
+                </Link>
+              );
+            })}
+        </GridContainer>
+      </Wrapper>
     </Wrapper>
   );
 }

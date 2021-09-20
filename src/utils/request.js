@@ -38,3 +38,11 @@ export const request = {
 export const FETCH_ID = (id) => {
   return `3/movie/${id}?api_key=${API_KEY}&language=en-US`;
 };
+
+export const FETCH_RECOMMENDATIONS = (id) => {
+  return `3/movie/${id}/recommendations?api_key=${API_KEY}&language=en-US&page=1`;
+};
+
+export const FETCH_CATEGORIES = (id, page) => {
+  return `3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&page=${page}&with_genres=${id}`;
+};

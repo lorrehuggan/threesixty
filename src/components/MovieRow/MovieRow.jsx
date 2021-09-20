@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import { GridContainer } from './MovieRow.styles';
 
-function MovieRow({ req, title }) {
+function MovieRow({ req, title, id }) {
   const [url, setUrl] = useState('');
   const { data: movies, loading, error } = useFetch(url);
   const { xl } = breakpoints;
@@ -28,16 +28,22 @@ function MovieRow({ req, title }) {
         <H5 color={styledTheme.warning} weight="800">
           {title}
         </H5>
-        <P weight="700" cursor>
-          More {title}
-        </P>
+        <Link to={`/genre/${id}`}>
+          <P weight="700" cursor>
+            More {title}
+          </P>
+        </Link>
       </Wrapper>
       <GridContainer direction="row">
         {movies &&
           movies?.slice(0, 4).map((movie) => {
             return (
               <Link to={`/film/${movie.id}`}>
-                <Card imgPath={imgPath} movie={movie} loading={loading} />
+                <Card
+                  poster={movie.poster_path}
+                  title={movie.title}
+                  loading={loading}
+                />
               </Link>
             );
           })}

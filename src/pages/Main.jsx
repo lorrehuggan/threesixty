@@ -5,41 +5,16 @@ import Banner from '../components/Banner/HomeBanner/Banner';
 import MovieRow from '../components/MovieRow/MovieRow';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import { baseURL, API_KEY, request, FETCH_ID } from '../utils/request';
+import { baseURL, request, FETCH_ID } from '../utils/request';
+import useFetch from '../hooks/useFetch';
 
 function Main() {
   const { xl } = breakpoints;
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [trailerURL, setTrailerURL] = useState('');
   const [trailerError, setTrailerError] = useState(false);
   const [genre, setGenre] = useState(null);
-
-  useEffect(() => {
-    fetch(baseURL + FETCH_ID(id))
-      .then((res) => {
-        if (!res.ok) {
-          throw Error('Could not fetch resource');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setMovie(data);
-        setLoading(false);
-        setError(null);
-      })
-
-      .catch((err) => {
-        if (err.name === 'AbortError') {
-          console.log('fetch aborted');
-        } else {
-          setLoading(false);
-          setError(err.message);
-        }
-      });
-  }, [id, setLoading, setError]);
+  const { data: movie, loading, error } = useFetch(baseURL + FETCH_ID(id));
 
   useEffect(() => {
     fetch(baseURL + request.fetchGenre)
@@ -62,8 +37,6 @@ function Main() {
       });
   }, []);
 
-  console.log(genre);
-
   return (
     <Wrapper width={xl} align="center">
       <Banner
@@ -85,7 +58,13 @@ function Main() {
       {trailerError && <H1>Error</H1>}
       {genre &&
         genre?.map((g) => {
-          return <MovieRow req={request.fetchCategory + g.id} title={g.name} />;
+          return (
+            <MovieRow
+              req={request.fetchCategory + g.id}
+              title={g.name}
+              id={g.id}
+            />
+          );
         })}
     </Wrapper>
   );

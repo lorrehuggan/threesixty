@@ -4,7 +4,7 @@ import { baseURL, FETCH_CATEGORIES, request } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import Card from '../components/Card/Card';
 import { breakpoints, styledTheme } from '../styles/Mixins';
-import { H1, Wrapper } from '../styles/GlobalComponents';
+import { H1, BigBody, Wrapper, H4 } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
 
@@ -60,6 +60,9 @@ function Genre() {
     setPage(v);
     window.scroll(0, 0);
   };
+  const handleClick = () => {
+    window.scroll(0, 0);
+  };
 
   return (
     <Wrapper
@@ -68,10 +71,10 @@ function Genre() {
         overflow: 'visible',
       }}
     >
-      <H1 style={{ marginBottom: '2rem' }}>{genre[0]?.name}</H1>
+      <H1 style={{ marginBottom: '1rem' }}>{genre[0]?.name}</H1>
       <Grid>
         {data.map((d) => (
-          <Link to={`/film/${d.id}`}>
+          <Link onClick={handleClick} to={`/film/${d.id}`}>
             <Card grid poster={d.poster_path} />
           </Link>
         ))}
@@ -79,13 +82,13 @@ function Genre() {
       <Wrapper
         justify="center"
         align="center"
-        width={md}
+        width={xl}
         style={{
           marginBottom: '4rem',
           marginTop: '4rem',
           backgroundColor: styledTheme.textPrimary,
-          padding: '2rem',
-          borderRadius: '8px',
+          padding: '1rem',
+          borderRadius: '4px',
         }}
       >
         <Pagination

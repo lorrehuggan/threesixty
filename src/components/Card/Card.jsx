@@ -13,20 +13,15 @@ function Card({ title, poster, loading, grid }) {
       }}
       grid={grid}
     >
-      {loading ? (
-        <Wrapper
-          style={{ width: '100%', height: '100%', backgroundColor: 'black' }}
-        ></Wrapper>
-      ) : (
-        <Image
-          src={imgPath + poster}
-          alt={title}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-        />
-      )}
+      <Image
+        src={imgPath + poster}
+        alt={title}
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      />
+
       <BottomGradient />
     </MovieCard>
   );

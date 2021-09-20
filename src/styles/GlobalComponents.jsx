@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { flex, styledTheme } from '../styles/Mixins';
 import { motion } from 'framer-motion';
+import { breakpoints } from '../styles/Mixins';
 
 export const Wrapper = styled.div`
   padding: ${({ padding }) => (padding ? `${padding}rem` : '0rem')};
@@ -46,7 +47,7 @@ export const H1 = styled.h1`
   cursor: ${({ cursor }) => cursor && 'pointer'};
   transition: color 0.3s ease;
   &:hover {
-    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+    color: ${({ hover, theme }) => hover && theme.warning};
   }
 `;
 export const H2 = styled.h2`
@@ -64,7 +65,7 @@ export const H2 = styled.h2`
   cursor: ${({ cursor }) => cursor && 'pointer'};
   transition: color 0.3s ease;
   &:hover {
-    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+    color: ${({ hover, theme }) => hover && theme.warning};
   }
 `;
 
@@ -83,7 +84,7 @@ export const H3 = styled.h3`
   cursor: ${({ cursor }) => cursor && 'pointer'};
   transition: color 0.3s ease;
   &:hover {
-    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+    color: ${({ hover, theme }) => hover && theme.warning};
   }
 `;
 
@@ -102,7 +103,7 @@ export const H4 = styled.h4`
   cursor: ${({ cursor }) => cursor && 'pointer'};
   transition: color 0.3s ease;
   &:hover {
-    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+    color: ${({ hover, theme }) => hover && theme.warning};
   }
 `;
 
@@ -121,7 +122,7 @@ export const H5 = styled.h5`
   cursor: ${({ cursor }) => cursor && 'pointer'};
   transition: color 0.3s ease;
   &:hover {
-    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+    color: ${({ hover, theme }) => hover && theme.warning};
   }
 `;
 
@@ -142,7 +143,7 @@ export const P = styled.p`
   cursor: ${({ cursor }) => cursor && 'pointer'};
   transition: color 0.3s ease;
   &:hover {
-    color: ${({ hover }) => hover && `${({ theme }) => theme.warning}`};
+    color: ${({ hover, theme }) => hover && theme.warning};
   }
 `;
 
@@ -202,4 +203,12 @@ export const MorphButton = styled.button`
   &:active {
     box-shadow: 11px 11px 43px #d9b257, 0px -11px 43px #fff075;
   }
+`;
+
+export const Grid = styled.div`
+  width: ${breakpoints.xl};
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: 0.5rem;
 `;

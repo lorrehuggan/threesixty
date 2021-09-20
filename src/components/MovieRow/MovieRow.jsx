@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Wrapper, H5, P } from '../../styles/GlobalComponents';
+import { Wrapper, H5, P, H4, BigBody } from '../../styles/GlobalComponents';
 import useFetch from '../../hooks/useFetch';
 import { baseURL, imgPath } from '../../utils/request';
 import { breakpoints, styledTheme } from '../../styles/Mixins';
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import { GridContainer } from './MovieRow.styles';
+import { FiArrowRightCircle } from 'react-icons/fi';
+import styled from 'styled-components';
+
+export const Arrow = styled(FiArrowRightCircle)`
+  height: 2rem;
+  width: 2rem;
+`;
 
 function MovieRow({ req, title, id }) {
   const [url, setUrl] = useState('');
@@ -32,10 +39,24 @@ function MovieRow({ req, title, id }) {
         <H5 color={styledTheme.warning} weight="800">
           {title}
         </H5>
-        <Link to={`/genre/${id}`}>
-          <P weight="700" cursor>
+        <Link
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+          to={`/genre/${id}`}
+        >
+          <BigBody
+            uppercase
+            style={{ marginRight: '0.5rem' }}
+            hover
+            weight="900"
+            cursor
+          >
             More {title}
-          </P>
+          </BigBody>
+          <Arrow />
         </Link>
       </Wrapper>
       <GridContainer direction="row">

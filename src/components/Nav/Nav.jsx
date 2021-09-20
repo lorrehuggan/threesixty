@@ -24,9 +24,11 @@ function Nav() {
             Home
           </BigBody>
         </Link>
-        <BigBody uppercase weight="700" cursor hover space="5">
-          Tv Show
-        </BigBody>
+        <Link to="/trending">
+          <BigBody uppercase weight="700" cursor hover space="5">
+            Trending
+          </BigBody>
+        </Link>
         <BigBody uppercase weight="700" cursor hover space="5">
           Movies
         </BigBody>

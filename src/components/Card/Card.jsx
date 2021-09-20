@@ -3,7 +3,7 @@ import { MovieCard, BottomGradient } from './Card.styles';
 import { Image, Wrapper } from '../../styles/GlobalComponents';
 import { imgPath } from '../../utils/request';
 
-function Card({ title, poster, loading }) {
+function Card({ title, poster, loading, grid }) {
   return (
     <MovieCard
       whileHover={{
@@ -11,6 +11,7 @@ function Card({ title, poster, loading }) {
         y: -16,
         transition: { duration: 0.3, ease: 'easeOut' },
       }}
+      grid={grid}
     >
       {loading ? (
         <Wrapper

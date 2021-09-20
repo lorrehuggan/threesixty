@@ -108,6 +108,7 @@ function Film() {
   };
 
   const cardClick = () => {
+    window.scroll(0, 0);
     if (trailerURL) {
       setTrailerURL('');
     } else {

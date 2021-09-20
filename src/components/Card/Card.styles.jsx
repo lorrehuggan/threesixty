@@ -12,6 +12,7 @@ export const MovieCard = styled(motion.div)`
   cursor: pointer;
   opacity: 1;
   overflow: hidden;
+  margin-top: ${({ grid }) => (grid ? '1rem' : '')};
 `;
 
 export const BottomGradient = styled.div`

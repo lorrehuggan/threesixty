@@ -16,6 +16,10 @@ function MovieRow({ req, title, id }) {
     setUrl(baseURL + req);
   }, [req]);
 
+  const handleClick = () => {
+    window.scroll(0, 0);
+  };
+
   return (
     <Wrapper style={{ marginBottom: '1rem', marginTop: '1rem' }}>
       <Wrapper
@@ -38,7 +42,7 @@ function MovieRow({ req, title, id }) {
         {movies &&
           movies?.slice(0, 4).map((movie) => {
             return (
-              <Link to={`/film/${movie.id}`}>
+              <Link onClick={handleClick} to={`/film/${movie.id}`}>
                 <Card
                   poster={movie.poster_path}
                   title={movie.title}

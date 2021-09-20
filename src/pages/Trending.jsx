@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { baseURL, FETCH_CATEGORIES, request } from '../utils/request';
+import { baseURL, FETCH_TRENDING } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import Card from '../components/Card/Card';
 import { breakpoints, styledTheme } from '../styles/Mixins';
@@ -16,45 +16,18 @@ export const Grid = styled.div`
   grid-gap: 0.5rem;
 `;
 
-function Genre() {
+function Trending() {
   const { xl, md } = breakpoints;
-  const { id } = useParams();
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
   const { data, loading, error, results } = useFetch(
-    baseURL + FETCH_CATEGORIES(id, page)
+    baseURL + FETCH_TRENDING(page)
   );
-  const [genre, setGenre] = useState({});
 
   useEffect(() => {
     setNumOfPages(results?.total_pages);
     console.log(numOfPages);
   }, [results, numOfPages]);
-
-  useEffect(() => {
-    fetch(baseURL + request.fetchGenre)
-      .then((res) => {
-        if (!res.ok) {
-          throw Error('Could not fetch resource');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setGenre(
-          data.genres?.filter((cat) => {
-            return cat.id == id;
-          })
-        );
-      })
-
-      .catch((err) => {
-        if (err.name === 'AbortError') {
-          console.log('fetch aborted');
-        } else {
-          console.log('error');
-        }
-      });
-  }, [id]);
 
   const handlePagination = (e, v) => {
     setPage(v);
@@ -68,10 +41,10 @@ function Genre() {
         overflow: 'visible',
       }}
     >
-      <H1 style={{ marginBottom: '2rem' }}>{genre[0]?.name}</H1>
+      <H1 style={{ marginBottom: '2rem' }}>Trending</H1>
       <Grid>
         {data.map((d) => (
-          <Link to={`/film/${d.id}`}>
+          <Link onClick={handlePagination} to={`/film/${d.id}`}>
             <Card grid poster={d.poster_path} />
           </Link>
         ))}
@@ -90,7 +63,7 @@ function Genre() {
       >
         <Pagination
           onChange={handlePagination}
-          count={numOfPages}
+          count={5}
           variant="outlined"
           shape="rounded"
           color="warning"
@@ -104,4 +77,4 @@ function Genre() {
   );
 }
 
-export default Genre;
+export default Trending;

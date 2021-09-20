@@ -4,6 +4,7 @@ const useFetch = (url) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [results, setResults] = useState(null);
 
   useEffect(() => {
     // abort controller A controller object that allows you to abort one or more DOM requests as and when desired.
@@ -18,6 +19,7 @@ const useFetch = (url) => {
       })
       .then((data) => {
         setData(data.results);
+        setResults(data);
         setLoading(false);
         setError(null);
       })
@@ -36,7 +38,7 @@ const useFetch = (url) => {
     };
   }, [url]);
 
-  return { data, loading, error };
+  return { data, loading, error, results };
 };
 
 export default useFetch;

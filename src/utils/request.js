@@ -46,3 +46,7 @@ export const FETCH_RECOMMENDATIONS = (id) => {
 export const FETCH_CATEGORIES = (id, page) => {
   return `3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&page=${page}&with_genres=${id}`;
 };
+
+export const FETCH_TRENDING = (page) => {
+  return `3/trending/all/day?api_key=${API_KEY}&page=${page}`;
+};

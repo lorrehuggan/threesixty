@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Wrapper, H5, BigBody, Image } from '../../styles/GlobalComponents';
 import { breakpoints, styledTheme, flex } from '../../styles/Mixins';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/system';
 import SearchForm from '../Search/SearchForm';
+import { MenuContext } from '../../contexts/MenuContext';
 
 function Nav() {
   const { xl } = breakpoints;
+  const { openMenu, setOpenMenu } = useContext(MenuContext);
+
+  const handleMenu = () => {
+    if (openMenu) {
+      setOpenMenu(false);
+    } else {
+      setOpenMenu(true);
+    }
+  };
+
   return (
     <Wrapper
       width={xl}
@@ -27,7 +38,7 @@ function Nav() {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          width: '400px',
+          width: '490px',
         }}
       >
         <Link to="/">
@@ -45,6 +56,16 @@ function Nav() {
             Animation
           </BigBody>
         </Link>
+        <BigBody
+          onClick={handleMenu}
+          uppercase
+          weight="700"
+          cursor
+          hover
+          space="5"
+        >
+          Menu
+        </BigBody>
       </Box>
       <Box>
         <SearchForm />

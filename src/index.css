@@ -15,4 +15,5 @@ body {
   background-color: #212529;
   color: #f8f9fa;
   font-family: 'Inter', sans-serif;
+  position: relative;
 }

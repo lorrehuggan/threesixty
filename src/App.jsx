@@ -9,32 +9,38 @@ import Genre from './pages/Genre';
 import Trending from './pages/Trending';
 import Search from './pages/Search';
 import { SearchContext } from './contexts/SearchContext';
+import Menu from './components/Menu/Menu';
+import { MenuContext } from './contexts/MenuContext';
 
 function App() {
   const [searchData, setSearchData] = useState();
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <Router>
       <ThemeProvider theme={styledTheme}>
         <SearchContext.Provider value={{ searchData, setSearchData }}>
-          <Nav />
-          <Switch>
-            <Route path="/" exact>
-              <Main />
-            </Route>
-            <Route path="/film/:id">
-              <Film />
-            </Route>
-            <Route path="/genre/:id">
-              <Genre />
-            </Route>
-            <Route path="/trending">
-              <Trending />
-            </Route>
-            <Route path="/search">
-              <Search />
-            </Route>
-          </Switch>
+          <MenuContext.Provider value={{ openMenu, setOpenMenu }}>
+            <Nav />
+            <Menu />
+            <Switch>
+              <Route path="/" exact>
+                <Main />
+              </Route>
+              <Route path="/film/:id">
+                <Film />
+              </Route>
+              <Route path="/genre/:id">
+                <Genre />
+              </Route>
+              <Route path="/trending">
+                <Trending />
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+            </Switch>
+          </MenuContext.Provider>
         </SearchContext.Provider>
       </ThemeProvider>
     </Router>

@@ -4,13 +4,20 @@ import { breakpoints } from '../styles/Mixins';
 import FilmBanner from '../components/Banner/FilmBanner/FilmBanner';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import { baseURL, FETCH_ID, FETCH_RECOMMENDATIONS } from '../utils/request';
+import {
+  baseURL,
+  FETCH_ID,
+  FETCH_RECOMMENDATIONS,
+  FETCH_CATEGORIES,
+  request,
+} from '../utils/request';
 import styled from 'styled-components';
 import { FaPlay } from 'react-icons/fa';
 import movieTrailer from 'movie-trailer';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
+import useFetch from '../hooks/useFetch';
 
 export const Play = styled(FaPlay)`
   color: #ffffff;
@@ -37,6 +44,34 @@ function Film() {
   const [recommendation, setRecommendation] = useState(null);
   const [recLoading, setRecLoading] = useState(true);
   const [recError, setRecError] = useState(null);
+  const [genre, setGenre] = useState({});
+  const [genreLoading, setGenreLoading] = useState({});
+  const [genreError, setGenreError] = useState({});
+
+  useEffect(() => {
+    fetch(baseURL + request.fetchGenre)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error('Could ot fetch resource');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setGenre(data.genres);
+        setGenreLoading(false);
+        setGenreError(null);
+        console.log(genre);
+      })
+
+      .catch((err) => {
+        if (err.name === 'AbortError') {
+          console.log('fetch aborted');
+        } else {
+          setLoading(false);
+          setError(err.message);
+        }
+      });
+  }, []);
 
   useEffect(() => {
     fetch(baseURL + FETCH_ID(id))
@@ -122,8 +157,8 @@ function Film() {
         movie={movie}
         loading={loading}
         error={error}
-        opacity="0.05"
-        hOpacity="0.09"
+        opacity="0.09"
+        hOpacity="0.19"
         trailerURL={trailerURL}
         setTrailerURL={setTrailerURL}
         setTrailerError={setTrailerError}

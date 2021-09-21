@@ -147,7 +147,7 @@ export const P = styled.p`
   }
 `;
 
-export const BigBody = styled.p`
+export const BigBody = styled.span`
   font-size: ${styledTheme.bodyBig};
   font-family: ${({ font }) =>
     font === 'header' ? styledTheme.headerFont : ''};

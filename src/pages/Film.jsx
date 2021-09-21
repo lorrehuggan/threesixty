@@ -17,7 +17,6 @@ import movieTrailer from 'movie-trailer';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
-import useFetch from '../hooks/useFetch';
 
 export const Play = styled(FaPlay)`
   color: #ffffff;

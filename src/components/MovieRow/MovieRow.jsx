@@ -53,6 +53,7 @@ function MovieRow({ req, title, id }) {
             hover
             weight="900"
             cursor
+            space="5"
           >
             More {title}
           </BigBody>

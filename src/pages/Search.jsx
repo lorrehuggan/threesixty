@@ -16,7 +16,7 @@ function Search() {
         overflow: 'visible',
       }}
     >
-      <H1 style={{ marginBottom: '2rem' }}>Search</H1>
+      <H1 style={{ marginBottom: '2rem' }}>Search Results</H1>
       <Grid>
         {data?.map((d) => (
           <Link to={`/film/${d.id}`}>
@@ -24,7 +24,7 @@ function Search() {
           </Link>
         ))}
       </Grid>
-      <Wrapper
+      {/* <Wrapper
         justify="center"
         align="center"
         width={md}
@@ -36,7 +36,7 @@ function Search() {
           borderRadius: '8px',
         }}
       >
-        {/* <Pagination
+        <Pagination
           onChange={handlePagination}
           count={5}
           variant="outlined"
@@ -46,8 +46,8 @@ function Search() {
           page={page}
           siblingCount={2}
           boundaryCount={2}
-        /> */}
-      </Wrapper>
+        />
+      </Wrapper> */}
     </Wrapper>
   );
 }

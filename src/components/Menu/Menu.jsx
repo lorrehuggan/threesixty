@@ -5,20 +5,45 @@ import useFetch from '../../hooks/useFetch';
 import { request, baseURL } from '../../utils/request';
 import { Link } from 'react-router-dom';
 import { MenuContext } from '../../contexts/MenuContext';
+import { breakpoints } from '../../styles/Mixins';
 
 export const Container = styled.div`
-  width: 25rem;
-  height: 100vh;
-  position: fixed;
-  right: 0;
-  top: 1.5rem;
+  width: ${({ width }) => width && `${width}px`};
+  height: 15rem;
+  margin: 0rem auto;
+  margin-bottom: 3rem;
   opacity: ${({ open }) => (open ? '1' : '0')};
   pointer-events: ${({ open }) => (open ? 'visible' : 'none')};
+  display: ${({ open }) => (open ? 'flex' : 'none')};
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  flex-direction: column;
+  position: relative;
 `;
 
 export const Wrap = styled.div`
   width: 100%;
 `;
+
+export const Item = styled.span`
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0.5rem 0.5rem;
+  flex: wrap;
+  transition: color 0.3s ease;
+  &:hover {
+    color: ${({ theme }) => theme.warning};
+  }
+`;
+
+const styledWrap = {
+  display: 'grid',
+  gridGap: '1rem',
+  gridTemplateColumns: 'repeat(6, 1fr)',
+  width: '100%',
+};
 
 function Menu() {
   const [data, setData] = useState(null);
@@ -26,6 +51,7 @@ function Menu() {
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
   const { openMenu, setOpenMenu } = useContext(MenuContext);
+  const { xl } = breakpoints;
 
   useEffect(() => {
     fetch(baseURL + request.fetchGenre)
@@ -51,27 +77,37 @@ function Menu() {
       });
   }, []);
 
+  const handleClick = () => {
+    setOpenMenu(false);
+  };
+
   return (
-    <Container open={openMenu}>
-      <Wrap>
-        <H3>Menu</H3>
+    <Container open={openMenu} width={xl}>
+      <Wrap style={{ marginBottom: '2rem' }}>
+        {' '}
+        <H3 style={{ textAlign: 'center' }}>Menu</H3>{' '}
       </Wrap>
-      {data?.map((d) => {
-        return (
-          <Wrap
-            style={{
-              marginTop: '1rem',
-              marginBottom: '1rem',
-            }}
-          >
-            <Link to={`/genre/${d.id}`}>
-              <H5 hover cursor uppercase weight="300">
-                {d.name}
-              </H5>
+      <Wrap style={styledWrap}>
+        {data?.map((d) => {
+          return (
+            <Link onClick={handleClick} to={`/genre/${d.id}`}>
+              <BigBody
+                style={{
+                  padding: '0.25rem',
+                  border: '0.5px solid white',
+                }}
+                weight="700"
+                uppercase
+                space="1.25"
+                hover
+                cursor
+              >
+                {`#${d.name}`}
+              </BigBody>
             </Link>
-          </Wrap>
-        );
-      })}
+          );
+        })}
+      </Wrap>
     </Container>
   );
 }

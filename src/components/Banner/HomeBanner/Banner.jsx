@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { breakpoints } from '../../../styles/Mixins';
 import useFetch from '../../../hooks/useFetch';
 import { baseURL, imgPath, request } from '../../../utils/request';
@@ -10,6 +11,7 @@ import {
   InnerWrapper,
   BottomGradient,
   StyledBigBody,
+  ButtonWrapper,
 } from './Banner.Styles';
 
 function Banner({
@@ -22,10 +24,25 @@ function Banner({
   const [url, setUrl] = useState(null);
   const { data: movies, loading, error } = useFetch(url);
   const { xl } = breakpoints;
+  const [bannerUrl, setBannerUrl] = useState(null);
+  const history = useHistory();
+
+  const currentHero = {
+    a: 11,
+    b: 12,
+  };
 
   useEffect(() => {
     setUrl(baseURL + request.fetchTrending);
   }, []);
+
+  useEffect(() => {
+    setBannerUrl(
+      movies?.slice(currentHero.a, currentHero.b).map((m) => {
+        return m.id;
+      })
+    );
+  }, [movies, currentHero]);
 
   const handleClick = (movie) => {
     setTrailerError(false);
@@ -43,11 +60,15 @@ function Banner({
     }
   };
 
+  const handleBannerDetails = () => {
+    history.push(`/film/${bannerUrl}`);
+  };
+
   return (
     <Wrapper width={xl} height="38" radius="2" style={{ cursor: 'pointer' }}>
       {error && <H1>Error</H1>}
       {movies &&
-        movies?.slice(11, 12).map((movie) => {
+        movies?.slice(currentHero.a, currentHero.b).map((movie) => {
           return (
             <Poster
               opacity={opacity}
@@ -70,19 +91,38 @@ function Banner({
                 bottom="0"
                 left="0"
               >
-                <InnerWrapper direction="column" padding="0" margin="2">
+                <InnerWrapper
+                  direction="column"
+                  padding="0"
+                  margin="2"
+                  align="left"
+                  pos="relative"
+                >
                   <H5 bottom="1">Rated {movie.vote_average * 10}%</H5>
                   <P bottom="1">{`${movie.overview.substring(0, 170)}...`}</P>
-                  <StyledBigBody
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    onClick={() => handleClick(movie)}
-                  >
-                    {trailerURL ? 'Close' : 'Watch Trailer'}
-                  </StyledBigBody>
+                  <ButtonWrapper direction="row" align="left" justify="left">
+                    <StyledBigBody
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                      onClick={() => handleClick(movie)}
+                    >
+                      {trailerURL ? 'Close' : 'Watch Trailer'}
+                    </StyledBigBody>
+
+                    <StyledBigBody
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                      onClick={handleBannerDetails}
+                    >
+                      Details
+                    </StyledBigBody>
+                  </ButtonWrapper>
                 </InnerWrapper>
               </StyledWrapper>
               <Image

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Wrapper, BigBody } from '../../../styles/GlobalComponents';
+import { flex } from '../../../styles/Mixins';
 
 export const Poster = styled.div`
   position: relative;
@@ -31,8 +32,13 @@ export const Poster = styled.div`
 export const StyledWrapper = styled(Wrapper)`
   width: 100%;
 `;
-export const InnerWrapper = styled(Wrapper)`
-  width: 50%;
+export const InnerWrapper = styled.div`
+  width: ${({ width }) => (width ? `${width}%` : `50%`)};
+  margin: 2rem;
+`;
+
+export const ButtonWrapper = styled.div`
+  ${flex}
 `;
 
 export const StyledBigBody = styled(BigBody)`
@@ -43,6 +49,7 @@ export const StyledBigBody = styled(BigBody)`
   width: 15.9%;
   background-color: #80808040;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 1rem;
   &:hover {
     background-color: #80808060;
     box-shadow: 1.4px 4.2px 5.3px rgba(0, 0, 0, 0.048),

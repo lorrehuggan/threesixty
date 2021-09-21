@@ -18,6 +18,12 @@ function Nav() {
     }
   };
 
+  const handleClick = () => {
+    if (openMenu) {
+      setOpenMenu(false);
+    }
+  };
+
   return (
     <Wrapper
       width={xl}
@@ -27,7 +33,7 @@ function Nav() {
       direction="row"
     >
       <Wrapper margin="0">
-        <Link to="/">
+        <Link onClick={handleClick} to="/">
           <H5 font="header" color={styledTheme.warning}>
             ThreeSixtyTrailers
           </H5>
@@ -41,17 +47,17 @@ function Nav() {
           width: '490px',
         }}
       >
-        <Link to="/">
+        <Link onClick={handleClick} to="/">
           <BigBody uppercase weight="700" cursor hover space="5">
             Home
           </BigBody>
         </Link>
-        <Link to="/trending">
+        <Link onClick={handleClick} to="/trending">
           <BigBody uppercase weight="700" cursor hover space="5">
             Trending
           </BigBody>
         </Link>
-        <Link to={'/genre/16'}>
+        <Link onClick={handleClick} to={'/genre/16'}>
           <BigBody uppercase weight="700" cursor hover space="5">
             Animation
           </BigBody>

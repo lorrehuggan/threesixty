@@ -15,7 +15,7 @@ export const Poster = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    opacity: ${({ opacity }) => opacity};
+    opacity: ${({ opacity, open }) => (open ? '0.2' : opacity)};
     background-color: ${({ theme }) => theme.textSecondary};
     background-image: url(${({ src }) => src});
     background-repeat: no-repeat;

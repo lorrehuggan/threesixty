@@ -1,7 +1,14 @@
 import React from 'react';
 import { breakpoints } from '../../../styles/Mixins';
 import { imgPath } from '../../../utils/request';
-import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
+import {
+  H1,
+  Wrapper,
+  Image,
+  P,
+  H5,
+  H3,
+} from '../../../styles/GlobalComponents';
 import {
   Poster,
   StyledWrapper,
@@ -41,6 +48,14 @@ function Banner({
     }
   };
 
+  const handleTitle = () => {
+    if (movie.title?.length > 34) {
+      return `${movie.title?.substring(0, 34)}...`;
+    } else {
+      return `${movie.title}`;
+    }
+  };
+
   return (
     <Wrapper width={xl} height="38" radius="2" style={{ cursor: 'pointer' }}>
       {error && <H1>Oops Something Went Wrong...</H1>}
@@ -56,9 +71,9 @@ function Banner({
           <H1>
             {loading
               ? 'Loading...'
-              : `${movie.title?.substring(0, 34)}...` ||
-                `${movie.original_name?.substring(0, 34)}...` ||
-                `${movie.original_title?.substring(0, 34)}...`}
+              : `${movie.title?.substring(0, 34)}` ||
+                `${movie.original_name?.substring(0, 34)}` ||
+                `${movie.original_title?.substring(0, 34)}`}
           </H1>
           <StyledWrapper
             justify="left"

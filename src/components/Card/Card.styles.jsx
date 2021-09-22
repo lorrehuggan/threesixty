@@ -28,3 +28,11 @@ export const BottomGradient = styled.div`
   left: 0;
   z-index: 0;
 `;
+
+export const SkeletonCard = styled.div`
+  width: 22rem;
+  height: 32rem;
+  border-radius: 4px;
+  background-color: 'black';
+  margin-top: ${({ grid }) => (grid ? '1rem' : '')};
+`;

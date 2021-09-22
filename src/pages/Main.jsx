@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
 import { baseURL, request, FETCH_ID } from '../utils/request';
 import useFetch from '../hooks/useFetch';
+import Carousel from '../components/Carousel/Carousel';
+import { SkeletonCard } from '../components/Card/Card.styles';
 
 function Main() {
   const { xl } = breakpoints;
@@ -37,8 +39,11 @@ function Main() {
       });
   }, []);
 
+  let skeletonArray = new Array(10).fill('i');
+
   return (
     <Wrapper width={xl} align="center">
+      {/* <Carousel /> */}
       <Banner
         opacity="0.35"
         hOpacity="0.5"
@@ -56,6 +61,10 @@ function Main() {
         />
       )}
       {trailerError && <H1>Error</H1>}
+      {!genre &&
+        skeletonArray.map((i) => {
+          return <SkeletonCard />;
+        })}
       {genre &&
         genre?.map((g) => {
           return (

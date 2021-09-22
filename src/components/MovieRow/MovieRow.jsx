@@ -8,6 +8,7 @@ import Card from '../Card/Card';
 import { GridContainer } from './MovieRow.styles';
 import { FiArrowRightCircle } from 'react-icons/fi';
 import styled from 'styled-components';
+import { SkeletonCard } from '../Card/Card.styles';
 
 export const Arrow = styled(FiArrowRightCircle)`
   height: 2rem;
@@ -27,54 +28,58 @@ function MovieRow({ req, title, id }) {
     window.scroll(0, 0);
   };
 
+  let skeletonArray = new Array(4).fill('i');
+
   return (
-    <Wrapper style={{ marginBottom: '1rem', marginTop: '1rem' }}>
-      <Wrapper
-        direction="row"
-        justify="space-between"
-        align="center"
-        width={xl}
-        style={{ marginBottom: '1rem' }}
-      >
-        <H5 color={styledTheme.warning} weight="800">
-          {title}
-        </H5>
-        <Link
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-          to={`/genre/${id}`}
+    <>
+      <Wrapper style={{ marginBottom: '1rem', marginTop: '1rem' }}>
+        <Wrapper
+          direction="row"
+          justify="space-between"
+          align="center"
+          width={xl}
+          style={{ marginBottom: '1rem' }}
         >
-          <BigBody
-            uppercase
-            style={{ marginRight: '0.5rem' }}
-            hover
-            weight="900"
-            cursor
-            space="5"
+          <H5 color={styledTheme.warning} weight="800">
+            {title}
+          </H5>
+          <Link
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+            to={`/genre/${id}`}
           >
-            More {title}
-          </BigBody>
-          <Arrow />
-        </Link>
+            <BigBody
+              uppercase
+              style={{ marginRight: '0.5rem' }}
+              hover
+              weight="900"
+              cursor
+              space="5"
+            >
+              More {title}
+            </BigBody>
+            <Arrow />
+          </Link>
+        </Wrapper>
+        <GridContainer direction="row">
+          {movies &&
+            movies?.slice(0, 4).map((movie) => {
+              return (
+                <Link onClick={handleClick} to={`/film/${movie.id}`}>
+                  <Card
+                    poster={movie.poster_path}
+                    title={movie.title}
+                    loading={loading}
+                  />
+                </Link>
+              );
+            })}
+        </GridContainer>
       </Wrapper>
-      <GridContainer direction="row">
-        {movies &&
-          movies?.slice(0, 4).map((movie) => {
-            return (
-              <Link onClick={handleClick} to={`/film/${movie.id}`}>
-                <Card
-                  poster={movie.poster_path}
-                  title={movie.title}
-                  loading={loading}
-                />
-              </Link>
-            );
-          })}
-      </GridContainer>
-    </Wrapper>
+    </>
   );
 }
 

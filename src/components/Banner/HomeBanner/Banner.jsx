@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { MenuContext } from '../../../contexts/MenuContext';
 import { useHistory } from 'react-router-dom';
 import { breakpoints } from '../../../styles/Mixins';
 import useFetch from '../../../hooks/useFetch';
@@ -26,11 +27,8 @@ function Banner({
   const { xl } = breakpoints;
   const [bannerUrl, setBannerUrl] = useState(null);
   const history = useHistory();
-
-  const currentHero = {
-    a: 11,
-    b: 12,
-  };
+  const [currentHero, setCurrentHero] = useState({ a: 12, b: 13 });
+  const { openMenu, setOpenMenu } = useContext(MenuContext);
 
   useEffect(() => {
     setUrl(baseURL + request.fetchTrending);
@@ -61,6 +59,7 @@ function Banner({
   };
 
   const handleBannerDetails = () => {
+    setOpenMenu(false);
     history.push(`/film/${bannerUrl}`);
   };
 
@@ -71,11 +70,13 @@ function Banner({
         movies?.slice(currentHero.a, currentHero.b).map((movie) => {
           return (
             <Poster
+              open={openMenu}
               opacity={opacity}
               hOpacity={hOpacity}
               src={imgPath + movie?.backdrop_path}
               onClick={() => handleClick(movie)}
             >
+              {openMenu && <BottomGradient top />}
               <H1>
                 {loading
                   ? 'Loading...'
@@ -120,7 +121,7 @@ function Banner({
                       }}
                       onClick={handleBannerDetails}
                     >
-                      Details
+                      More
                     </StyledBigBody>
                   </ButtonWrapper>
                 </InnerWrapper>

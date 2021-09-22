@@ -69,8 +69,9 @@ function Nav() {
           cursor
           hover
           space="5"
+          color={openMenu ? styledTheme.error : ''}
         >
-          Menu
+          {openMenu ? 'Close' : 'Menu'}
         </BigBody>
       </Box>
       <Box>

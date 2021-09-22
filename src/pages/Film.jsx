@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { H4, H5, P, Wrapper } from '../styles/GlobalComponents';
-import { breakpoints } from '../styles/Mixins';
+import { breakpoints, styledTheme } from '../styles/Mixins';
 import FilmBanner from '../components/Banner/FilmBanner/FilmBanner';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
@@ -8,7 +8,6 @@ import {
   baseURL,
   FETCH_ID,
   FETCH_RECOMMENDATIONS,
-  FETCH_CATEGORIES,
   request,
 } from '../utils/request';
 import styled from 'styled-components';
@@ -17,9 +16,10 @@ import movieTrailer from 'movie-trailer';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
+import { GiFilmProjector } from 'react-icons/gi';
 
 export const Play = styled(FaPlay)`
-  color: #ffffff;
+  color: ${({ theme }) => theme.textPrimary};
   width: 8rem;
   height: 8rem;
   cursor: pointer;
@@ -30,6 +30,12 @@ export const Play = styled(FaPlay)`
   &:active {
     color: grey;
   }
+`;
+
+export const FilmIcon = styled(GiFilmProjector)`
+  color: ${({ theme, play }) => (play ? theme.success : theme.textPrimary)};
+  font-size: 2rem;
+  margin-right: 0.5rem;
 `;
 
 function Film() {
@@ -162,6 +168,22 @@ function Film() {
         setTrailerURL={setTrailerURL}
         setTrailerError={setTrailerError}
       />
+      <Wrapper
+        width={xl}
+        style={{ paddingLeft: '2rem' }}
+        direction="row"
+        align="center"
+      >
+        <FilmIcon play={trailerURL} />
+        <P
+          style={{ color: trailerURL ? styledTheme.success : '' }}
+          weight="700"
+        >
+          {trailerURL && 'Now Playing'}{' '}
+          {movie.title || movie.original_name || movie.original_title || ''}{' '}
+          Trailer
+        </P>
+      </Wrapper>
 
       {!trailerURL && (
         <Wrapper

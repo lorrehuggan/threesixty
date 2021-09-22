@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { BigBody, H3, H4, H5 } from '../../styles/GlobalComponents';
-import useFetch from '../../hooks/useFetch';
 import { request, baseURL } from '../../utils/request';
 import { Link } from 'react-router-dom';
 import { MenuContext } from '../../contexts/MenuContext';
-import { breakpoints } from '../../styles/Mixins';
+import { breakpoints, styledTheme } from '../../styles/Mixins';
 
 export const Container = styled.div`
   width: ${({ width }) => width && `${width}px`};
@@ -83,7 +82,7 @@ function Menu() {
 
   return (
     <Container open={openMenu} width={xl}>
-      <Wrap style={{ marginBottom: '2rem' }}>
+      <Wrap style={{ marginBottom: '3rem' }}>
         {' '}
         <H3 style={{ textAlign: 'center' }}>Menu</H3>{' '}
       </Wrap>

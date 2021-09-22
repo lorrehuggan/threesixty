@@ -5,10 +5,8 @@ import Banner from '../components/Banner/HomeBanner/Banner';
 import MovieRow from '../components/MovieRow/MovieRow';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import { baseURL, request, FETCH_ID } from '../utils/request';
+import { FETCH_ID, FETCH_GENRE, FETCH_CATEGORIES } from '../utils/request';
 import useFetch from '../hooks/useFetch';
-import Carousel from '../components/Carousel/Carousel';
-import { SkeletonCard } from '../components/Card/Card.styles';
 
 function Main() {
   const { xl } = breakpoints;
@@ -16,10 +14,10 @@ function Main() {
   const [trailerURL, setTrailerURL] = useState('');
   const [trailerError, setTrailerError] = useState(false);
   const [genre, setGenre] = useState(null);
-  const { data: movie, loading, error } = useFetch(baseURL + FETCH_ID(id));
+  const { data: movie, loading, error } = useFetch(FETCH_ID(id));
 
   useEffect(() => {
-    fetch(baseURL + request.fetchGenre)
+    fetch(FETCH_GENRE())
       .then((res) => {
         if (!res.ok) {
           throw Error('Could not fetch resource');
@@ -38,8 +36,6 @@ function Main() {
         }
       });
   }, []);
-
-  let skeletonArray = new Array(10).fill('i');
 
   return (
     <Wrapper width={xl} align="center">
@@ -61,15 +57,12 @@ function Main() {
         />
       )}
       {trailerError && <H1>Error</H1>}
-      {!genre &&
-        skeletonArray.map((i) => {
-          return <SkeletonCard />;
-        })}
+
       {genre &&
         genre?.map((g) => {
           return (
             <MovieRow
-              req={request.fetchCategory + g.id}
+              request={FETCH_CATEGORIES(g.id, 1)}
               title={g.name}
               id={g.id}
             />

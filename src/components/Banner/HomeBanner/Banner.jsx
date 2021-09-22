@@ -3,7 +3,7 @@ import { MenuContext } from '../../../contexts/MenuContext';
 import { useHistory } from 'react-router-dom';
 import { breakpoints } from '../../../styles/Mixins';
 import useFetch from '../../../hooks/useFetch';
-import { baseURL, imgPath, request } from '../../../utils/request';
+import { FETCH_TRENDING, imgPath } from '../../../utils/request';
 import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
 import movieTrailer from 'movie-trailer';
 import {
@@ -27,11 +27,11 @@ function Banner({
   const { xl } = breakpoints;
   const [bannerUrl, setBannerUrl] = useState(null);
   const history = useHistory();
-  const [currentHero, setCurrentHero] = useState({ a: 12, b: 13 });
+  const [currentHero, setCurrentHero] = useState({ a: 9, b: 10 });
   const { openMenu, setOpenMenu } = useContext(MenuContext);
 
   useEffect(() => {
-    setUrl(baseURL + request.fetchTrending);
+    setUrl(FETCH_TRENDING(1));
   }, []);
 
   useEffect(() => {
@@ -63,8 +63,39 @@ function Banner({
     history.push(`/film/${bannerUrl}`);
   };
 
+  // Animations
+
+  const wrapperVar = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+    hidden: { opacity: 0, y: 10 },
+  };
+
+  const textVar = {
+    visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.2 } },
+    hidden: { opacity: 0, y: 10 },
+  };
+
+  const posterVar = {
+    visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.8 } },
+    hidden: { opacity: 0, y: 10 },
+  };
+
   return (
-    <Wrapper width={xl} height="38" radius="2" style={{ cursor: 'pointer' }}>
+    <Wrapper
+      variants={wrapperVar}
+      initial="hidden"
+      animate="visible"
+      width={xl}
+      height="38"
+      radius="2"
+      style={{ cursor: 'pointer' }}
+    >
       {error && <H1>Error</H1>}
       {movies &&
         movies?.slice(currentHero.a, currentHero.b).map((movie) => {
@@ -77,7 +108,7 @@ function Banner({
               onClick={() => handleClick(movie)}
             >
               {openMenu && <BottomGradient top />}
-              <H1>
+              <H1 variants={textVar} initial="hidden" animate="visible">
                 {loading
                   ? 'Loading...'
                   : movie.title?.substring(0, 35) ||
@@ -99,9 +130,28 @@ function Banner({
                   align="left"
                   pos="relative"
                 >
-                  <H5 bottom="1">Rated {movie.vote_average * 10}%</H5>
-                  <P bottom="1">{`${movie.overview.substring(0, 170)}...`}</P>
-                  <ButtonWrapper direction="row" align="left" justify="left">
+                  <H5
+                    variants={textVar}
+                    initial="hidden"
+                    animate="visible"
+                    bottom="1"
+                  >
+                    Rated {movie.vote_average * 10}%
+                  </H5>
+                  <P
+                    variants={textVar}
+                    initial="hidden"
+                    animate="visible"
+                    bottom="1"
+                  >{`${movie.overview.substring(0, 170)}...`}</P>
+                  <ButtonWrapper
+                    variants={textVar}
+                    initial="hidden"
+                    animate="visible"
+                    direction="row"
+                    align="left"
+                    justify="left"
+                  >
                     <StyledBigBody
                       style={{
                         display: 'flex',
@@ -127,6 +177,9 @@ function Banner({
                 </InnerWrapper>
               </StyledWrapper>
               <Image
+                variants={posterVar}
+                initial="hidden"
+                animate="visible"
                 pos="absolute"
                 bottom="2"
                 right="2"

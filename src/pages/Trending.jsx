@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { baseURL, FETCH_TRENDING } from '../utils/request';
+import { FETCH_TRENDING } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import Card from '../components/Card/Card';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { H1, Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
+import { SkeletonCard } from '../components/Card/Card.styles';
 
 export const Grid = styled.div`
   width: ${breakpoints.xl};
@@ -20,9 +21,7 @@ function Trending() {
   const { xl, md } = breakpoints;
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
-  const { data, loading, error, results } = useFetch(
-    baseURL + FETCH_TRENDING(page)
-  );
+  const { data, loading, error, results } = useFetch(FETCH_TRENDING(page));
 
   useEffect(() => {
     setNumOfPages(results?.total_pages);
@@ -34,6 +33,8 @@ function Trending() {
     window.scroll(0, 0);
   };
 
+  let skeletonArray = new Array(20).fill('i');
+
   return (
     <Wrapper
       width={xl}
@@ -43,6 +44,10 @@ function Trending() {
     >
       <H1 style={{ marginBottom: '2rem' }}>Trending</H1>
       <Grid>
+        {loading &&
+          skeletonArray.map(() => {
+            return <SkeletonCard />;
+          })}
         {data.map((d) => (
           <Link onClick={handlePagination} to={`/film/${d.id}`}>
             <Card grid poster={d.poster_path} />

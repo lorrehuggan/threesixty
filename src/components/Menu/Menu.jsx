@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { BigBody, H3, H4, H5 } from '../../styles/GlobalComponents';
-import { request, baseURL } from '../../utils/request';
+import { FETCH_GENRE } from '../../utils/request';
 import { Link } from 'react-router-dom';
 import { MenuContext } from '../../contexts/MenuContext';
 import { breakpoints, styledTheme } from '../../styles/Mixins';
@@ -10,7 +10,6 @@ export const Container = styled.div`
   width: ${({ width }) => width && `${width}px`};
   height: 15rem;
   margin: 0rem auto;
-  margin-bottom: 3rem;
   opacity: ${({ open }) => (open ? '1' : '0')};
   pointer-events: ${({ open }) => (open ? 'visible' : 'none')};
   display: ${({ open }) => (open ? 'flex' : 'none')};
@@ -53,7 +52,7 @@ function Menu() {
   const { xl } = breakpoints;
 
   useEffect(() => {
-    fetch(baseURL + request.fetchGenre)
+    fetch(FETCH_GENRE())
       .then((res) => {
         if (!res.ok) {
           throw Error('Could not fetch resource');
@@ -82,10 +81,10 @@ function Menu() {
 
   return (
     <Container open={openMenu} width={xl}>
-      <Wrap style={{ marginBottom: '3rem' }}>
+      {/* <Wrap style={{ marginBottom: '3rem' }}>
         {' '}
         <H3 style={{ textAlign: 'center' }}>Menu</H3>{' '}
-      </Wrap>
+      </Wrap> */}
       <Wrap style={styledWrap}>
         {data?.map((d) => {
           return (

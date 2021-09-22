@@ -55,9 +55,7 @@ function SearchForm() {
 
   const { searchData, setSearchData } = useContext(SearchContext);
 
-  const { data, loading, error, results } = useFetch(
-    baseURL + FETCH_QUERY(1, query)
-  );
+  const { data, loading, error, results } = useFetch(FETCH_QUERY(1, query));
 
   const handleSubmit = (e) => {
     e.preventDefault();

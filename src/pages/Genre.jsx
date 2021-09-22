@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { baseURL, FETCH_CATEGORIES, request } from '../utils/request';
+import { FETCH_CATEGORIES, FETCH_GENRE } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import Card from '../components/Card/Card';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { H1, BigBody, Wrapper, H4 } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
+import { SkeletonCard } from '../components/Card/Card.styles';
 
 export const Grid = styled.div`
   width: ${breakpoints.xl};
@@ -22,7 +23,7 @@ function Genre() {
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
   const { data, loading, error, results } = useFetch(
-    baseURL + FETCH_CATEGORIES(id, page)
+    FETCH_CATEGORIES(id, page)
   );
   const [genre, setGenre] = useState({});
 
@@ -32,7 +33,7 @@ function Genre() {
   }, [results, numOfPages]);
 
   useEffect(() => {
-    fetch(baseURL + request.fetchGenre)
+    fetch(FETCH_GENRE())
       .then((res) => {
         if (!res.ok) {
           throw Error('Could not fetch resource');
@@ -64,6 +65,8 @@ function Genre() {
     window.scroll(0, 0);
   };
 
+  let skeletonArray = new Array(20).fill('i');
+
   return (
     <Wrapper
       width={xl}
@@ -71,8 +74,15 @@ function Genre() {
         overflow: 'visible',
       }}
     >
-      <H1 style={{ marginBottom: '1rem' }}>{genre[0]?.name}</H1>
+      <H1 style={{ marginBottom: '1rem' }}>
+        {loading ? 'Loading...' : genre[0]?.name}
+      </H1>
       <Grid>
+        {loading &&
+          skeletonArray.map(() => {
+            return <SkeletonCard />;
+          })}
+
         {data.map((d) => (
           <Link onClick={handleClick} to={`/film/${d.id}`}>
             <Card grid poster={d.poster_path} />

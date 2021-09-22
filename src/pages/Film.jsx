@@ -4,12 +4,7 @@ import { breakpoints, styledTheme } from '../styles/Mixins';
 import FilmBanner from '../components/Banner/FilmBanner/FilmBanner';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import {
-  baseURL,
-  FETCH_ID,
-  FETCH_RECOMMENDATIONS,
-  request,
-} from '../utils/request';
+import { FETCH_GENRE, FETCH_ID, FETCH_RECOMMENDATIONS } from '../utils/request';
 import styled from 'styled-components';
 import { FaPlay } from 'react-icons/fa';
 import movieTrailer from 'movie-trailer';
@@ -36,6 +31,13 @@ export const FilmIcon = styled(GiFilmProjector)`
   color: ${({ theme, play }) => (play ? theme.success : theme.textPrimary)};
   font-size: 2rem;
   margin-right: 0.5rem;
+  transition: color 1.3s ease;
+`;
+
+export const GenreContainer = styled.div`
+  display: flex;
+  flex-direction: 'row';
+  margin-left: 0.5rem;
 `;
 
 function Film() {
@@ -49,12 +51,13 @@ function Film() {
   const [recommendation, setRecommendation] = useState(null);
   const [recLoading, setRecLoading] = useState(true);
   const [recError, setRecError] = useState(null);
-  const [genre, setGenre] = useState({});
+  const [genre, setGenre] = useState(null);
   const [genreLoading, setGenreLoading] = useState({});
   const [genreError, setGenreError] = useState({});
+  const [filteredGenre, setFilteredGenre] = useState([]);
 
   useEffect(() => {
-    fetch(baseURL + request.fetchGenre)
+    fetch(FETCH_GENRE())
       .then((res) => {
         if (!res.ok) {
           throw Error('Could ot fetch resource');
@@ -65,7 +68,6 @@ function Film() {
         setGenre(data.genres);
         setGenreLoading(false);
         setGenreError(null);
-        console.log(genre);
       })
 
       .catch((err) => {
@@ -79,7 +81,7 @@ function Film() {
   }, []);
 
   useEffect(() => {
-    fetch(baseURL + FETCH_ID(id))
+    fetch(FETCH_ID(id))
       .then((res) => {
         if (!res.ok) {
           throw Error('Could not fetch resource');
@@ -103,7 +105,7 @@ function Film() {
   }, [id, setLoading, setError]);
 
   useEffect(() => {
-    fetch(baseURL + FETCH_RECOMMENDATIONS(id))
+    fetch(FETCH_RECOMMENDATIONS(id))
       .then((res) => {
         if (!res.ok) {
           throw Error('Could not fetch resource');
@@ -156,6 +158,12 @@ function Film() {
     }
   };
 
+  // useEffect(() => {
+  //   movie.genres?.map((m) => {
+  //     return setFilteredGenre(genre?.filter((g) => g.id === m.id));
+  //   });
+  // }, [genre, movie]);
+
   return (
     <Wrapper width={xl} align="center">
       <FilmBanner
@@ -173,16 +181,23 @@ function Film() {
         style={{ paddingLeft: '2rem' }}
         direction="row"
         align="center"
+        justifyContent="left"
       >
         <FilmIcon play={trailerURL} />
         <P
-          style={{ color: trailerURL ? styledTheme.success : '' }}
+          style={{
+            color: trailerURL ? styledTheme.success : '',
+            transition: 'color 1.3s ease',
+          }}
           weight="700"
         >
           {trailerURL && 'Now Playing'}{' '}
           {movie.title || movie.original_name || movie.original_title || ''}{' '}
           Trailer
         </P>
+        {/* <GenreContainer>
+          <P>{filteredGenre[0]?.name}</P>
+        </GenreContainer> */}
       </Wrapper>
 
       {!trailerURL && (

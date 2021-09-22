@@ -1,14 +1,7 @@
 import React from 'react';
 import { breakpoints } from '../../../styles/Mixins';
 import { imgPath } from '../../../utils/request';
-import {
-  H1,
-  Wrapper,
-  Image,
-  P,
-  H5,
-  H3,
-} from '../../../styles/GlobalComponents';
+import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
 import {
   Poster,
   StyledWrapper,
@@ -50,14 +43,47 @@ function Banner({
 
   const handleTitle = () => {
     if (movie.title?.length > 34) {
-      return `${movie.title?.substring(0, 34)}...`;
+      return (
+        `${movie.title?.substring(0, 34)}...` || `${movie.original_title}...`
+      );
     } else {
-      return `${movie.title}`;
+      return `${movie.title}` || `${movie.original_title}`;
     }
   };
 
+  // Animations
+
+  const wrapperVar = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+    hidden: { opacity: 0, y: 10 },
+  };
+
+  const textVar = {
+    visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.2 } },
+    hidden: { opacity: 0, y: 10 },
+  };
+
+  const posterVar = {
+    visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.8 } },
+    hidden: { opacity: 0, y: 10 },
+  };
+
   return (
-    <Wrapper width={xl} height="38" radius="2" style={{ cursor: 'pointer' }}>
+    <Wrapper
+      variants={wrapperVar}
+      initial="hidden"
+      animate="visible"
+      width={xl}
+      height="38"
+      radius="2"
+      style={{ cursor: 'pointer' }}
+    >
       {error && <H1>Oops Something Went Wrong...</H1>}
       {movie && (
         <Poster
@@ -68,12 +94,8 @@ function Banner({
         >
           <BottomGradient top />
 
-          <H1>
-            {loading
-              ? 'Loading...'
-              : `${movie.title?.substring(0, 34)}` ||
-                `${movie.original_name?.substring(0, 34)}` ||
-                `${movie.original_title?.substring(0, 34)}`}
+          <H1 variants={textVar} initial="hidden" animate="visible">
+            {loading ? 'Loading...' : handleTitle()}
           </H1>
           <StyledWrapper
             justify="left"
@@ -84,8 +106,20 @@ function Banner({
             left="0"
           >
             <InnerWrapper direction="column" padding="0" margin="2">
-              <H5 bottom="1">Rated {movie.vote_average * 10}%</H5>
-              <P bottom="1">{`${movie.overview?.substring(0, 480)}...`}</P>
+              <H5
+                variants={textVar}
+                initial="hidden"
+                animate="visible"
+                bottom="1"
+              >
+                Rated {movie.vote_average * 10}%
+              </H5>
+              <P
+                variants={textVar}
+                initial="hidden"
+                animate="visible"
+                bottom="1"
+              >{`${movie.overview?.substring(0, 480)}...`}</P>
               {!error && (
                 <StyledBigBody
                   style={{
@@ -102,6 +136,9 @@ function Banner({
           </StyledWrapper>
           {!error && (
             <Image
+              variants={posterVar}
+              initial="hidden"
+              animate="visible"
               pos="absolute"
               bottom="2"
               right="2"

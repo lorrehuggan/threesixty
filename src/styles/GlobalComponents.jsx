@@ -3,7 +3,7 @@ import { flex, styledTheme } from '../styles/Mixins';
 import { motion } from 'framer-motion';
 import { breakpoints } from '../styles/Mixins';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(motion.div)`
   padding: ${({ padding }) => (padding ? `${padding}rem` : '0rem')};
   margin: ${({ margin }) => (margin ? `${margin}rem` : '0rem auto')};
   width: ${({ width }) => (width ? `${width}px` : 'auto')};
@@ -32,7 +32,7 @@ export const Container = styled.div`
   justify-content: ${({ justify }) => (justify ? justify : 'left')};
 `;
 
-export const H1 = styled.h1`
+export const H1 = styled(motion.h1)`
   font-size: ${styledTheme.superHero};
   font-family: ${({ font }) =>
     font === 'header' ? styledTheme.headerFont : ''};
@@ -107,7 +107,7 @@ export const H4 = styled.h4`
   }
 `;
 
-export const H5 = styled.h5`
+export const H5 = styled(motion.h5)`
   font-size: ${styledTheme.subHeader};
   font-family: ${({ font }) =>
     font === 'header' ? styledTheme.headerFont : ''};
@@ -126,7 +126,7 @@ export const H5 = styled.h5`
   }
 `;
 
-export const P = styled.p`
+export const P = styled(motion.p)`
   line-height: 1.4;
   letter-spacing: 0.3px;
   font-size: ${styledTheme.body};

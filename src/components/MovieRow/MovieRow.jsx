@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Wrapper, H5, P, H4, BigBody } from '../../styles/GlobalComponents';
+import React, { useEffect, useState, useContext } from 'react';
+import { Wrapper, H5, BigBody } from '../../styles/GlobalComponents';
 import useFetch from '../../hooks/useFetch';
-import { baseURL, imgPath } from '../../utils/request';
 import { breakpoints, styledTheme } from '../../styles/Mixins';
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
@@ -9,23 +8,28 @@ import { GridContainer } from './MovieRow.styles';
 import { FiArrowRightCircle } from 'react-icons/fi';
 import styled from 'styled-components';
 import { SkeletonCard } from '../Card/Card.styles';
+import { MenuContext } from '../../contexts/MenuContext';
 
 export const Arrow = styled(FiArrowRightCircle)`
   height: 2rem;
   width: 2rem;
 `;
 
-function MovieRow({ req, title, id }) {
+function MovieRow({ request, title, id }) {
   const [url, setUrl] = useState('');
   const { data: movies, loading, error } = useFetch(url);
   const { xl } = breakpoints;
+  const { openMenu, setOpenMenu } = useContext(MenuContext);
 
   useEffect(() => {
-    setUrl(baseURL + req);
-  }, [req]);
+    setUrl(request);
+  }, [request]);
 
   const handleClick = () => {
     window.scroll(0, 0);
+    if (openMenu) {
+      setOpenMenu(false);
+    }
   };
 
   let skeletonArray = new Array(4).fill('i');
@@ -50,6 +54,7 @@ function MovieRow({ req, title, id }) {
               alignItems: 'center',
             }}
             to={`/genre/${id}`}
+            onClick={handleClick}
           >
             <BigBody
               uppercase
@@ -65,18 +70,28 @@ function MovieRow({ req, title, id }) {
           </Link>
         </Wrapper>
         <GridContainer direction="row">
-          {movies &&
-            movies?.slice(0, 4).map((movie) => {
-              return (
-                <Link onClick={handleClick} to={`/film/${movie.id}`}>
-                  <Card
-                    poster={movie.poster_path}
-                    title={movie.title}
-                    loading={loading}
-                  />
-                </Link>
-              );
-            })}
+          <>
+            {error &&
+              skeletonArray.map(() => {
+                return <SkeletonCard />;
+              })}
+            {loading &&
+              skeletonArray.map(() => {
+                return <SkeletonCard />;
+              })}
+            {movies &&
+              movies?.slice(0, 4).map((movie) => {
+                return (
+                  <Link onClick={handleClick} to={`/film/${movie.id}`}>
+                    <Card
+                      poster={movie.poster_path}
+                      title={movie.title}
+                      loading={loading}
+                    />
+                  </Link>
+                );
+              })}
+          </>
         </GridContainer>
       </Wrapper>
     </>

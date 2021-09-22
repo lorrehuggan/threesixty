@@ -33,6 +33,6 @@ export const SkeletonCard = styled.div`
   width: 22rem;
   height: 32rem;
   border-radius: 4px;
-  background-color: #000000;
+  background-color: ${({ theme }) => theme.textSecondary};
   margin-top: ${({ grid }) => (grid ? '1rem' : '')};
 `;

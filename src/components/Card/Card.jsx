@@ -14,9 +14,17 @@ const noImage = {
   textAlign: 'center',
 };
 
+const cardVar = {
+  visible: { opacity: 1, transition: { duration: 1, delay: 0.5 } },
+  hidden: { opacity: 0 },
+};
+
 function Card({ title, poster, loading, grid }) {
   return (
     <MovieCard
+      variants={cardVar}
+      initial="hidden"
+      animate="visible"
       whileHover={{
         filter: 'brightness(1.15)',
         y: -16,

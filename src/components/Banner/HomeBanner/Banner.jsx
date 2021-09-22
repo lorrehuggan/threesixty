@@ -82,7 +82,7 @@ function Banner({
   };
 
   const posterVar = {
-    visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.8 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.5 } },
     hidden: { opacity: 0, y: 10 },
   };
 

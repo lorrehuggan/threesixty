@@ -8,8 +8,9 @@ import { H1, BigBody, Wrapper, H4 } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
 import { SkeletonCard } from '../components/Card/Card.styles';
+import { motion } from 'framer-motion';
 
-export const Grid = styled.div`
+export const Grid = styled(motion.div)`
   width: ${breakpoints.xl};
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -67,6 +68,17 @@ function Genre() {
 
   let skeletonArray = new Array(20).fill('i');
 
+  // Animation
+
+  const gridVar = {
+    visible: {
+      opacity: 1,
+    },
+    hidden: {
+      opacity: 0,
+    },
+  };
+
   return (
     <Wrapper
       width={xl}
@@ -83,10 +95,17 @@ function Genre() {
             return <SkeletonCard />;
           })}
 
-        {data.map((d) => (
-          <Link onClick={handleClick} to={`/film/${d.id}`}>
-            <Card grid poster={d.poster_path} />
-          </Link>
+        {data.map((d, i) => (
+          <motion.div
+            variants={gridVar}
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 0.3, delay: i * 0.1 }}
+          >
+            <Link onClick={handleClick} to={`/film/${d.id}`}>
+              <Card grid poster={d.poster_path} />
+            </Link>
+          </motion.div>
         ))}
       </Grid>
       <Wrapper

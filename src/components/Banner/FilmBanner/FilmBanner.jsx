@@ -41,10 +41,11 @@ function Banner({
     }
   };
 
-  const handleTitle = () => {
-    if (movie.title?.length > 34) {
+  const handleTitle = (num) => {
+    if (movie.title?.length > num) {
       return (
-        `${movie.title?.substring(0, 34)}...` || `${movie.original_title}...`
+        `${movie.title?.substring(0, num)}...` ||
+        `${movie.original_title?.substring(0, num)}...`
       );
     } else {
       return `${movie.title}` || `${movie.original_title}`;
@@ -95,7 +96,7 @@ function Banner({
           <BottomGradient top />
 
           <H1 variants={textVar} initial="hidden" animate="visible">
-            {loading ? 'Loading...' : handleTitle()}
+            {loading ? 'Loading...' : handleTitle(30)}
           </H1>
           <StyledWrapper
             justify="left"

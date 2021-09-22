@@ -9,6 +9,7 @@ import { FiArrowRightCircle } from 'react-icons/fi';
 import styled from 'styled-components';
 import { SkeletonCard } from '../Card/Card.styles';
 import { MenuContext } from '../../contexts/MenuContext';
+import { motion } from 'framer-motion';
 
 export const Arrow = styled(FiArrowRightCircle)`
   height: 2rem;
@@ -33,6 +34,16 @@ function MovieRow({ request, title, id }) {
   };
 
   let skeletonArray = new Array(4).fill('i');
+  // Animation
+
+  const gridVar = {
+    visible: {
+      opacity: 1,
+    },
+    hidden: {
+      opacity: 0,
+    },
+  };
 
   return (
     <>
@@ -80,15 +91,22 @@ function MovieRow({ request, title, id }) {
                 return <SkeletonCard />;
               })}
             {movies &&
-              movies?.slice(0, 4).map((movie) => {
+              movies?.slice(0, 4).map((movie, i) => {
                 return (
-                  <Link onClick={handleClick} to={`/film/${movie.id}`}>
-                    <Card
-                      poster={movie.poster_path}
-                      title={movie.title}
-                      loading={loading}
-                    />
-                  </Link>
+                  <motion.div
+                    variants={gridVar}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ duration: 0.4, delay: i * 0.4 }}
+                  >
+                    <Link onClick={handleClick} to={`/film/${movie.id}`}>
+                      <Card
+                        poster={movie.poster_path}
+                        title={movie.title}
+                        loading={loading}
+                      />
+                    </Link>
+                  </motion.div>
                 );
               })}
           </>

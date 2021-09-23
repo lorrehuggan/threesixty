@@ -5,13 +5,18 @@ import { breakpoints, styledTheme } from '../../styles/Mixins';
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import { GridContainer } from './MovieRow.styles';
-import { FiArrowRightCircle } from 'react-icons/fi';
+import { FiArrowRightCircle, FiArrowUpCircle } from 'react-icons/fi';
 import styled from 'styled-components';
 import { SkeletonCard } from '../Card/Card.styles';
 import { MenuContext } from '../../contexts/MenuContext';
 import { motion } from 'framer-motion';
 
 export const Arrow = styled(FiArrowRightCircle)`
+  height: 2rem;
+  width: 2rem;
+`;
+
+export const ArrowUp = styled(FiArrowUpCircle)`
   height: 2rem;
   width: 2rem;
 `;

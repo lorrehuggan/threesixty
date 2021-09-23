@@ -23,7 +23,7 @@ function Genre() {
   const { id } = useParams();
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
-  const { data, loading, error, results } = useFetch(
+  const { data, loading, setLoading, error, results } = useFetch(
     FETCH_CATEGORIES(id, page)
   );
   const [genre, setGenre] = useState({});
@@ -79,6 +79,15 @@ function Genre() {
     },
   };
 
+  const headerVar = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+    },
+  };
+
   return (
     <Wrapper
       width={xl}
@@ -86,7 +95,15 @@ function Genre() {
         overflow: 'visible',
       }}
     >
-      <H1 style={{ marginBottom: '1rem' }}>
+      <H1
+        variants={headerVar}
+        initial="hidden"
+        animate="visible"
+        transition={{
+          duration: '0.7',
+        }}
+        style={{ marginBottom: '1rem' }}
+      >
         {loading ? 'Loading...' : genre[0]?.name}
       </H1>
       <Grid>

@@ -77,17 +77,6 @@ function Nav() {
       <Box>
         <SearchForm />
       </Box>
-
-      {/* <Wrapper margin="0" direction="row" align="center">
-        <BigBody right="0.5" uppercase weight="700">
-          Profile
-        </BigBody>
-        <Image
-          src="https://images.pexels.com/photos/5679150/pexels-photo-5679150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-          height="3"
-          width="3"
-        />
-      </Wrapper> */}
     </Wrapper>
   );
 }

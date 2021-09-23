@@ -10,6 +10,7 @@ import {
   StyledBigBody,
 } from '../HomeBanner/Banner.Styles';
 import movieTrailer from 'movie-trailer';
+import { AnimateSharedLayout } from 'framer-motion';
 
 function Banner({
   opacity,

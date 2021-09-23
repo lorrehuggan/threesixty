@@ -8,6 +8,7 @@ import { H1, Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
 import { SkeletonCard } from '../components/Card/Card.styles';
+import { motion } from 'framer-motion';
 
 export const Grid = styled.div`
   width: ${breakpoints.xl};
@@ -35,6 +36,26 @@ function Trending() {
 
   let skeletonArray = new Array(20).fill('i');
 
+  // Animation
+
+  const gridVar = {
+    visible: {
+      opacity: 1,
+    },
+    hidden: {
+      opacity: 0,
+    },
+  };
+
+  const headerVar = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+    },
+  };
+
   return (
     <Wrapper
       width={xl}
@@ -42,16 +63,33 @@ function Trending() {
         overflow: 'visible',
       }}
     >
-      <H1 style={{ marginBottom: '2rem' }}>Trending</H1>
+      <H1
+        variants={headerVar}
+        initial="hidden"
+        animate="visible"
+        transition={{
+          duration: '0.7',
+        }}
+        style={{ marginBottom: '2rem' }}
+      >
+        Trending
+      </H1>
       <Grid>
         {loading &&
           skeletonArray.map(() => {
             return <SkeletonCard />;
           })}
-        {data.map((d) => (
-          <Link onClick={handlePagination} to={`/film/${d.id}`}>
-            <Card grid poster={d.poster_path} />
-          </Link>
+        {data.map((d, i) => (
+          <motion.div
+            variants={gridVar}
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 0.3, delay: i * 0.1 }}
+          >
+            <Link onClick={handlePagination} to={`/film/${d.id}`}>
+              <Card grid poster={d.poster_path} />
+            </Link>
+          </motion.div>
         ))}
       </Grid>
       <Wrapper

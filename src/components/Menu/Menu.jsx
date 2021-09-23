@@ -8,16 +8,17 @@ import { breakpoints, styledTheme } from '../../styles/Mixins';
 
 export const Container = styled.div`
   width: ${({ width }) => width && `${width}px`};
-  height: 15rem;
+  height: ${({ open }) => (open ? '15rem' : '0')};
   margin: 0rem auto;
   opacity: ${({ open }) => (open ? '1' : '0')};
   pointer-events: ${({ open }) => (open ? 'visible' : 'none')};
-  display: ${({ open }) => (open ? 'flex' : 'none')};
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
   flex-direction: column;
   position: relative;
+  transition: height 0.3s ease;
 `;
 
 export const Wrap = styled.div`
@@ -79,17 +80,26 @@ function Menu() {
     setOpenMenu(false);
   };
 
+  //Animations
+
+  const menuVar = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: openMenu ? 1 : 0,
+      transition: { duration: 0.6, delay: 0.3 },
+    },
+  };
+
   return (
     <Container open={openMenu} width={xl}>
-      {/* <Wrap style={{ marginBottom: '3rem' }}>
-        {' '}
-        <H3 style={{ textAlign: 'center' }}>Menu</H3>{' '}
-      </Wrap> */}
       <Wrap style={styledWrap}>
         {data?.map((d) => {
           return (
             <Link onClick={handleClick} to={`/genre/${d.id}`}>
               <BigBody
+                variants={menuVar}
+                initial="hidden"
+                animate="visible"
                 style={{
                   padding: '0.25rem',
                   border: '0.5px solid white',

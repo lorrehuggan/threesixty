@@ -4,6 +4,7 @@ import { BigBody, H5, Image, Wrapper } from '../../styles/GlobalComponents';
 import { imgPath } from '../../utils/request';
 import { styledTheme } from '../../styles/Mixins';
 import { motion } from 'framer-motion';
+import { AnimateSharedLayout } from 'framer-motion';
 
 const noImage = {
   backgroundColor: styledTheme.primary,

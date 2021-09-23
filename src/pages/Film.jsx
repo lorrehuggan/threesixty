@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
 import { GiFilmProjector } from 'react-icons/gi';
+import { motion } from 'framer-motion';
 
 export const Play = styled(FaPlay)`
   color: ${({ theme }) => theme.textPrimary};
@@ -158,11 +159,10 @@ function Film() {
     }
   };
 
-  // useEffect(() => {
-  //   movie.genres?.map((m) => {
-  //     return setFilteredGenre(genre?.filter((g) => g.id === m.id));
-  //   });
-  // }, [genre, movie]);
+  const skeletonVar = {
+    hidden: { opacity: 0, x: 10 },
+    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
+  };
 
   return (
     <Wrapper width={xl} align="center">
@@ -177,6 +177,9 @@ function Film() {
         setTrailerError={setTrailerError}
       />
       <Wrapper
+        variants={skeletonVar}
+        initial="hidden"
+        animate="visible"
         width={xl}
         style={{ paddingLeft: '2rem' }}
         direction="row"
@@ -195,13 +198,13 @@ function Film() {
           {movie.title || movie.original_name || movie.original_title || ''}{' '}
           Trailer
         </P>
-        {/* <GenreContainer>
-          <P>{filteredGenre[0]?.name}</P>
-        </GenreContainer> */}
       </Wrapper>
 
       {!trailerURL && (
         <Wrapper
+          variants={skeletonVar}
+          initial="hidden"
+          animate="visible"
           width={xl}
           height="30.625"
           style={{

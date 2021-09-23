@@ -38,7 +38,7 @@ const useFetch = (url) => {
     };
   }, [url]);
 
-  return { data, loading, error, results };
+  return { data, loading, error, results, setLoading };
 };
 
 export default useFetch;

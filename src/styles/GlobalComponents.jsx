@@ -147,7 +147,7 @@ export const P = styled(motion.p)`
   }
 `;
 
-export const BigBody = styled.span`
+export const BigBody = styled(motion.span)`
   font-size: ${styledTheme.bodyBig};
   font-family: ${({ font }) =>
     font === 'header' ? styledTheme.headerFont : ''};
@@ -211,4 +211,19 @@ export const Grid = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-gap: 0.5rem;
+`;
+
+export const Button = styled.button`
+  padding: 0.5rem;
+  color: ${({ theme }) => theme.textSecondary};
+  background-color: ${({ theme }) => theme.textPrimary};
+  border: none;
+  border-radius: 4px;
+  font-weight: 900;
+  font-size: ${styledTheme.header};
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: grey;
+  }
 `;

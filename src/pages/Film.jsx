@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { H4, H5, P, Wrapper } from '../styles/GlobalComponents';
+import { BigBody, H4, H5, P, Wrapper } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import FilmBanner from '../components/Banner/FilmBanner/FilmBanner';
 import { useParams } from 'react-router-dom';
@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
 import { GiFilmProjector } from 'react-icons/gi';
-import { motion } from 'framer-motion';
 
 export const Play = styled(FaPlay)`
   color: ${({ theme }) => theme.textPrimary};
@@ -55,7 +54,7 @@ function Film() {
   const [genre, setGenre] = useState(null);
   const [genreLoading, setGenreLoading] = useState({});
   const [genreError, setGenreError] = useState({});
-  const [filteredGenre, setFilteredGenre] = useState([]);
+  const [movieGenre, setMovieGenre] = useState({});
 
   useEffect(() => {
     fetch(FETCH_GENRE())
@@ -143,6 +142,7 @@ function Film() {
           if (url === null) {
             setTrailerError(true);
           } else {
+            watchClick();
             setTrailerURL(url);
           }
         })
@@ -156,6 +156,12 @@ function Film() {
       setTrailerURL('');
     } else {
       return;
+    }
+  };
+
+  const watchClick = () => {
+    if (!trailerURL) {
+      window.scroll(0, 400);
     }
   };
 
@@ -175,7 +181,52 @@ function Film() {
         trailerURL={trailerURL}
         setTrailerURL={setTrailerURL}
         setTrailerError={setTrailerError}
+        watchClick={watchClick}
       />
+      <Wrapper
+        variants={skeletonVar}
+        initial="hidden"
+        animate="visible"
+        width={xl}
+        style={{ paddingLeft: '2rem', marginBottom: '1rem' }}
+        direction="row"
+        align="center"
+        justifyContent="left"
+      >
+        {movie.production_companies?.slice(0, 3).map((pc) => (
+          <P weight="700" right="0.25">
+            {pc.name},
+          </P>
+        ))}
+      </Wrapper>
+      <Wrapper
+        variants={skeletonVar}
+        initial="hidden"
+        animate="visible"
+        width={xl}
+        style={{ paddingLeft: '2rem', marginBottom: '1rem' }}
+        direction="row"
+        align="center"
+        justifyContent="left"
+      >
+        {movie.genres?.map((mg) => (
+          <Link onClick={cardClick} to={`/genre/${mg.id}`}>
+            <P
+              weight="700"
+              padding="0.25"
+              uppercase
+              hover
+              style={{
+                marginRight: '0.5rem',
+                border: '0.25px solid white',
+                letterSpacing: '1.25px',
+              }}
+            >
+              #{mg.name}
+            </P>
+          </Link>
+        ))}
+      </Wrapper>
       <Wrapper
         variants={skeletonVar}
         initial="hidden"
@@ -240,15 +291,17 @@ function Film() {
         />
       )}
       <Wrapper style={{ marginBottom: '1rem', marginTop: '1rem' }}>
-        <Wrapper
-          direction="row"
-          justify="space-between"
-          align="center"
-          width={xl}
-          style={{ marginBottom: '2rem', marginTop: '1rem' }}
-        >
-          <H4>Recommended</H4>
-        </Wrapper>
+        {recommendation && (
+          <Wrapper
+            direction="row"
+            justify="space-between"
+            align="center"
+            width={xl}
+            style={{ marginBottom: '2rem', marginTop: '1rem' }}
+          >
+            {recError ? <H4>Error</H4> : <H4>Recommended</H4>}
+          </Wrapper>
+        )}
         <GridContainer direction="row">
           {recommendation &&
             recommendation?.slice(0, 4).map((rec) => {

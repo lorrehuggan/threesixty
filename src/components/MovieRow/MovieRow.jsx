@@ -52,7 +52,7 @@ function MovieRow({ request, title, id }) {
 
   return (
     <>
-      <Wrapper style={{ marginBottom: '1rem', marginTop: '1rem' }}>
+      <Wrapper hidden style={{ marginBottom: '1rem', marginTop: '1rem' }}>
         <Wrapper
           direction="row"
           justify="space-between"
@@ -60,7 +60,7 @@ function MovieRow({ request, title, id }) {
           width={xl}
           style={{ marginBottom: '1rem' }}
         >
-          <H5 color={styledTheme.warning} weight="800">
+          <H5 left="2" color={styledTheme.warning} weight="800">
             {title}
           </H5>
           <Link

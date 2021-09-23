@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { BigBody, H3, H4, H5 } from '../../styles/GlobalComponents';
+import { BigBody } from '../../styles/GlobalComponents';
 import { FETCH_GENRE } from '../../utils/request';
 import { Link } from 'react-router-dom';
 import { MenuContext } from '../../contexts/MenuContext';
-import { breakpoints, styledTheme } from '../../styles/Mixins';
+import { breakpoints } from '../../styles/Mixins';
 
 export const Container = styled.div`
   width: ${({ width }) => width && `${width}px`};
@@ -15,7 +15,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 0;
   flex-direction: column;
   position: relative;
   transition: height 0.3s ease;
@@ -33,7 +33,7 @@ export const Item = styled.span`
   flex: wrap;
   transition: color 0.3s ease;
   &:hover {
-    color: ${({ theme }) => theme.warning};
+    color: ${({ theme }) => theme.success};
   }
 `;
 

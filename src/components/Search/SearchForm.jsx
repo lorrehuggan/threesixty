@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { BiSearchAlt } from 'react-icons/bi';
 import { styledTheme } from '../../styles/Mixins';
 import useFetch from '../../hooks/useFetch';
-import { request, FETCH_QUERY, baseURL } from '../../utils/request';
+import { FETCH_QUERY } from '../../utils/request';
 import { useHistory } from 'react-router-dom';
+import { QueryContext } from '../../contexts/QueryContext';
 
 export const Form = styled.form`
   height: 50px;
@@ -52,14 +53,15 @@ export const Search = styled(BiSearchAlt)`
 function SearchForm() {
   const history = useHistory();
   const [query, setQuery] = useState('');
-
   const { searchData, setSearchData } = useContext(SearchContext);
-
   const { data, loading, error, results } = useFetch(FETCH_QUERY(1, query));
+  const { queryData, setQueryData } = useContext(QueryContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchData(data);
+    setQueryData(results);
+    console.log(results);
     setQuery('');
 
     history.push('/search');

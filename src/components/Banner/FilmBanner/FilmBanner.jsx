@@ -10,7 +10,6 @@ import {
   StyledBigBody,
 } from '../HomeBanner/Banner.Styles';
 import movieTrailer from 'movie-trailer';
-import { AnimateSharedLayout } from 'framer-motion';
 
 function Banner({
   opacity,
@@ -21,12 +20,14 @@ function Banner({
   trailerURL,
   setTrailerURL,
   setTrailerError,
+  watchClick,
 }) {
   const { xl } = breakpoints;
 
   //get youtube video id by passing movie title into movieTrailer func
 
   const handleClick = () => {
+    watchClick();
     setTrailerError(false);
     if (trailerURL) {
       setTrailerURL('');
@@ -121,7 +122,7 @@ function Banner({
                 initial="hidden"
                 animate="visible"
                 bottom="1"
-              >{`${movie.overview?.substring(0, 480)}...`}</P>
+              >{`${movie.overview?.substring(0, 480)}`}</P>
               {!error && (
                 <StyledBigBody
                   style={{

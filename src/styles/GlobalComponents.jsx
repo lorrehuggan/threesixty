@@ -12,7 +12,7 @@ export const Wrapper = styled(motion.div)`
   flex-direction: ${({ direction }) => (direction ? direction : 'column')};
   align-items: ${({ align }) => (align ? align : 'left')};
   justify-content: ${({ justify }) => (justify ? justify : 'left')};
-  overflow: hidden;
+  overflow: ${({ hidden }) => (hidden ? '' : 'hidden')};
   border-radius: ${({ radius }) => (radius ? `${radius}px` : 0)};
   position: ${({ pos }) => (pos ? pos : '')};
   top: ${({ top }) => (top ? `${top}rem` : '')};
@@ -141,6 +141,7 @@ export const P = styled(motion.p)`
   margin-top: ${({ top }) => (top ? `${top}rem` : 0)};
   text-transform: ${({ uppercase }) => uppercase && 'uppercase'};
   cursor: ${({ cursor }) => cursor && 'pointer'};
+  padding: ${({ padding }) => (padding ? `${padding}rem` : '')};
   transition: color 0.3s ease;
   &:hover {
     color: ${({ hover, theme }) => hover && theme.warning};

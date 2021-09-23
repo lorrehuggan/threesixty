@@ -1,10 +1,9 @@
-import React from 'react';
-import { MovieCard, BottomGradient } from './Card.styles';
-import { BigBody, H5, Image, Wrapper } from '../../styles/GlobalComponents';
+import React, { useState } from 'react';
+import { MovieCard, BottomGradient, TopGradient } from './Card.styles';
+import { H5, Image } from '../../styles/GlobalComponents';
 import { imgPath } from '../../utils/request';
 import { styledTheme } from '../../styles/Mixins';
 import { motion } from 'framer-motion';
-import { AnimateSharedLayout } from 'framer-motion';
 
 const noImage = {
   backgroundColor: styledTheme.primary,
@@ -16,19 +15,19 @@ const noImage = {
   textAlign: 'center',
 };
 
-const cardVar = {
-  visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.5 } },
-  hidden: { opacity: 0, y: -10 },
-};
-
 function Card({ title, poster, loading, grid }) {
+  const [hover, setHover] = useState(false);
+
   return (
     <motion.div>
       <MovieCard
+        onHoverStart={() => setHover(true)}
+        onHoverEnd={() => setHover(false)}
         whileHover={{
-          filter: 'brightness(1.15)',
+          filter: 'brightness(1.2)',
           y: -16,
           transition: { duration: '0.4', ease: 'easeOut' },
+          boxShadow: '15px 15px 19px #060606',
         }}
         grid={grid}
       >
@@ -48,7 +47,7 @@ function Card({ title, poster, loading, grid }) {
           />
         )}
 
-        <BottomGradient />
+        <BottomGradient hover={hover} />
       </MovieCard>
     </motion.div>
   );

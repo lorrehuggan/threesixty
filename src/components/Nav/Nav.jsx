@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { Wrapper, H5, BigBody, Image } from '../../styles/GlobalComponents';
-import { breakpoints, styledTheme, flex } from '../../styles/Mixins';
+import { Wrapper, H5, BigBody } from '../../styles/GlobalComponents';
+import { breakpoints, styledTheme } from '../../styles/Mixins';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/system';
 import SearchForm from '../Search/SearchForm';

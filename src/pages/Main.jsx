@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Wrapper, H1, BigBody, H5 } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import Banner from '../components/Banner/HomeBanner/Banner';
-import MovieRow, { Arrow, ArrowUp } from '../components/MovieRow/MovieRow';
-import { Link, useParams } from 'react-router-dom';
+import MovieRow, { ArrowUp } from '../components/MovieRow/MovieRow';
+import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
 import { FETCH_ID, FETCH_GENRE, FETCH_CATEGORIES } from '../utils/request';
 import useFetch from '../hooks/useFetch';
@@ -42,7 +42,7 @@ function Main() {
   };
 
   return (
-    <Wrapper width={xl} align="center">
+    <Wrapper hidden width={xl} align="center">
       <Banner
         opacity="0.35"
         hOpacity="0.5"

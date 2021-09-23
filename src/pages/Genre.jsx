@@ -4,7 +4,7 @@ import { FETCH_CATEGORIES, FETCH_GENRE } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import Card from '../components/Card/Card';
 import { breakpoints, styledTheme } from '../styles/Mixins';
-import { H1, BigBody, Wrapper, H4 } from '../styles/GlobalComponents';
+import { H1, Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
 import { SkeletonCard } from '../components/Card/Card.styles';
@@ -23,14 +23,13 @@ function Genre() {
   const { id } = useParams();
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
-  const { data, loading, setLoading, error, results } = useFetch(
+  const { data, loading, error, results } = useFetch(
     FETCH_CATEGORIES(id, page)
   );
   const [genre, setGenre] = useState({});
 
   useEffect(() => {
     setNumOfPages(results?.total_pages);
-    console.log(numOfPages);
   }, [results, numOfPages]);
 
   useEffect(() => {
@@ -44,7 +43,7 @@ function Genre() {
       .then((data) => {
         setGenre(
           data.genres?.filter((cat) => {
-            return cat.id == id;
+            return cat.id.toString() === id;
           })
         );
       })
@@ -95,17 +94,31 @@ function Genre() {
         overflow: 'visible',
       }}
     >
-      <H1
-        variants={headerVar}
-        initial="hidden"
-        animate="visible"
-        transition={{
-          duration: '0.7',
-        }}
-        style={{ marginBottom: '1rem' }}
-      >
-        {loading ? 'Loading...' : genre[0]?.name}
-      </H1>
+      {error ? (
+        <H1
+          variants={headerVar}
+          initial="hidden"
+          animate="visible"
+          transition={{
+            duration: '0.7',
+          }}
+          style={{ marginBottom: '1rem' }}
+        >
+          Error
+        </H1>
+      ) : (
+        <H1
+          variants={headerVar}
+          initial="hidden"
+          animate="visible"
+          transition={{
+            duration: '0.7',
+          }}
+          style={{ marginBottom: '1rem' }}
+        >
+          {loading ? 'Loading...' : genre[0]?.name}
+        </H1>
+      )}
       <Grid>
         {loading &&
           skeletonArray.map(() => {
@@ -128,7 +141,7 @@ function Genre() {
       <Wrapper
         justify="center"
         align="center"
-        width={xl}
+        width={md}
         style={{
           marginBottom: '4rem',
           marginTop: '4rem',

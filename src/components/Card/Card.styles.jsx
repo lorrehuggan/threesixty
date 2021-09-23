@@ -27,6 +27,21 @@ export const BottomGradient = styled.div`
   bottom: 0;
   left: 0;
   z-index: 0;
+  opacity: ${({ hover }) => (hover ? '0' : '1')};
+  transition: opacity 0.6s ease;
+`;
+export const TopGradient = styled.div`
+  background-image: linear-gradient(
+    to bottom,
+    ${({ theme }) => theme.textSecondary},
+    transparent
+  );
+  width: 100%;
+  height: 5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
 `;
 
 export const SkeletonCard = styled.div`

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { FETCH_CATEGORIES, FETCH_GENRE } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import Card from '../components/Card/Card';
-import { breakpoints, styledTheme } from '../styles/Mixins';
+import { breakpoints, styledTheme, media } from '../styles/Mixins';
 import { H1, Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
@@ -13,13 +13,18 @@ import { motion } from 'framer-motion';
 export const Grid = styled(motion.div)`
   width: ${breakpoints.xl};
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(${({ count }) => count}, 1fr);
   grid-template-rows: auto;
   grid-gap: 0.5rem;
+
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
+    height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
 `;
 
 function Genre() {
-  const { xl, md } = breakpoints;
+  const { xl, md, lg } = breakpoints;
   const { id } = useParams();
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
@@ -27,6 +32,24 @@ function Genre() {
     FETCH_CATEGORIES(id, page)
   );
   const [genre, setGenre] = useState({});
+  const [width, setWidth] = useState('');
+  const [movieAmount, setMovieAmount] = useState(4);
+
+  useEffect(() => {
+    if (width < xl) {
+      setMovieAmount(5);
+    } else {
+      setMovieAmount(4);
+    }
+  }, [width, xl]);
+
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+  });
 
   useEffect(() => {
     setNumOfPages(results?.total_pages);
@@ -93,6 +116,7 @@ function Genre() {
       style={{
         overflow: 'visible',
       }}
+      lgWidth={lg}
     >
       {error ? (
         <H1
@@ -103,6 +127,7 @@ function Genre() {
             duration: '0.7',
           }}
           style={{ marginBottom: '1rem' }}
+          lgFontSize={styledTheme.headline}
         >
           Error
         </H1>
@@ -115,11 +140,12 @@ function Genre() {
             duration: '0.7',
           }}
           style={{ marginBottom: '1rem' }}
+          lgFontSize={styledTheme.headline}
         >
           {loading ? 'Loading...' : genre[0]?.name}
         </H1>
       )}
-      <Grid>
+      <Grid count={movieAmount}>
         {loading &&
           skeletonArray.map(() => {
             return <SkeletonCard />;

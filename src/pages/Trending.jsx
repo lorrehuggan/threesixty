@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FETCH_TRENDING } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import Card from '../components/Card/Card';
-import { breakpoints, styledTheme } from '../styles/Mixins';
+import { breakpoints, styledTheme, media } from '../styles/Mixins';
 import { H1, Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
@@ -13,16 +13,41 @@ import { motion } from 'framer-motion';
 export const Grid = styled.div`
   width: ${breakpoints.xl};
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  grid-template-columns: repeat(${({ count }) => count}, 1fr);
+
   grid-template-rows: auto;
   grid-gap: 0.5rem;
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
+    height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
 `;
 
 function Trending() {
-  const { xl, md } = breakpoints;
+  const { xl, md, lg } = breakpoints;
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
   const { data, loading, error, results } = useFetch(FETCH_TRENDING(page));
+  const [genre, setGenre] = useState({});
+  const [width, setWidth] = useState('');
+  const [movieAmount, setMovieAmount] = useState(4);
+
+  useEffect(() => {
+    if (width < xl) {
+      setMovieAmount(5);
+    } else {
+      setMovieAmount(4);
+    }
+  }, [width, xl]);
+
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+  });
 
   useEffect(() => {
     setNumOfPages(results?.total_pages);
@@ -62,6 +87,7 @@ function Trending() {
       style={{
         overflow: 'visible',
       }}
+      lgWidth={lg}
     >
       <H1
         variants={headerVar}
@@ -71,10 +97,11 @@ function Trending() {
           duration: '0.7',
         }}
         style={{ marginBottom: '2rem' }}
+        lgFontSize={styledTheme.headline}
       >
         {error ? 'Error' : 'Trending'}
       </H1>
-      <Grid>
+      <Grid count={movieAmount}>
         {loading &&
           skeletonArray.map(() => {
             return <SkeletonCard />;

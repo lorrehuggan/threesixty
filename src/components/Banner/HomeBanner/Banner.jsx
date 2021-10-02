@@ -27,7 +27,7 @@ function Banner({
   const { xl } = breakpoints;
   const [bannerUrl, setBannerUrl] = useState(null);
   const history = useHistory();
-  const [currentHero, setCurrentHero] = useState({ a: 9, b: 10 });
+  const [currentHero, setCurrentHero] = useState({ a: 1, b: 2 });
   const { openMenu, setOpenMenu } = useContext(MenuContext);
 
   useEffect(() => {

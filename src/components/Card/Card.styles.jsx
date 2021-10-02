@@ -54,4 +54,8 @@ export const SkeletonCard = styled.div`
   border-radius: 4px;
   background-color: ${({ theme }) => theme.textSecondary};
   margin-top: ${({ grid }) => (grid ? '1rem' : '')};
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}rem` : '')};
+    height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
 `;

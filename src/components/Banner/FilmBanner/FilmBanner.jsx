@@ -1,5 +1,5 @@
 import React from 'react';
-import { breakpoints } from '../../../styles/Mixins';
+import { breakpoints, styledTheme } from '../../../styles/Mixins';
 import { imgPath } from '../../../utils/request';
 import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
 import {
@@ -22,7 +22,7 @@ function Banner({
   setTrailerError,
   watchClick,
 }) {
-  const { xl } = breakpoints;
+  const { xl, lg } = breakpoints;
 
   //get youtube video id by passing movie title into movieTrailer func
 
@@ -86,6 +86,8 @@ function Banner({
       height="38"
       radius="2"
       style={{ cursor: 'pointer' }}
+      lgWidth={lg}
+      lgHeight="34"
     >
       {error && <H1>Oops Something Went Wrong...</H1>}
       {movie && (
@@ -97,7 +99,12 @@ function Banner({
         >
           <BottomGradient top />
 
-          <H1 variants={textVar} initial="hidden" animate="visible">
+          <H1
+            variants={textVar}
+            initial="hidden"
+            animate="visible"
+            lgFontSize={styledTheme.header}
+          >
             {loading ? 'Loading...' : handleTitle(30)}
           </H1>
           <StyledWrapper
@@ -125,6 +132,7 @@ function Banner({
               >{`${movie.overview?.substring(0, 480)}`}</P>
               {!error && (
                 <StyledBigBody
+                  lgWidth="30"
                   style={{
                     display: 'flex',
                     justifyContent: 'center',

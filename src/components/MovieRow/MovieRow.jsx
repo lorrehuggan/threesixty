@@ -108,11 +108,11 @@ function MovieRow({ request, title, id }) {
           <>
             {error &&
               skeletonArray.map(() => {
-                return <SkeletonCard />;
+                return <SkeletonCard lgWidth="12" lgHeight="22" />;
               })}
             {loading &&
               skeletonArray.map(() => {
-                return <SkeletonCard />;
+                return <SkeletonCard lgWidth="12" lgHeight="22" />;
               })}
             {movies &&
               movies?.slice(movieAmount.a, movieAmount.b).map((movie, i) => {

@@ -41,7 +41,7 @@ export const GenreContainer = styled.div`
 `;
 
 function Film() {
-  const { xl } = breakpoints;
+  const { xl, lg } = breakpoints;
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(true);
@@ -55,6 +55,24 @@ function Film() {
   const [genreLoading, setGenreLoading] = useState({});
   const [genreError, setGenreError] = useState({});
   const [movieGenre, setMovieGenre] = useState({});
+  const [width, setWidth] = useState('');
+  const [movieAmount, setMovieAmount] = useState({ a: 0, b: 4 });
+
+  useEffect(() => {
+    if (width < xl) {
+      setMovieAmount({ a: 0, b: 5 });
+    } else {
+      setMovieAmount({ a: 0, b: 4 });
+    }
+  }, [width, xl]);
+
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+  });
 
   useEffect(() => {
     fetch(FETCH_GENRE())
@@ -171,7 +189,7 @@ function Film() {
   };
 
   return (
-    <Wrapper width={xl} align="center">
+    <Wrapper width={xl} align="center" lgWidth={lg} hidden>
       <FilmBanner
         movie={movie}
         loading={loading}
@@ -236,6 +254,7 @@ function Film() {
         direction="row"
         align="center"
         justifyContent="left"
+        lgWidth={lg}
       >
         <FilmIcon play={trailerURL} />
         <P
@@ -265,6 +284,7 @@ function Film() {
           justify="center"
           align="center"
           pos="relative"
+          lgWidth={lg}
         >
           {trailerError ? (
             <H5>Sorry we cant find what your looking for</H5>
@@ -293,10 +313,12 @@ function Film() {
       <Wrapper style={{ marginBottom: '1rem', marginTop: '1rem' }}>
         {recommendation && (
           <Wrapper
+            hidden
             direction="row"
             justify="space-between"
             align="center"
             width={xl}
+            lgWidth={lg}
             style={{ marginBottom: '2rem', marginTop: '1rem' }}
           >
             {recError ? <H4>Error</H4> : <H4>Recommended</H4>}
@@ -304,7 +326,7 @@ function Film() {
         )}
         <GridContainer direction="row">
           {recommendation &&
-            recommendation?.slice(0, 4).map((rec) => {
+            recommendation?.slice(movieAmount.a, movieAmount.b).map((rec) => {
               return (
                 <Link
                   onClick={() => {

@@ -30,6 +30,8 @@ function Card({ title, poster, loading, grid }) {
           boxShadow: '15px 15px 19px #060606',
         }}
         grid={grid}
+        lgWidth="12"
+        lgHeight="22"
       >
         {!poster && (
           <div style={noImage}>

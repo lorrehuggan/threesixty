@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Wrapper, BigBody } from '../../../styles/GlobalComponents';
-import { flex } from '../../../styles/Mixins';
+import { flex, media } from '../../../styles/Mixins';
 
 export const Poster = styled.div`
   position: relative;
@@ -60,6 +60,9 @@ export const StyledBigBody = styled(BigBody)`
     background-color: #80808099;
     box-shadow: 1.4px 4.2px 5.3px rgba(0, 0, 0, 0.048),
       21px 63px 80px rgba(0, 0, 0, 0.12);
+  }
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}%` : '')};
   }
 `;
 

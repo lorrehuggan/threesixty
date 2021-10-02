@@ -24,8 +24,26 @@ export const ArrowUp = styled(FiArrowUpCircle)`
 function MovieRow({ request, title, id }) {
   const [url, setUrl] = useState('');
   const { data: movies, loading, error } = useFetch(url);
-  const { xl } = breakpoints;
+  const { xl, lg } = breakpoints;
   const { openMenu, setOpenMenu } = useContext(MenuContext);
+  const [width, setWidth] = useState('');
+  const [movieAmount, setMovieAmount] = useState({ a: 0, b: 4 });
+
+  useEffect(() => {
+    if (width < xl) {
+      setMovieAmount({ a: 0, b: 5 });
+    } else {
+      setMovieAmount({ a: 0, b: 4 });
+    }
+  }, [width, xl]);
+
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+  });
 
   useEffect(() => {
     setUrl(request);
@@ -59,6 +77,7 @@ function MovieRow({ request, title, id }) {
           align="center"
           width={xl}
           style={{ marginBottom: '1rem' }}
+          lgWidth={lg}
         >
           <H5 left="2" color={styledTheme.warning} weight="800">
             {title}
@@ -96,7 +115,7 @@ function MovieRow({ request, title, id }) {
                 return <SkeletonCard />;
               })}
             {movies &&
-              movies?.slice(0, 4).map((movie, i) => {
+              movies?.slice(movieAmount.a, movieAmount.b).map((movie, i) => {
                 return (
                   <motion.div
                     variants={gridVar}

@@ -16,4 +16,5 @@ body {
   color: #f8f9fa;
   font-family: 'Inter', sans-serif;
   position: relative;
+  overflow-x: hidden;
 }

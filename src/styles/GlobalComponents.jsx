@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { flex, styledTheme } from '../styles/Mixins';
 import { motion } from 'framer-motion';
-import { breakpoints } from '../styles/Mixins';
+import { breakpoints, media } from '../styles/Mixins';
 
 export const Wrapper = styled(motion.div)`
   padding: ${({ padding }) => (padding ? `${padding}rem` : '0rem')};
@@ -19,6 +19,10 @@ export const Wrapper = styled(motion.div)`
   right: ${({ right }) => (right ? `${right}rem` : '')};
   bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : '')};
   left: ${({ left }) => (left ? `${left}rem` : '')};
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
+    height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
 `;
 
 export const Container = styled.div`
@@ -48,6 +52,9 @@ export const H1 = styled(motion.h1)`
   transition: color 0.3s ease;
   &:hover {
     color: ${({ hover, theme }) => hover && theme.warning};
+  }
+  ${media.large} {
+    font-size: ${({ lgFontSize }) => (lgFontSize ? lgFontSize : '')};
   }
 `;
 export const H2 = styled.h2`
@@ -123,6 +130,9 @@ export const H5 = styled(motion.h5)`
   transition: color 0.3s ease;
   &:hover {
     color: ${({ hover, theme }) => hover && theme.warning};
+  }
+  ${media.large} {
+    font-size: ${({ lgFontSize }) => (lgFontSize ? lgFontSize : '')};
   }
 `;
 

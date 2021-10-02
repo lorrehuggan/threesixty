@@ -4,7 +4,7 @@ import { breakpoints } from '../../styles/Mixins';
 import YouTube from 'react-youtube';
 
 function Trailer({ movie, loading, error, trailerURL }) {
-  const { xl } = breakpoints;
+  const { xl, lg } = breakpoints;
 
   const opts = {
     width: '100%',
@@ -20,7 +20,11 @@ function Trailer({ movie, loading, error, trailerURL }) {
   };
 
   return (
-    <Wrapper width={xl} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
+    <Wrapper
+      lgWidth={lg}
+      width={xl}
+      style={{ marginTop: '2rem', marginBottom: '1rem' }}
+    >
       <YouTube videoId={trailerURL} opts={opts} />
     </Wrapper>
   );

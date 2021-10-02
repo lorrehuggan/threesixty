@@ -9,7 +9,7 @@ import { FETCH_ID, FETCH_GENRE, FETCH_CATEGORIES } from '../utils/request';
 import useFetch from '../hooks/useFetch';
 
 function Main() {
-  const { xl } = breakpoints;
+  const { xl, lg, md } = breakpoints;
   const { id } = useParams();
   const [trailerURL, setTrailerURL] = useState('');
   const [trailerError, setTrailerError] = useState(false);
@@ -42,7 +42,7 @@ function Main() {
   };
 
   return (
-    <Wrapper hidden width={xl} align="center">
+    <Wrapper hidden width={xl} align="center" lgWidth={lg}>
       <Banner
         opacity="0.35"
         hOpacity="0.5"
@@ -59,7 +59,7 @@ function Main() {
           trailerURL={trailerURL}
         />
       )}
-      {trailerError && <H1>Error</H1>}
+      {trailerError && <H1 lgFontSize={styledTheme.headline}>Error</H1>}
 
       {genre &&
         genre?.map((g) => {
@@ -78,6 +78,7 @@ function Main() {
         align="center"
         width={xl}
         style={{ marginBottom: '5rem' }}
+        lgWidth={lg}
       >
         <H5 onClick={toTop} cursor color={styledTheme.warning} weight="800">
           Back To Top

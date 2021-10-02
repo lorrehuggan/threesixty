@@ -7,7 +7,7 @@ import SearchForm from '../Search/SearchForm';
 import { MenuContext } from '../../contexts/MenuContext';
 
 function Nav() {
-  const { xl } = breakpoints;
+  const { xl, md, sm, lg } = breakpoints;
   const { openMenu, setOpenMenu } = useContext(MenuContext);
 
   const handleMenu = () => {
@@ -31,10 +31,15 @@ function Nav() {
       align="center"
       height="8"
       direction="row"
+      lgWidth={lg}
     >
       <Wrapper margin="0">
         <Link onClick={handleClick} to="/">
-          <H5 font="header" color={styledTheme.warning}>
+          <H5
+            font="header"
+            color={styledTheme.warning}
+            lgFontSize={styledTheme.bodyBig}
+          >
             ThreeSixtyTrailers
           </H5>
         </Link>

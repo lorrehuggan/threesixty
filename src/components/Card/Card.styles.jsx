@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { flex } from '../../styles/Mixins';
+import { flex, media } from '../../styles/Mixins';
 
 export const MovieCard = styled(motion.div)`
   position: relative;
@@ -13,6 +13,10 @@ export const MovieCard = styled(motion.div)`
   opacity: 1;
   overflow: hidden;
   margin-top: ${({ grid }) => (grid ? '1rem' : '')};
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}rem` : '')};
+    height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
 `;
 
 export const BottomGradient = styled.div`

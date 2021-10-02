@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { MenuContext } from '../../../contexts/MenuContext';
 import { useHistory } from 'react-router-dom';
-import { breakpoints } from '../../../styles/Mixins';
+import { breakpoints, styledTheme } from '../../../styles/Mixins';
 import useFetch from '../../../hooks/useFetch';
 import { FETCH_TRENDING, imgPath } from '../../../utils/request';
 import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
@@ -24,7 +24,7 @@ function Banner({
 }) {
   const [url, setUrl] = useState(null);
   const { data: movies, loading, error } = useFetch(url);
-  const { xl } = breakpoints;
+  const { xl, lg } = breakpoints;
   const [bannerUrl, setBannerUrl] = useState(null);
   const history = useHistory();
   const [currentHero, setCurrentHero] = useState({ a: 1, b: 2 });
@@ -95,6 +95,8 @@ function Banner({
       height="38"
       radius="2"
       style={{ cursor: 'pointer' }}
+      lgWidth={lg}
+      lgHeight="34"
     >
       {error && <H1>Error</H1>}
       {movies &&
@@ -108,7 +110,12 @@ function Banner({
               onClick={() => handleClick(movie)}
             >
               {openMenu && <BottomGradient top />}
-              <H1 variants={textVar} initial="hidden" animate="visible">
+              <H1
+                lgFontSize={styledTheme.heroHeadline}
+                variants={textVar}
+                initial="hidden"
+                animate="visible"
+              >
                 {loading
                   ? 'Loading...'
                   : movie.title?.substring(0, 35) ||
@@ -153,6 +160,7 @@ function Banner({
                     justify="left"
                   >
                     <StyledBigBody
+                      lgWidth="30"
                       style={{
                         display: 'flex',
                         justifyContent: 'center',

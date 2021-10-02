@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Wrapper, H1, Grid } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { SearchContext } from '../contexts/SearchContext';
@@ -9,9 +9,27 @@ import { QueryContext } from '../contexts/QueryContext';
 import Pagination from '@mui/material/Pagination';
 
 function Search({ page, setPage }) {
-  const { xl } = breakpoints;
+  const { xl, lg } = breakpoints;
   const { searchData: data } = useContext(SearchContext);
   const { queryData, setQueryData } = useContext(QueryContext);
+  const [width, setWidth] = useState('');
+  const [movieAmount, setMovieAmount] = useState(4);
+
+  useEffect(() => {
+    if (window.innerWidth < xl) {
+      setMovieAmount(5);
+    } else {
+      setMovieAmount(4);
+    }
+  }, [width, xl]);
+
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+  });
 
   const gridVar = {
     visible: {
@@ -34,9 +52,12 @@ function Search({ page, setPage }) {
       style={{
         overflow: 'visible',
       }}
+      lgWidth={lg}
     >
-      <H1 style={{ marginBottom: '2rem' }}>Search Results</H1>
-      <Grid>
+      <H1 style={{ marginBottom: '2rem' }} lgFontSize={styledTheme.headline}>
+        Search Results
+      </H1>
+      <Grid count={movieAmount}>
         {data?.map((d, i) => (
           <motion.div
             variants={gridVar}
@@ -61,6 +82,7 @@ function Search({ page, setPage }) {
           padding: '1rem',
           borderRadius: '4px',
         }}
+        lgWidth={lg}
       >
         <Pagination
           onChange={handlePagination}

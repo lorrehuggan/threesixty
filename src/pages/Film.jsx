@@ -59,7 +59,7 @@ function Film() {
   const [movieAmount, setMovieAmount] = useState({ a: 0, b: 4 });
 
   useEffect(() => {
-    if (width < xl) {
+    if (window.innerWidth < xl) {
       setMovieAmount({ a: 0, b: 5 });
     } else {
       setMovieAmount({ a: 0, b: 4 });

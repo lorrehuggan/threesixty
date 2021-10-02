@@ -29,17 +29,17 @@ function MovieRow({ request, title, id }) {
   const [width, setWidth] = useState('');
   const [movieAmount, setMovieAmount] = useState({ a: 0, b: 4 });
 
-  useEffect(() => {
-    if (width < xl) {
-      setMovieAmount({ a: 0, b: 5 });
-    } else {
-      setMovieAmount({ a: 0, b: 4 });
-    }
-  }, [width, xl]);
-
   const updateDimensions = () => {
     setWidth(window.innerWidth);
   };
+
+  useEffect(() => {
+    if (window.innerWidth >= xl) {
+      setMovieAmount({ a: 0, b: 4 });
+    } else {
+      setMovieAmount({ a: 0, b: 5 });
+    }
+  }, [width, xl]);
 
   useEffect(() => {
     window.addEventListener('resize', updateDimensions);

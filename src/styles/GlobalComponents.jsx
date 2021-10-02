@@ -34,6 +34,10 @@ export const Container = styled.div`
   flex-direction: ${({ direction }) => (direction ? direction : 'left')};
   align-items: ${({ align }) => (align ? align : 'left')};
   justify-content: ${({ justify }) => (justify ? justify : 'left')};
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
+    height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
 `;
 
 export const H1 = styled(motion.h1)`
@@ -176,6 +180,9 @@ export const BigBody = styled(motion.span)`
   &:hover {
     color: ${({ hover, theme }) => hover && theme.warning};
   }
+  ${media.large} {
+    font-size: ${({ lgFontSize }) => (lgFontSize ? lgFontSize : '')};
+  }
 `;
 
 export const Image = styled(motion.img)`
@@ -219,9 +226,13 @@ export const MorphButton = styled.button`
 export const Grid = styled.div`
   width: ${breakpoints.xl};
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(${({ count }) => count}, 1fr);
   grid-template-rows: auto;
   grid-gap: 0.5rem;
+  ${media.large} {
+    width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
+    height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
 `;
 
 export const Button = styled.button`

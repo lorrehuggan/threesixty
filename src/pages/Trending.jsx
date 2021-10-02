@@ -34,7 +34,7 @@ function Trending() {
   const [movieAmount, setMovieAmount] = useState(4);
 
   useEffect(() => {
-    if (width < xl) {
+    if (window.innerWidth < xl) {
       setMovieAmount(5);
     } else {
       setMovieAmount(4);
@@ -130,6 +130,7 @@ function Trending() {
           padding: '2rem',
           borderRadius: '8px',
         }}
+        lgWidth={lg}
       >
         <Pagination
           onChange={handlePagination}

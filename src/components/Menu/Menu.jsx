@@ -1,48 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
 import { BigBody } from '../../styles/GlobalComponents';
 import { FETCH_GENRE } from '../../utils/request';
 import { Link } from 'react-router-dom';
 import { MenuContext } from '../../contexts/MenuContext';
-import { breakpoints } from '../../styles/Mixins';
-
-export const Container = styled.div`
-  width: ${({ width }) => width && `${width}px`};
-  height: ${({ open }) => (open ? '15rem' : '0')};
-  margin: 0rem auto;
-  opacity: ${({ open }) => (open ? '1' : '0')};
-  pointer-events: ${({ open }) => (open ? 'visible' : 'none')};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  flex-direction: column;
-  position: relative;
-  transition: height 0.3s ease;
-`;
-
-export const Wrap = styled.div`
-  width: 100%;
-`;
-
-export const Item = styled.span`
-  font-size: 18px;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin: 0.5rem 0.5rem;
-  flex: wrap;
-  transition: color 0.3s ease;
-  &:hover {
-    color: ${({ theme }) => theme.success};
-  }
-`;
-
-const styledWrap = {
-  display: 'grid',
-  gridGap: '1rem',
-  gridTemplateColumns: 'repeat(6, 1fr)',
-  width: '100%',
-};
+import { breakpoints, styledTheme } from '../../styles/Mixins';
+import { Container, Wrap } from './Menu.styles';
 
 function Menu() {
   const [data, setData] = useState(null);
@@ -50,7 +12,7 @@ function Menu() {
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
   const { openMenu, setOpenMenu } = useContext(MenuContext);
-  const { xl } = breakpoints;
+  const { xl, lg } = breakpoints;
 
   useEffect(() => {
     fetch(FETCH_GENRE())
@@ -91,8 +53,8 @@ function Menu() {
   };
 
   return (
-    <Container open={openMenu} width={xl}>
-      <Wrap style={styledWrap}>
+    <Container open={openMenu} width={xl} lgWidth={lg}>
+      <Wrap>
         {data?.map((d) => {
           return (
             <Link onClick={handleClick} to={`/genre/${d.id}`}>
@@ -109,6 +71,7 @@ function Menu() {
                 space="1.25"
                 hover
                 cursor
+                lgFontSize={styledTheme.body}
               >
                 {`#${d.name}`}
               </BigBody>

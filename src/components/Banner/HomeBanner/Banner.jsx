@@ -97,6 +97,7 @@ function Banner({
       style={{ cursor: 'pointer' }}
       lgWidth={lg}
       lgHeight="34"
+      mdWidth="980"
     >
       {error && <H1>Error</H1>}
       {movies &&

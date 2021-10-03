@@ -189,7 +189,7 @@ function Film() {
   };
 
   return (
-    <Wrapper width={xl} align="center" lgWidth={lg} hidden>
+    <Wrapper width={xl} align="center" lgWidth={lg} hidden mdWidth="980">
       <FilmBanner
         movie={movie}
         loading={loading}
@@ -210,6 +210,7 @@ function Film() {
         direction="row"
         align="center"
         justifyContent="left"
+        mdWidth="980"
       >
         {movie.production_companies?.slice(0, 3).map((pc) => (
           <P weight="700" right="0.25">
@@ -226,6 +227,7 @@ function Film() {
         direction="row"
         align="center"
         justifyContent="left"
+        mdWidth="980"
       >
         {movie.genres?.map((mg) => (
           <Link onClick={cardClick} to={`/genre/${mg.id}`}>
@@ -255,6 +257,7 @@ function Film() {
         align="center"
         justifyContent="left"
         lgWidth={lg}
+        mdWidth="980"
       >
         <FilmIcon play={trailerURL} />
         <P
@@ -285,6 +288,8 @@ function Film() {
           align="center"
           pos="relative"
           lgWidth={lg}
+          mdWidth="980"
+          mdHeight="30"
         >
           {trailerError ? (
             <H5>Sorry we cant find what your looking for</H5>
@@ -319,6 +324,7 @@ function Film() {
             align="center"
             width={xl}
             lgWidth={lg}
+            mdWidth="980"
             style={{ marginBottom: '2rem', marginTop: '1rem' }}
           >
             {recError ? <H4>Error</H4> : <H4>Recommended</H4>}

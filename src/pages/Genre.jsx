@@ -36,7 +36,7 @@ function Genre() {
   const [movieAmount, setMovieAmount] = useState(4);
 
   useEffect(() => {
-    if (window.innerWidth < xl) {
+    if (window.innerWidth <= xl) {
       setMovieAmount(5);
     } else {
       setMovieAmount(4);
@@ -117,6 +117,7 @@ function Genre() {
         overflow: 'visible',
       }}
       lgWidth={lg}
+      mdWidth="980"
     >
       {error ? (
         <H1
@@ -176,6 +177,7 @@ function Genre() {
           borderRadius: '4px',
         }}
         lgWidth={lg}
+        mdWidth="980"
       >
         <Pagination
           onChange={handlePagination}

@@ -23,6 +23,10 @@ export const Wrapper = styled(motion.div)`
     width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
     height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
   }
+  ${media.laptop} {
+    width: ${({ mdWidth }) => (mdWidth ? `${mdWidth}px` : '')};
+    height: ${({ mdHeight }) => (mdHeight ? `${mdHeight}rem` : '')};
+  }
 `;
 
 export const Container = styled.div`
@@ -37,6 +41,10 @@ export const Container = styled.div`
   ${media.large} {
     width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
     height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
+  }
+  ${media.laptop} {
+    width: ${({ mdWidth }) => (mdWidth ? `${mdWidth}px` : '')};
+    height: ${({ mdHeight }) => (mdHeight ? `${mdHeight}rem` : '')};
   }
 `;
 
@@ -138,6 +146,9 @@ export const H5 = styled(motion.h5)`
   ${media.large} {
     font-size: ${({ lgFontSize }) => (lgFontSize ? lgFontSize : '')};
   }
+  ${media.laptop} {
+    font-size: ${({ mdFontSize }) => (mdFontSize ? mdFontSize : '')};
+  }
 `;
 
 export const P = styled(motion.p)`
@@ -182,6 +193,9 @@ export const BigBody = styled(motion.span)`
   }
   ${media.large} {
     font-size: ${({ lgFontSize }) => (lgFontSize ? lgFontSize : '')};
+  }
+  ${media.laptop} {
+    font-size: ${({ mdFontSize }) => (mdFontSize ? mdFontSize : '')};
   }
 `;
 

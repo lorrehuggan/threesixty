@@ -32,6 +32,7 @@ function Nav() {
       height="8"
       direction="row"
       lgWidth={lg}
+      mdWidth="980"
     >
       <Wrapper margin="0">
         <Link onClick={handleClick} to="/">
@@ -53,17 +54,38 @@ function Nav() {
         }}
       >
         <Link onClick={handleClick} to="/">
-          <BigBody uppercase weight="700" cursor hover space="5">
+          <BigBody
+            uppercase
+            weight="700"
+            cursor
+            hover
+            space="5"
+            mdFontSize={styledTheme.body}
+          >
             Home
           </BigBody>
         </Link>
         <Link onClick={handleClick} to="/trending">
-          <BigBody uppercase weight="700" cursor hover space="5">
+          <BigBody
+            uppercase
+            weight="700"
+            cursor
+            hover
+            space="5"
+            mdFontSize={styledTheme.body}
+          >
             Trending
           </BigBody>
         </Link>
         <Link onClick={handleClick} to={'/genre/16'}>
-          <BigBody uppercase weight="700" cursor hover space="5">
+          <BigBody
+            uppercase
+            weight="700"
+            cursor
+            hover
+            space="5"
+            mdFontSize={styledTheme.body}
+          >
             Animation
           </BigBody>
         </Link>
@@ -75,6 +97,7 @@ function Nav() {
           hover
           space="5"
           color={openMenu ? styledTheme.error : ''}
+          mdFontSize={styledTheme.body}
         >
           {openMenu ? 'Close' : 'Menu'}
         </BigBody>

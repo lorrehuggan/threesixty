@@ -17,6 +17,10 @@ export const MovieCard = styled(motion.div)`
     width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}rem` : '')};
     height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
   }
+  ${media.laptop} {
+    width: ${({ mdWidth }) => (mdWidth ? `${mdWidth}rem` : '')};
+    height: ${({ mdHeight }) => (mdHeight ? `${mdHeight}rem` : '')};
+  }
 `;
 
 export const BottomGradient = styled.div`

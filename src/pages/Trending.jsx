@@ -34,7 +34,7 @@ function Trending() {
   const [movieAmount, setMovieAmount] = useState(4);
 
   useEffect(() => {
-    if (window.innerWidth < xl) {
+    if (window.innerWidth <= xl) {
       setMovieAmount(5);
     } else {
       setMovieAmount(4);
@@ -88,6 +88,7 @@ function Trending() {
         overflow: 'visible',
       }}
       lgWidth={lg}
+      mdWidth="980"
     >
       <H1
         variants={headerVar}
@@ -131,6 +132,7 @@ function Trending() {
           borderRadius: '8px',
         }}
         lgWidth={lg}
+        mdWidth="980"
       >
         <Pagination
           onChange={handlePagination}

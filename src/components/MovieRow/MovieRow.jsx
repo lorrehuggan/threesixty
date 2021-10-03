@@ -78,6 +78,7 @@ function MovieRow({ request, title, id }) {
           width={xl}
           style={{ marginBottom: '1rem' }}
           lgWidth={lg}
+          mdWidth="980"
         >
           <H5 left="2" color={styledTheme.warning} weight="800">
             {title}

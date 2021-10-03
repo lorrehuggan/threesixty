@@ -32,6 +32,8 @@ function Card({ title, poster, loading, grid }) {
         grid={grid}
         lgWidth="12.35"
         lgHeight="22"
+        mdWidth="11.8"
+        mdHeight="20"
       >
         {!poster && (
           <div style={noImage}>

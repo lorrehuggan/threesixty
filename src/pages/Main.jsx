@@ -42,7 +42,7 @@ function Main() {
   };
 
   return (
-    <Wrapper hidden width={xl} align="center" lgWidth={lg}>
+    <Wrapper hidden width={xl} align="center" lgWidth={lg} mdWidth="980">
       <Banner
         opacity="0.35"
         hOpacity="0.5"

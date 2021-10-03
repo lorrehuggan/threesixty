@@ -19,12 +19,23 @@ function App() {
   const [openMenu, setOpenMenu] = useState(false);
   const [queryData, setQueryData] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [width, setWidth] = useState('');
 
   useEffect(() => {
     if (window.innerWidth <= 1020) {
       setIsSmallScreen(true);
+    } else {
+      setIsSmallScreen(false);
     }
-  }, []);
+  }, [width]);
+
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+  });
 
   return (
     <Router>

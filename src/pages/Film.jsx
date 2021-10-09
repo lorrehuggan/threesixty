@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BigBody, H4, H5, P, Wrapper } from '../styles/GlobalComponents';
+import { H4, H5, P, Wrapper } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import FilmBanner from '../components/Banner/FilmBanner/FilmBanner';
 import { useParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
 import { GiFilmProjector } from 'react-icons/gi';
 
+//styled components
 export const Play = styled(FaPlay)`
   color: ${({ theme }) => theme.textPrimary};
   width: 8rem;
@@ -58,6 +59,7 @@ function Film() {
   const [width, setWidth] = useState('');
   const [movieAmount, setMovieAmount] = useState({ a: 0, b: 4 });
 
+  //set num of movies depending on screen size
   useEffect(() => {
     if (window.innerWidth < xl) {
       setMovieAmount({ a: 0, b: 5 });
@@ -74,6 +76,7 @@ function Film() {
     window.addEventListener('resize', updateDimensions);
   });
 
+  // fetch genre for selected film
   useEffect(() => {
     fetch(FETCH_GENRE())
       .then((res) => {
@@ -98,6 +101,8 @@ function Film() {
       });
   }, []);
 
+  // fetch selected movie using movie ID
+
   useEffect(() => {
     fetch(FETCH_ID(id))
       .then((res) => {
@@ -121,6 +126,8 @@ function Film() {
         }
       });
   }, [id, setLoading, setError]);
+
+  // fetch recommended movies for selected film
 
   useEffect(() => {
     fetch(FETCH_RECOMMENDATIONS(id))
@@ -147,6 +154,8 @@ function Film() {
     return () => {};
   }, [id, setRecLoading, setRecError]);
 
+  // play youtube  video when clicked
+
   const handleClick = () => {
     setTrailerError(false);
     if (trailerURL) {
@@ -168,6 +177,8 @@ function Film() {
     }
   };
 
+  //play youtube video when banner is clicked
+
   const cardClick = () => {
     window.scroll(0, 0);
     if (trailerURL) {
@@ -177,11 +188,15 @@ function Film() {
     }
   };
 
+  // scroll window to place youtube in the center of the viewport when clicked
+
   const watchClick = () => {
     if (!trailerURL) {
       window.scroll(0, 400);
     }
   };
+
+  // skeleton animation
 
   const skeletonVar = {
     hidden: { opacity: 0, x: 10 },

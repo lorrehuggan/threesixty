@@ -90,7 +90,7 @@ function Banner({
       lgHeight="34"
       mdWidth="980"
     >
-      {error && <H1>Oops Something Went Wrong...</H1>}
+      {error && <H1>Oops </H1>}
       {movie && (
         <Poster
           opacity={opacity}

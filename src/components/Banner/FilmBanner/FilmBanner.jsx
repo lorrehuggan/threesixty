@@ -1,7 +1,14 @@
 import React from 'react';
 import { breakpoints, styledTheme } from '../../../styles/Mixins';
 import { imgPath } from '../../../utils/request';
-import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
+import {
+  H1,
+  Wrapper,
+  Image,
+  P,
+  H5,
+  H2,
+} from '../../../styles/GlobalComponents';
 import {
   Poster,
   StyledWrapper,
@@ -91,6 +98,7 @@ function Banner({
       mdWidth="980"
     >
       {error && <H1>Oops </H1>}
+      {loading && <H1>Loading...</H1>}
       {movie && (
         <Poster
           opacity={opacity}
@@ -99,15 +107,18 @@ function Banner({
           onClick={() => handleClick()}
         >
           <BottomGradient top />
-
-          <H1
-            variants={textVar}
-            initial="hidden"
-            animate="visible"
-            lgFontSize={styledTheme.header}
-          >
-            {loading ? 'Loading...' : handleTitle(30)}
-          </H1>
+          {error ? (
+            <H5>We are working on this error</H5>
+          ) : (
+            <H1
+              variants={textVar}
+              initial="hidden"
+              animate="visible"
+              lgFontSize={styledTheme.header}
+            >
+              {handleTitle(30)}
+            </H1>
+          )}
           <StyledWrapper
             justify="left"
             align="left"
@@ -123,14 +134,19 @@ function Banner({
                 animate="visible"
                 bottom="1"
               >
-                Rated {movie.vote_average * 10}%
+                {!error && 'Rated'} {!error && movie.vote_average * 10}
+                {!error && '%'}
               </H5>
-              <P
-                variants={textVar}
-                initial="hidden"
-                animate="visible"
-                bottom="1"
-              >{`${movie.overview?.substring(0, 480)}`}</P>
+              {error ? (
+                ''
+              ) : (
+                <P
+                  variants={textVar}
+                  initial="hidden"
+                  animate="visible"
+                  bottom="1"
+                >{`${movie.overview?.substring(0, 480)}`}</P>
+              )}
               {!error && (
                 <StyledBigBody
                   lgWidth="30"

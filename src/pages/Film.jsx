@@ -221,10 +221,14 @@ function Film() {
         initial="hidden"
         animate="visible"
         width={xl}
-        style={{ paddingLeft: '2rem', marginBottom: '1rem' }}
+        style={{
+          paddingLeft: '2rem',
+          marginBottom: '1rem',
+        }}
         direction="row"
         align="center"
         justifyContent="left"
+        lgWidth="1024"
         mdWidth="980"
       >
         {movie.production_companies?.slice(0, 3).map((pc) => (
@@ -242,6 +246,7 @@ function Film() {
         direction="row"
         align="center"
         justifyContent="left"
+        lgWidth="1024"
         mdWidth="980"
       >
         {movie.genres?.map((mg) => (
@@ -345,6 +350,7 @@ function Film() {
             {recError ? <H4>Error</H4> : <H4>Recommended</H4>}
           </Wrapper>
         )}
+
         <GridContainer direction="row">
           {recommendation &&
             recommendation?.slice(movieAmount.a, movieAmount.b).map((rec) => {

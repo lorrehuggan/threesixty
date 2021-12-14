@@ -66,6 +66,7 @@ function App() {
                       <Search />
                     </Route>
                   </Switch>
+                  <div>Created By Lorre Huggan</div>
                 </>
               )}
             </QueryContext.Provider>

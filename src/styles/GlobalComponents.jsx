@@ -6,6 +6,8 @@ import { breakpoints, media } from '../styles/Mixins';
 export const Wrapper = styled(motion.div)`
   padding: ${({ padding }) => (padding ? `${padding}rem` : '0rem')};
   margin: ${({ margin }) => (margin ? `${margin}rem` : '0rem auto')};
+  margin-top: ${({ mtop }) => (mtop ? `${mtop}rem` : '')};
+  margin-bottom: ${({ mbottom }) => (mbottom ? `${mbottom}rem` : '')};
   width: ${({ width }) => (width ? `${width}px` : 'auto')};
   height: ${({ height }) => (height ? `${height}rem` : 'auto')};
   display: flex;

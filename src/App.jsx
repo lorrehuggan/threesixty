@@ -13,6 +13,9 @@ import Menu from './components/Menu/Menu';
 import { MenuContext } from './contexts/MenuContext';
 import { QueryContext } from './contexts/QueryContext';
 import SmallScreen from './components/SmallScreen';
+import SignUp from './pages/SignUp';
+import appReducer, { initialState } from './reducers/appReducer';
+import { AppProvider } from '../src/contexts/AppProvider';
 
 function App() {
   const [searchData, setSearchData] = useState();
@@ -47,26 +50,30 @@ function App() {
                 <SmallScreen />
               ) : (
                 <>
-                  <Nav />
-                  <Menu />
-                  <Switch>
-                    <Route path="/" exact>
-                      <Main />
-                    </Route>
-                    <Route path="/film/:id">
-                      <Film />
-                    </Route>
-                    <Route path="/genre/:id">
-                      <Genre />
-                    </Route>
-                    <Route path="/trending">
-                      <Trending />
-                    </Route>
-                    <Route path="/search">
-                      <Search />
-                    </Route>
-                  </Switch>
-                  <div>Created By Lorre Huggan</div>
+                  <AppProvider initialState={initialState} reducer={appReducer}>
+                    <Nav />
+                    <Menu />
+                    <Switch>
+                      <Route path="/" exact>
+                        <Main />
+                      </Route>
+                      <Route path="/film/:id">
+                        <Film />
+                      </Route>
+                      <Route path="/genre/:id">
+                        <Genre />
+                      </Route>
+                      <Route path="/trending">
+                        <Trending />
+                      </Route>
+                      <Route path="/search">
+                        <Search />
+                      </Route>
+                      <Route path="/signup">
+                        <SignUp />
+                      </Route>
+                    </Switch>
+                  </AppProvider>
                 </>
               )}
             </QueryContext.Provider>

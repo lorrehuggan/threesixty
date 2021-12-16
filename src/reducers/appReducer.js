@@ -1,6 +1,6 @@
 export const initialState = {
   user: null,
-  signUp: null,
+  signUp: { name: '', email: '', password: '', passwordConfirm: '' },
 };
 
 export const types = {
@@ -15,7 +15,11 @@ const appReducer = (state, action) => {
         ...state,
         user: action.user,
       };
-
+    case 'SET_SIGN_UP':
+      return {
+        ...state,
+        signUp: action.signUp,
+      };
     default:
       return state;
   }

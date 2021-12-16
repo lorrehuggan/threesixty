@@ -231,8 +231,8 @@ function Film() {
         lgWidth="1024"
         mdWidth="980"
       >
-        {movie.production_companies?.slice(0, 3).map((pc) => (
-          <P weight="700" right="0.25">
+        {movie.production_companies?.slice(0, 3).map((pc, idx) => (
+          <P weight="700" right="0.25" key={idx}>
             {pc.name},
           </P>
         ))}
@@ -249,8 +249,8 @@ function Film() {
         lgWidth="1024"
         mdWidth="980"
       >
-        {movie.genres?.map((mg) => (
-          <Link onClick={cardClick} to={`/genre/${mg.id}`}>
+        {movie.genres?.map((mg, idx) => (
+          <Link onClick={cardClick} to={`/genre/${mg.id}`} key={idx}>
             <P
               weight="700"
               padding="0.25"
@@ -353,22 +353,25 @@ function Film() {
 
         <GridContainer direction="row">
           {recommendation &&
-            recommendation?.slice(movieAmount.a, movieAmount.b).map((rec) => {
-              return (
-                <Link
-                  onClick={() => {
-                    cardClick();
-                  }}
-                  to={`/film/${rec.id}`}
-                >
-                  <Card
-                    poster={rec.poster_path}
-                    title={rec.title}
-                    loading={recLoading}
-                  />
-                </Link>
-              );
-            })}
+            recommendation
+              ?.slice(movieAmount.a, movieAmount.b)
+              .map((rec, idx) => {
+                return (
+                  <Link
+                    onClick={() => {
+                      cardClick();
+                    }}
+                    to={`/film/${rec.id}`}
+                    key={idx}
+                  >
+                    <Card
+                      poster={rec.poster_path}
+                      title={rec.title}
+                      loading={recLoading}
+                    />
+                  </Link>
+                );
+              })}
         </GridContainer>
       </Wrapper>
     </Wrapper>

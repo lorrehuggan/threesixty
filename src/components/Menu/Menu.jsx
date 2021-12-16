@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom';
 import { MenuContext } from '../../contexts/MenuContext';
 import { breakpoints, styledTheme } from '../../styles/Mixins';
 import { Container, Wrap } from './Menu.styles';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Menu() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
-  const { openMenu, setOpenMenu } = useContext(MenuContext);
+  const { openMenu, setOpenMenu, setMenuLoading } = useContext(MenuContext);
   const { xl, lg } = breakpoints;
+  const { logout, currentUser } = useAuth();
 
   useEffect(() => {
     fetch(FETCH_GENRE())
@@ -39,7 +41,16 @@ function Menu() {
   }, []);
 
   const handleClick = () => {
+    setMenuLoading(true);
+    setTimeout(() => {
+      setMenuLoading(false);
+    }, 1000);
     setOpenMenu(false);
+  };
+
+  const handleLogout = async (e) => {
+    setOpenMenu(false);
+    logout().catch((e) => console.log(e.message));
   };
 
   //Animations
@@ -78,6 +89,27 @@ function Menu() {
             </Link>
           );
         })}
+        {/* logout button */}
+        <Link onClick={handleLogout} to={currentUser ? `/` : `/login`}>
+          <BigBody
+            variants={menuVar}
+            initial="hidden"
+            animate="visible"
+            style={{
+              padding: '0.25rem',
+              border: '0.5px solid white',
+              color: styledTheme.error,
+            }}
+            weight="700"
+            uppercase
+            space="1.25"
+            hover
+            cursor
+            lgFontSize={styledTheme.body}
+          >
+            {currentUser ? '-> Log Out' : '<- Log In'}
+          </BigBody>
+        </Link>
       </Wrap>
     </Container>
   );

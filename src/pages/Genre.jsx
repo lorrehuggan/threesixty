@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FETCH_CATEGORIES, FETCH_GENRE } from '../utils/request';
 import useFetch from '../hooks/useFetch';
+import { MenuContext } from '../contexts/MenuContext';
 import Card from '../components/Card/Card';
 import { breakpoints, styledTheme, media } from '../styles/Mixins';
-import { H1, Wrapper } from '../styles/GlobalComponents';
+import { H1, H2, Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
 import { SkeletonCard } from '../components/Card/Card.styles';
@@ -34,6 +35,8 @@ function Genre() {
   const [genre, setGenre] = useState({});
   const [width, setWidth] = useState('');
   const [movieAmount, setMovieAmount] = useState(4);
+  const [pageLoading, setPageLoading] = useState(false);
+  const { menuLoading } = useContext(MenuContext);
 
   useEffect(() => {
     if (window.innerWidth <= xl) {
@@ -81,6 +84,11 @@ function Genre() {
   }, [id]);
 
   const handlePagination = (e, v) => {
+    setPageLoading(true);
+    setTimeout(() => {
+      setPageLoading(false);
+    }, 500);
+
     setPage(v);
     window.scroll(0, 0);
   };
@@ -143,54 +151,69 @@ function Genre() {
           style={{ marginBottom: '1rem' }}
           lgFontSize={styledTheme.headline}
         >
-          {loading ? 'Loading...' : genre[0]?.name}
+          {loading || pageLoading || menuLoading
+            ? 'Loading...'
+            : genre[0]?.name}
         </H1>
       )}
-      <Grid count={movieAmount}>
-        {loading &&
-          skeletonArray.map(() => {
-            return <SkeletonCard />;
-          })}
+      {pageLoading || menuLoading ? (
+        ''
+      ) : (
+        <Grid count={movieAmount}>
+          {loading &&
+            skeletonArray.map((arr, idx) => {
+              return <SkeletonCard key={idx} />;
+            })}
 
-        {data.map((d, i) => (
-          <motion.div
-            variants={gridVar}
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 0.3, delay: i * 0.1 }}
-          >
-            <Link onClick={handleClick} to={`/film/${d.id}`}>
-              <Card grid poster={d.poster_path} />
-            </Link>
-          </motion.div>
-        ))}
-      </Grid>
-      <Wrapper
-        justify="center"
-        align="center"
-        width={md}
-        style={{
-          marginBottom: '4rem',
-          marginTop: '4rem',
-          backgroundColor: styledTheme.textPrimary,
-          padding: '1rem',
-          borderRadius: '4px',
-        }}
-        lgWidth={lg}
-        mdWidth="980"
-      >
-        <Pagination
-          onChange={handlePagination}
-          count={numOfPages}
-          variant="outlined"
-          shape="rounded"
-          color="warning"
-          size="large"
-          page={page}
-          siblingCount={2}
-          boundaryCount={2}
-        />
-      </Wrapper>
+          {data.map((d, idx) => (
+            <motion.div
+              key={idx}
+              variants={gridVar}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.3, delay: idx * 0.1 }}
+            >
+              <Link onClick={handleClick} to={`/film/${d.id}`}>
+                <Card grid poster={d.poster_path} />
+              </Link>
+            </motion.div>
+          ))}
+        </Grid>
+      )}
+      {!pageLoading ? (
+        <Wrapper
+          justify="center"
+          align="center"
+          width={md}
+          style={{
+            marginBottom: '4rem',
+            marginTop: '4rem',
+            backgroundColor: styledTheme.textPrimary,
+            padding: '1rem',
+            borderRadius: '4px',
+          }}
+          lgWidth={lg}
+          mdWidth="980"
+        >
+          {!menuLoading ? (
+            <Pagination
+              onChange={handlePagination}
+              count={numOfPages}
+              variant="outlined"
+              shape="rounded"
+              color="warning"
+              size="large"
+              page={page}
+              siblingCount={2}
+              boundaryCount={2}
+            />
+          ) : (
+            ''
+          )}
+        </Wrapper>
+      ) : (
+        ''
+      )}
     </Wrapper>
   );
 }

@@ -21,6 +21,7 @@ export const Wrapper = styled(motion.div)`
   right: ${({ right }) => (right ? `${right}rem` : '')};
   bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : '')};
   left: ${({ left }) => (left ? `${left}rem` : '')};
+  z-index: ${({ idx }) => (idx ? idx : '')};
   ${media.large} {
     width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
     height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
@@ -264,4 +265,19 @@ export const Button = styled.button`
   &:hover {
     background-color: grey;
   }
+`;
+
+export const Alert = styled.div`
+  background-color: ${({ theme, error }) => {
+    if (error) {
+      return theme.error;
+    }
+  }};
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  border-radius: 4px;
+  flex-direction: ${({ direction }) => (direction ? direction : 'column')};
+  align-items: ${({ align }) => (align ? align : 'center')};
+  justify-content: ${({ justify }) => (justify ? justify : 'center')};
 `;

@@ -3,17 +3,24 @@ import { Wrapper, H3, Alert } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { FaExclamation, FaCheck } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 
-const SignUp = () => {
+const SignIn = () => {
   const [userSignUp, setUserSignUp] = useState({
     email: '',
     password: '',
-    passwordConfirm: '',
   });
   const [passError, setPassError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { xl, lg, md } = breakpoints;
-  const { register } = useAuth();
+  const { login, currentUser } = useAuth();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (currentUser) {
+      history.push('/');
+    }
+  }, [currentUser, history]);
 
   //form styles
   const input = {
@@ -33,27 +40,19 @@ const SignUp = () => {
   //form handling
   function formSubmit(e) {
     e.preventDefault();
-    if (
-      !userSignUp.email ||
-      !userSignUp.password ||
-      !userSignUp.passwordConfirm
-    ) {
+    if (!userSignUp.email || !userSignUp.password) {
       return setPassError('Credentials not valid');
     }
-    if (userSignUp.password.length < 6) {
-      return setPassError('Password should be at least 6 characters');
-    }
-    if (userSignUp.password !== userSignUp.passwordConfirm) {
-      return setPassError('Passwords do not match');
-    }
+
     setLoading(true);
-    register(userSignUp.email, userSignUp.password)
+    login(userSignUp.email, userSignUp.password)
       .then((res) => {
         console.log(res);
+        history.push('/');
       })
       .catch((err) => {
-        if (err.message === 'Firebase: Error (auth/email-already-in-use).') {
-          setPassError('Email already registered');
+        if (err.message === 'Firebase: Error (auth/user-not-found).') {
+          return setPassError('Email or password incorrect ');
         }
       })
       .finally(() => {
@@ -62,7 +61,6 @@ const SignUp = () => {
     setUserSignUp({
       email: '',
       password: '',
-      passwordConfirm: '',
     });
   }
 
@@ -76,29 +74,9 @@ const SignUp = () => {
 
   return (
     <Wrapper hidden width={xl} align="center" lgWidth={lg} mdWidth="980">
-      <H3>Sign Up</H3>
+      <H3>Log In</H3>
       <Wrapper width={md} align="center" mtop="2">
         <form style={{ width: '400px' }} onSubmit={formSubmit}>
-          {/* <Wrapper
-            justify="space-between"
-            align="center"
-            direction="row"
-            mbottom="0.25"
-          >
-            <label style={label}>Name</label>
-            <div>
-              <input
-                type="text"
-                name="name"
-                placeholder="MettaWorld"
-                style={input}
-                value={userSignUp.name}
-                onChange={handleChange}
-              />
-              <FaExclamation />
-              <FaCheck />
-            </div>
-          </Wrapper> */}
           <Wrapper
             justify="space-between"
             align="center"
@@ -135,19 +113,7 @@ const SignUp = () => {
               />
             </div>
           </Wrapper>
-          <Wrapper justify="space-between" align="center" direction="row">
-            <label style={label}>Password Confirm</label>
-            <div>
-              <input
-                type="password"
-                name="passwordConfirm"
-                placeholder="Re-type Passwrod"
-                style={input}
-                value={userSignUp.passwordConfirm}
-                onChange={handleChange}
-              />
-            </div>
-          </Wrapper>
+
           {/* Error alerts */}
           {passError && (
             <Wrapper mtop="1">
@@ -159,7 +125,7 @@ const SignUp = () => {
               Submit
             </button>
             <Wrapper mtop="1" align="left">
-              Already have an account log-in here
+              Dont already have an account sign up here
             </Wrapper>
           </Wrapper>
         </form>
@@ -168,4 +134,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

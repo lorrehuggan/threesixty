@@ -20,31 +20,6 @@ function Main() {
   const { data: movie, loading, error } = useFetch(FETCH_ID(id));
   const { currentUser } = useAuth();
 
-  // useEffect(() => {
-  //   const getUsers = async () => {
-  //     const data = await getDocs(collection(db, 'users'));
-  //     console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //   };
-  //   getUsers();
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(currentUser.uid);
-  //   if (!currentUser) {
-  //     return;
-  //   }
-
-  //   const getUser = async () => {
-  //     const data = await getDoc(doc(db, 'users', currentUser?.uid));
-  //     if (data.exists()) {
-  //       console.log(data.data().liked_film);
-  //     } else {
-  //       console.log('no such doc');
-  //     }
-  //   };
-  //   getUser();
-  // }, [currentUser]);
-
   useEffect(() => {
     fetch(FETCH_GENRE())
       .then((res) => {

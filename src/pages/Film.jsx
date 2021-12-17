@@ -13,6 +13,8 @@ import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
 import { GiFilmProjector } from 'react-icons/gi';
 import useUser from '../hooks/useUser';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../utils/firebase';
 
 //styled components
 export const Play = styled(FaPlay)`
@@ -85,6 +87,33 @@ function Film() {
 
   const updateDimensions = () => {
     setWidth(window.innerWidth);
+  };
+
+  // Update likes
+
+  const updateLikes = async (id, film) => {
+    const userDoc = doc(db, 'users', id);
+    function checkLikes(idx) {
+      return idx === film;
+    }
+    if (userLikedFilms?.includes(film)) {
+      const deleteLike = userLikedFilms.filter(checkLikes);
+      const newLikeArr = { liked_film: [...deleteLike] };
+      await updateDoc(userDoc, newLikeArr)
+        .then(() => console.log('delete'))
+        .catch((err) => console.log(err.message));
+      return;
+    }
+    const addLike = { liked_film: [...userLikedFilms, film] };
+    await updateDoc(userDoc, addLike)
+      .then(() => {
+        console.log('yeee');
+      })
+      .catch((err) => console.log(err.message));
+  };
+
+  const handleLike = () => {
+    updateLikes(userData.id, id);
   };
 
   useEffect(() => {
@@ -220,7 +249,7 @@ function Film() {
 
   return (
     <Wrapper width={xl} align="center" lgWidth={lg} hidden mdWidth="980">
-      {like ? 'like' : 'nope'}
+      <div onClick={handleLike}>{like ? 'like' : 'nope'}</div>
       <FilmBanner
         movie={movie}
         loading={loading}

@@ -16,11 +16,12 @@ const useUser = () => {
     const getUser = async () => {
       const data = await getDoc(doc(db, 'users', currentUser?.uid));
       if (data.exists()) {
+        const user = data.data();
         setUserData({
-          likes: data.data().liked_film,
-          name: data.data().name,
-          email: data.data().email,
-          id: data.data().id,
+          likes: user.liked_film,
+          name: user.name,
+          email: user.email,
+          id: user.id,
         });
       } else {
         console.log('no such doc');

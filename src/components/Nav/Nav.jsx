@@ -7,11 +7,13 @@ import SearchForm from '../Search/SearchForm';
 import { MenuContext } from '../../contexts/MenuContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { FaUserCircle } from 'react-icons/fa';
+import useUser from '../../hooks/useUser';
 
 function Nav() {
   const { xl, md, sm, lg } = breakpoints;
   const { openMenu, setOpenMenu } = useContext(MenuContext);
   const { currentUser } = useAuth();
+  const { userData } = useUser();
 
   const handleMenu = () => {
     if (openMenu) {
@@ -125,7 +127,7 @@ function Nav() {
                   fontSize: '1.5rem',
                 }}
               />
-              <Wrapper align="center">{currentUser.email}</Wrapper>
+              <Wrapper align="center">{userData.name}</Wrapper>
             </Wrapper>
           ) : (
             ''

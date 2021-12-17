@@ -53,9 +53,9 @@ export const Search = styled(BiSearchAlt)`
 function SearchForm() {
   const history = useHistory();
   const [query, setQuery] = useState('');
-  const { searchData, setSearchData } = useContext(SearchContext);
-  const { data, loading, error, results } = useFetch(FETCH_QUERY(1, query));
-  const { queryData, setQueryData } = useContext(QueryContext);
+  const { setSearchData } = useContext(SearchContext);
+  const { data, results } = useFetch(FETCH_QUERY(1, query));
+  const { setQueryData } = useContext(QueryContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import Card from '../components/Card/Card';
 import { GridContainer } from '../components/MovieRow/MovieRow.styles';
 import { GiFilmProjector } from 'react-icons/gi';
+import useUser from '../hooks/useUser';
 
 //styled components
 export const Play = styled(FaPlay)`
@@ -55,9 +56,23 @@ function Film() {
   const [genre, setGenre] = useState(null);
   const [genreLoading, setGenreLoading] = useState({});
   const [genreError, setGenreError] = useState({});
-  const [movieGenre, setMovieGenre] = useState({});
   const [width, setWidth] = useState('');
   const [movieAmount, setMovieAmount] = useState({ a: 0, b: 4 });
+  const [userLikedFilms, setUserLikedFilm] = useState();
+  const [like, setLike] = useState(false);
+  const { userData } = useUser();
+
+  //get user doc from firebase firestore
+
+  useEffect(() => {
+    setUserLikedFilm(userData.likes);
+  }, [userData]);
+
+  //check if current film is liked by user
+
+  useEffect(() => {
+    setLike(userLikedFilms?.includes(id));
+  }, [id, userLikedFilms]);
 
   //set num of movies depending on screen size
   useEffect(() => {
@@ -205,6 +220,7 @@ function Film() {
 
   return (
     <Wrapper width={xl} align="center" lgWidth={lg} hidden mdWidth="980">
+      {like ? 'like' : 'nope'}
       <FilmBanner
         movie={movie}
         loading={loading}

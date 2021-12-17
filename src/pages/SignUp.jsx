@@ -3,9 +3,14 @@ import { Wrapper, H3, Alert } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { FaExclamation, FaCheck } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
+import { db } from '../utils/firebase';
+import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [userSignUp, setUserSignUp] = useState({
+    name: '',
     email: '',
     password: '',
     passwordConfirm: '',
@@ -13,7 +18,15 @@ const SignUp = () => {
   const [passError, setPassError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { xl, lg, md } = breakpoints;
-  const { register } = useAuth();
+  const { register, currentUser } = useAuth();
+  const history = useHistory();
+  const collectionRef = collection(db, 'users');
+
+  useEffect(() => {
+    if (currentUser) {
+      history.push('/');
+    }
+  }, [currentUser, history]);
 
   //form styles
   const input = {
@@ -34,6 +47,7 @@ const SignUp = () => {
   function formSubmit(e) {
     e.preventDefault();
     if (
+      !userSignUp.name ||
       !userSignUp.email ||
       !userSignUp.password ||
       !userSignUp.passwordConfirm
@@ -49,7 +63,12 @@ const SignUp = () => {
     setLoading(true);
     register(userSignUp.email, userSignUp.password)
       .then((res) => {
-        console.log(res);
+        // create new user in db and set collection title to user UID
+        setDoc(doc(collectionRef, res.user.uid), {
+          name: userSignUp.name,
+          email: userSignUp.email,
+          id: res.user.uid,
+        });
       })
       .catch((err) => {
         if (err.message === 'Firebase: Error (auth/email-already-in-use).') {
@@ -60,6 +79,7 @@ const SignUp = () => {
         setLoading(false);
       });
     setUserSignUp({
+      name: '',
       email: '',
       password: '',
       passwordConfirm: '',
@@ -79,7 +99,7 @@ const SignUp = () => {
       <H3>Sign Up</H3>
       <Wrapper width={md} align="center" mtop="2">
         <form style={{ width: '400px' }} onSubmit={formSubmit}>
-          {/* <Wrapper
+          <Wrapper
             justify="space-between"
             align="center"
             direction="row"
@@ -95,10 +115,8 @@ const SignUp = () => {
                 value={userSignUp.name}
                 onChange={handleChange}
               />
-              <FaExclamation />
-              <FaCheck />
             </div>
-          </Wrapper> */}
+          </Wrapper>
           <Wrapper
             justify="space-between"
             align="center"
@@ -159,7 +177,7 @@ const SignUp = () => {
               Submit
             </button>
             <Wrapper mtop="1" align="left">
-              Already have an account log-in here
+              <Link to="/login">Already have an account log-in here</Link>
             </Wrapper>
           </Wrapper>
         </form>

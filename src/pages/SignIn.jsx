@@ -3,7 +3,7 @@ import { Wrapper, H3, Alert } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { FaExclamation, FaCheck } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const SignIn = () => {
   const [userSignUp, setUserSignUp] = useState({
@@ -125,7 +125,9 @@ const SignIn = () => {
               Submit
             </button>
             <Wrapper mtop="1" align="left">
-              Dont already have an account sign up here
+              <Link to="/signup">
+                Dont already have an account sign up here
+              </Link>
             </Wrapper>
           </Wrapper>
         </form>

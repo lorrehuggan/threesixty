@@ -110,6 +110,28 @@ function Menu() {
             {currentUser ? '-> Log Out' : '<- Log In'}
           </BigBody>
         </Link>
+        {!currentUser && (
+          <Link onClick={handleLogout} to="/signup">
+            <BigBody
+              variants={menuVar}
+              initial="hidden"
+              animate="visible"
+              style={{
+                padding: '0.25rem',
+                border: '0.5px solid white',
+                color: styledTheme.error,
+              }}
+              weight="700"
+              uppercase
+              space="1.25"
+              hover
+              cursor
+              lgFontSize={styledTheme.body}
+            >
+              -> Sign Up
+            </BigBody>
+          </Link>
+        )}
       </Wrap>
     </Container>
   );

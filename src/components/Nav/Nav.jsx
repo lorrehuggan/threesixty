@@ -78,18 +78,6 @@ function Nav() {
             Trending
           </BigBody>
         </Link>
-        <BigBody
-          onClick={handleMenu}
-          uppercase
-          weight="700"
-          cursor
-          hover
-          space="5"
-          color={openMenu ? styledTheme.error : ''}
-          mdFontSize={styledTheme.body}
-        >
-          {openMenu ? 'Close' : 'Menu'}
-        </BigBody>
         <Link onClick={handleClick} to={'/genre/16'}>
           <BigBody
             uppercase
@@ -102,12 +90,25 @@ function Nav() {
             Anime
           </BigBody>
         </Link>
+        <BigBody
+          onClick={handleMenu}
+          uppercase
+          weight="700"
+          cursor
+          hover
+          space="5"
+          color={openMenu ? styledTheme.error : ''}
+          mdFontSize={styledTheme.body}
+        >
+          {openMenu ? 'Close' : 'Menu'}
+        </BigBody>
 
         <P
           style={{
             position: 'absolute',
-            bottom: '0',
+            bottom: '0.5rem',
             left: '0',
+            fontSize: '0.75rem',
           }}
           uppercase
           space="1"
@@ -118,7 +119,11 @@ function Nav() {
           {currentUser ? (
             <Wrapper direction="row" align="center">
               <FaUserCircle
-                style={{ marginRight: '0.25rem', color: styledTheme.success }}
+                style={{
+                  marginRight: '0.25rem',
+                  color: styledTheme.success,
+                  fontSize: '1.5rem',
+                }}
               />
               <Wrapper align="center">{currentUser.email}</Wrapper>
             </Wrapper>

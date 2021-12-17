@@ -17,6 +17,7 @@ import {
   StyledBigBody,
 } from '../HomeBanner/Banner.Styles';
 import movieTrailer from 'movie-trailer';
+import { ImHeart } from 'react-icons/im';
 
 function Banner({
   opacity,
@@ -28,6 +29,8 @@ function Banner({
   setTrailerURL,
   setTrailerError,
   watchClick,
+  like,
+  handleLike,
 }) {
   const { xl, lg } = breakpoints;
 
@@ -92,7 +95,6 @@ function Banner({
       width={xl}
       height="38"
       radius="2"
-      style={{ cursor: 'pointer' }}
       lgWidth={lg}
       lgHeight="34"
       mdWidth="980"
@@ -104,7 +106,6 @@ function Banner({
           opacity={opacity}
           hOpacity={hOpacity}
           src={imgPath + movie?.backdrop_path}
-          onClick={() => handleClick()}
         >
           <BottomGradient top />
           {error ? (
@@ -148,17 +149,29 @@ function Banner({
                 >{`${movie.overview?.substring(0, 480)}`}</P>
               )}
               {!error && (
-                <StyledBigBody
-                  lgWidth="30"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  onClick={() => handleClick()}
-                >
-                  {trailerURL ? 'Stop' : 'Watch Trailer'}
-                </StyledBigBody>
+                <Wrapper direction="row" align="center">
+                  <ImHeart
+                    style={{
+                      marginRight: '0.5rem',
+                      fontSize: '2rem',
+                      cursor: 'pointer',
+                      color: like ? styledTheme.error : '',
+                    }}
+                    onClick={handleLike}
+                  />
+
+                  <StyledBigBody
+                    lgWidth="30"
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onClick={handleClick}
+                  >
+                    {trailerURL ? 'Stop' : 'Watch Trailer'}
+                  </StyledBigBody>
+                </Wrapper>
               )}
             </InnerWrapper>
           </StyledWrapper>

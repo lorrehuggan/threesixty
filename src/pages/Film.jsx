@@ -94,20 +94,22 @@ function Film() {
   const updateLikes = async (id, film) => {
     const userDoc = doc(db, 'users', id);
     function checkLikes(idx) {
-      return idx === film;
+      return idx !== film;
     }
     if (userLikedFilms?.includes(film)) {
       const deleteLike = userLikedFilms.filter(checkLikes);
       const newLikeArr = { liked_film: [...deleteLike] };
       await updateDoc(userDoc, newLikeArr)
-        .then(() => console.log('delete'))
+        .then(() => {
+          setLike(false);
+        })
         .catch((err) => console.log(err.message));
       return;
     }
     const addLike = { liked_film: [...userLikedFilms, film] };
     await updateDoc(userDoc, addLike)
       .then(() => {
-        console.log('yeee');
+        setLike(true);
       })
       .catch((err) => console.log(err.message));
   };
@@ -249,7 +251,6 @@ function Film() {
 
   return (
     <Wrapper width={xl} align="center" lgWidth={lg} hidden mdWidth="980">
-      <div onClick={handleLike}>{like ? 'like' : 'nope'}</div>
       <FilmBanner
         movie={movie}
         loading={loading}
@@ -260,6 +261,8 @@ function Film() {
         setTrailerURL={setTrailerURL}
         setTrailerError={setTrailerError}
         watchClick={watchClick}
+        like={like}
+        handleLike={handleLike}
       />
       <Wrapper
         variants={skeletonVar}

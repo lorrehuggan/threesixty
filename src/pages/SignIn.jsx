@@ -146,7 +146,7 @@ const SignIn = () => {
           )}
           <Wrapper mtop="2">
             <Button type="submit" disabled={loading}>
-              Sign Up
+              Login
             </Button>
             <Wrapper mtop="1" align="left" hover>
               <Link to="/signup">

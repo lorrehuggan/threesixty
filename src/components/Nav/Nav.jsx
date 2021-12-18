@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Wrapper, H5, BigBody, P } from '../../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../../styles/Mixins';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Box } from '@mui/system';
 import SearchForm from '../Search/SearchForm';
 import { MenuContext } from '../../contexts/MenuContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { FaUserCircle } from 'react-icons/fa';
+import { VscThreeBars } from 'react-icons/vsc';
 import useUser from '../../hooks/useUser';
 
 function Nav() {
@@ -14,6 +15,27 @@ function Nav() {
   const { openMenu, setOpenMenu } = useContext(MenuContext);
   const { currentUser } = useAuth();
   const { userData } = useUser();
+  const location = useLocation();
+  const [hide, setHide] = useState(false);
+  const [onAccount, setOnAccount] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname === '/signup') {
+      setHide(true);
+    } else if (location.pathname === '/login') {
+      setHide(true);
+    } else {
+      setHide(false);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (location.pathname === '/profile') {
+      setOnAccount(true);
+    } else {
+      setOnAccount(false);
+    }
+  }, [location]);
 
   const handleMenu = () => {
     if (openMenu) {
@@ -40,6 +62,8 @@ function Nav() {
       mdWidth="980"
       pos="relative"
       idx="999"
+      mbottom={currentUser ? '1.5' : ''}
+      hide={hide ? 'hide' : ''}
     >
       <Wrapper margin="0">
         <Link onClick={handleClick} to="/">
@@ -108,9 +132,9 @@ function Nav() {
         <P
           style={{
             position: 'absolute',
-            bottom: '0.5rem',
+            bottom: '0',
             left: '0',
-            fontSize: '0.75rem',
+            fontSize: '1rem',
           }}
           uppercase
           space="1"
@@ -118,19 +142,47 @@ function Nav() {
           weight="700"
           color={styledTheme.success}
         >
-          {currentUser ? (
+          {currentUser && (
             <Wrapper direction="row" align="center">
               <FaUserCircle
                 style={{
-                  marginRight: '0.25rem',
+                  marginRight: '0.5rem',
                   color: styledTheme.success,
                   fontSize: '1.5rem',
                 }}
               />
               <Wrapper align="center">{userData.name}</Wrapper>
             </Wrapper>
-          ) : (
-            ''
+          )}
+        </P>
+        <P
+          style={{
+            position: 'absolute',
+            bottom: '0',
+            right: '0',
+            fontSize: '1rem',
+          }}
+          uppercase
+          space="1"
+          mdFontSize={styledTheme.body}
+          weight="700"
+          color={styledTheme.success}
+        >
+          {currentUser && (
+            <Link to={onAccount ? '/' : '/profile'}>
+              <Wrapper direction="row" align="center">
+                <VscThreeBars
+                  style={{
+                    marginRight: '0.25rem',
+                    color: styledTheme.success,
+                    fontSize: '1.5rem',
+                  }}
+                />
+                <Wrapper align="center">
+                  {onAccount ? 'Close' : 'My Account'}
+                </Wrapper>
+              </Wrapper>
+            </Link>
           )}
         </P>
       </Box>

@@ -44,7 +44,7 @@ function Menu() {
     setMenuLoading(true);
     setTimeout(() => {
       setMenuLoading(false);
-    }, 1000);
+    }, 500);
     setOpenMenu(false);
   };
 
@@ -59,7 +59,7 @@ function Menu() {
     hidden: { opacity: 0 },
     visible: {
       opacity: openMenu ? 1 : 0,
-      transition: { duration: 0.6, delay: 0.3 },
+      transition: { duration: 0.6, delay: 0.2 },
     },
   };
 

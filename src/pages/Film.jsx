@@ -64,18 +64,6 @@ function Film() {
   const [like, setLike] = useState(false);
   const { userData } = useUser();
 
-  //get user doc from firebase firestore
-
-  useEffect(() => {
-    setUserLikedFilm(userData.likes);
-  }, [userData]);
-
-  //check if current film is liked by user
-
-  useEffect(() => {
-    setLike(userLikedFilms?.includes(id));
-  }, [id, userLikedFilms]);
-
   //set num of movies depending on screen size
   useEffect(() => {
     if (window.innerWidth < xl) {
@@ -88,6 +76,22 @@ function Film() {
   const updateDimensions = () => {
     setWidth(window.innerWidth);
   };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+  });
+
+  //get user doc from firebase firestore
+
+  useEffect(() => {
+    setUserLikedFilm(userData.likes);
+  }, [userData]);
+
+  //check if current film is liked by user
+
+  useEffect(() => {
+    setLike(userLikedFilms?.includes(id));
+  }, [id, userLikedFilms]);
 
   // Update likes
 
@@ -117,10 +121,6 @@ function Film() {
   const handleLike = () => {
     updateLikes(userData.id, id);
   };
-
-  useEffect(() => {
-    window.addEventListener('resize', updateDimensions);
-  });
 
   // fetch genre for selected film
   useEffect(() => {

@@ -10,7 +10,7 @@ export const Wrapper = styled(motion.div)`
   margin-bottom: ${({ mbottom }) => (mbottom ? `${mbottom}rem` : '')};
   width: ${({ width }) => (width ? `${width}px` : 'auto')};
   height: ${({ height }) => (height ? `${height}rem` : 'auto')};
-  display: flex;
+  display: ${({ hide }) => (hide ? 'none' : 'flex')};
   flex-direction: ${({ direction }) => (direction ? direction : 'column')};
   align-items: ${({ align }) => (align ? align : 'left')};
   justify-content: ${({ justify }) => (justify ? justify : 'left')};
@@ -22,6 +22,11 @@ export const Wrapper = styled(motion.div)`
   bottom: ${({ bottom }) => (bottom ? `${bottom}rem` : '')};
   left: ${({ left }) => (left ? `${left}rem` : '')};
   z-index: ${({ idx }) => (idx ? idx : '')};
+  &:hover {
+    color: ${({ hover, theme }) => hover && theme.warning};
+  }
+  display: ${({ display }) => (display ? 'none' : '')};
+
   ${media.large} {
     width: ${({ lgWidth }) => (lgWidth ? `${lgWidth}px` : '')};
     height: ${({ lgHeight }) => (lgHeight ? `${lgHeight}rem` : '')};
@@ -259,7 +264,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 4px;
   font-weight: 900;
-  font-size: ${styledTheme.header};
+  font-size: ${styledTheme.bodyBig};
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {
@@ -268,13 +273,14 @@ export const Button = styled.button`
 `;
 
 export const Alert = styled.div`
+  padding: 1rem;
   background-color: ${({ theme, error }) => {
     if (error) {
       return theme.error;
     }
   }};
   width: 100%;
-  height: 2rem;
+
   display: flex;
   border-radius: 4px;
   flex-direction: ${({ direction }) => (direction ? direction : 'column')};

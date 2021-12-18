@@ -92,6 +92,9 @@ function App() {
                         <Route path="/login">
                           <SignIn />
                         </Route>
+                        <Route path="/profile">
+                          <Profile />
+                        </Route>
                       </Switch>
                     </AppProvider>
                   </>

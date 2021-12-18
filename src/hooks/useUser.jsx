@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../utils/firebase';
 
 const useUser = () => {
@@ -10,24 +10,26 @@ const useUser = () => {
   //get user doc from firebase firestore
 
   useEffect(() => {
-    if (!currentUser) {
-      return;
+    //----> realtime listener <----
+    if (currentUser) {
+      const docRef = doc(db, 'users', currentUser?.uid);
+      const unsub = onSnapshot(docRef, (document) => {
+        if (document.exists()) {
+          const user = document.data();
+          setUserData({
+            likes: user.liked_film,
+            name: user.name,
+            email: user.email,
+            id: user.id,
+          });
+        } else {
+          console.log('error: no items available');
+        }
+      });
+      return () => {
+        unsub();
+      };
     }
-    const getUser = async () => {
-      const data = await getDoc(doc(db, 'users', currentUser?.uid));
-      if (data.exists()) {
-        const user = data.data();
-        setUserData({
-          likes: user.liked_film,
-          name: user.name,
-          email: user.email,
-          id: user.id,
-        });
-      } else {
-        console.log('no such doc');
-      }
-    };
-    getUser();
   }, [currentUser]);
 
   return { userData };

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper, H3, Alert } from '../styles/GlobalComponents';
+import { Wrapper, H3, Alert, Button, H5 } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { FaExclamation, FaCheck } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../utils/firebase';
 import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
-import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { emailCheck, passwordCheck, usernameCheck } from '../utils/regex';
+import { letterSpacing } from '@mui/system';
 
 const SignUp = () => {
   const [userSignUp, setUserSignUp] = useState({
@@ -19,14 +20,9 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const { xl, lg, md } = breakpoints;
   const { register, currentUser } = useAuth();
-  const history = useHistory();
   const collectionRef = collection(db, 'users');
 
-  useEffect(() => {
-    if (currentUser) {
-      history.push('/');
-    }
-  }, [currentUser, history]);
+  useEffect(() => {}, []);
 
   //form styles
   const input = {
@@ -35,10 +31,15 @@ const SignUp = () => {
     outline: 'none',
     padding: '0.25rem',
     borderRadius: '2px',
+    width: '100%',
+    fontSize: '1rem',
   };
 
   const label = {
-    fontSize: '1.25rem',
+    fontSize: '1rem',
+    letterSpacing: '0.5px',
+    marginBottom: '0.5rem',
+    marginTop: '0.5rem',
   };
 
   //firebase
@@ -54,8 +55,18 @@ const SignUp = () => {
     ) {
       return setPassError('Credentials not valid');
     }
-    if (userSignUp.password.length < 6) {
-      return setPassError('Password should be at least 6 characters');
+    if (!usernameCheck.test(userSignUp.name)) {
+      return setPassError(
+        'Username not valid, must be at least 3 letters long'
+      );
+    }
+    if (!emailCheck.test(userSignUp.email)) {
+      return setPassError('Email not valid');
+    }
+    if (!passwordCheck.test(userSignUp.password)) {
+      return setPassError(
+        'Password not valid. Min eight characters, at least one upper case, one lower case, one number and one special character'
+      );
     }
     if (userSignUp.password !== userSignUp.passwordConfirm) {
       return setPassError('Passwords do not match');
@@ -68,11 +79,14 @@ const SignUp = () => {
           name: userSignUp.name,
           email: userSignUp.email,
           id: res.user.uid,
+          liked_film: [],
         });
       })
       .catch((err) => {
         if (err.message === 'Firebase: Error (auth/email-already-in-use).') {
           setPassError('Email already registered');
+        } else {
+          setPassError('Error');
         }
       })
       .finally(() => {
@@ -94,15 +108,34 @@ const SignUp = () => {
     });
   };
 
+  const page = {
+    height: '100vh',
+  };
+
   return (
-    <Wrapper hidden width={xl} align="center" lgWidth={lg} mdWidth="980">
+    <Wrapper
+      hidden
+      width={xl}
+      align="center"
+      lgWidth={lg}
+      mdWidth="980"
+      justify="center"
+      style={page}
+    >
+      <Wrapper mbottom="1">
+        <Link to="/">
+          <H5 color={styledTheme.warning} lgFontSize={styledTheme.bodyBig}>
+            ThreeSixtyTrailers
+          </H5>
+        </Link>
+      </Wrapper>
       <H3>Sign Up</H3>
-      <Wrapper width={md} align="center" mtop="2">
-        <form style={{ width: '400px' }} onSubmit={formSubmit}>
+      <Wrapper width="300" align="left" mtop="2">
+        <form style={{ width: '100%' }} onSubmit={formSubmit}>
           <Wrapper
             justify="space-between"
-            align="center"
-            direction="row"
+            align="left"
+            direction="column"
             mbottom="0.25"
           >
             <label style={label}>Name</label>
@@ -119,8 +152,8 @@ const SignUp = () => {
           </Wrapper>
           <Wrapper
             justify="space-between"
-            align="center"
-            direction="row"
+            align="left"
+            direction="column"
             mbottom="0.25"
           >
             <label style={label}>Email</label>
@@ -137,8 +170,8 @@ const SignUp = () => {
           </Wrapper>
           <Wrapper
             justify="space-between"
-            align="center"
-            direction="row"
+            align="left"
+            direction="column"
             mbottom="0.25"
           >
             <label style={label}>Password</label>
@@ -153,7 +186,7 @@ const SignUp = () => {
               />
             </div>
           </Wrapper>
-          <Wrapper justify="space-between" align="center" direction="row">
+          <Wrapper justify="space-between" align="left" direction="column">
             <label style={label}>Password Confirm</label>
             <div>
               <input
@@ -172,11 +205,11 @@ const SignUp = () => {
               <Alert error>{passError}</Alert>
             </Wrapper>
           )}
-          <Wrapper mtop="1">
-            <button type="submit" disabled={loading}>
-              Submit
-            </button>
-            <Wrapper mtop="1" align="left">
+          <Wrapper mtop="2">
+            <Button type="submit" disabled={loading}>
+              Sign Up
+            </Button>
+            <Wrapper mtop="1" align="left" hover>
               <Link to="/login">Already have an account log-in here</Link>
             </Wrapper>
           </Wrapper>

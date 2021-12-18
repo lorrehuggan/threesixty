@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper, H3, Alert } from '../styles/GlobalComponents';
+import { Wrapper, H3, Alert, Button, H5 } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import { FaExclamation, FaCheck } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
@@ -29,10 +29,15 @@ const SignIn = () => {
     outline: 'none',
     padding: '0.25rem',
     borderRadius: '2px',
+    width: '100%',
+    fontSize: '1rem',
   };
 
   const label = {
-    fontSize: '1.25rem',
+    fontSize: '1rem',
+    letterSpacing: '0.5px',
+    marginBottom: '0.5rem',
+    marginTop: '0.5rem',
   };
 
   //firebase
@@ -72,15 +77,34 @@ const SignIn = () => {
     });
   };
 
+  const page = {
+    height: '100vh',
+  };
+
   return (
-    <Wrapper hidden width={xl} align="center" lgWidth={lg} mdWidth="980">
+    <Wrapper
+      hidden
+      width={xl}
+      align="center"
+      justify="center"
+      lgWidth={lg}
+      mdWidth="980"
+      style={page}
+    >
+      <Wrapper mbottom="1">
+        <Link to="/">
+          <H5 color={styledTheme.warning} lgFontSize={styledTheme.bodyBig}>
+            ThreeSixtyTrailers
+          </H5>
+        </Link>
+      </Wrapper>
       <H3>Log In</H3>
       <Wrapper width={md} align="center" mtop="2">
         <form style={{ width: '400px' }} onSubmit={formSubmit}>
           <Wrapper
             justify="space-between"
-            align="center"
-            direction="row"
+            align="left"
+            direction="column"
             mbottom="0.25"
           >
             <label style={label}>Email</label>
@@ -97,8 +121,8 @@ const SignIn = () => {
           </Wrapper>
           <Wrapper
             justify="space-between"
-            align="center"
-            direction="row"
+            align="left"
+            direction="column"
             mbottom="0.25"
           >
             <label style={label}>Password</label>
@@ -120,11 +144,11 @@ const SignIn = () => {
               <Alert error>{passError}</Alert>
             </Wrapper>
           )}
-          <Wrapper mtop="1">
-            <button type="submit" disabled={loading}>
-              Submit
-            </button>
-            <Wrapper mtop="1" align="left">
+          <Wrapper mtop="2">
+            <Button type="submit" disabled={loading}>
+              Sign Up
+            </Button>
+            <Wrapper mtop="1" align="left" hover>
               <Link to="/signup">
                 Dont already have an account sign up here
               </Link>

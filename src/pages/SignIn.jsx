@@ -52,7 +52,6 @@ const SignIn = () => {
     setLoading(true);
     login(userSignUp.email, userSignUp.password)
       .then((res) => {
-        console.log(res);
         history.push('/');
       })
       .catch((err) => {

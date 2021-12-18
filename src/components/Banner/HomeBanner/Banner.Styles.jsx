@@ -22,7 +22,7 @@ export const Poster = styled.div`
     background-position: 50% 0;
     background-size: cover;
     z-index: -1;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.7s ease;
   }
   &:hover::before {
     opacity: ${({ hOpacity }) => hOpacity};

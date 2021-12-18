@@ -5,6 +5,7 @@ import { breakpoints, styledTheme } from '../../../styles/Mixins';
 import useFetch from '../../../hooks/useFetch';
 import { FETCH_TRENDING, imgPath } from '../../../utils/request';
 import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
+import Trailer from '../../Trailer/Trailer';
 import movieTrailer from 'movie-trailer';
 import {
   Poster,
@@ -15,13 +16,7 @@ import {
   ButtonWrapper,
 } from './Banner.Styles';
 
-function Banner({
-  opacity,
-  hOpacity,
-  setTrailerURL,
-  trailerURL,
-  setTrailerError,
-}) {
+function Banner({ opacity, hOpacity }) {
   const [url, setUrl] = useState(null);
   const { data: movies, loading, error } = useFetch(url);
   const { xl, lg } = breakpoints;
@@ -29,6 +24,9 @@ function Banner({
   const history = useHistory();
   const [currentHero, setCurrentHero] = useState({ a: 1, b: 2 });
   const { openMenu, setOpenMenu } = useContext(MenuContext);
+  const [isHovered, setIsHovered] = useState(false);
+  const [trailerURL, setTrailerURL] = useState('');
+  const [trailerError, setTrailerError] = useState(false);
 
   useEffect(() => {
     setUrl(FETCH_TRENDING(1));
@@ -61,6 +59,27 @@ function Banner({
   const handleBannerDetails = () => {
     setOpenMenu(false);
     history.push(`/film/${bannerUrl}`);
+  };
+
+  const handleMouseEnter = (movie) => {
+    setTimeout(() => {
+      movieTrailer(
+        movie?.title || movie?.original_name || movie?.original_title || '',
+        { id: true }
+      )
+        .then((url) => {
+          setTrailerURL(url);
+        })
+        .catch(() => {
+          setTrailerError(true);
+        });
+    }, 600);
+  };
+
+  const handleMouseLeave = () => {
+    setTimeout(() => {
+      setTrailerURL('');
+    }, 300);
   };
 
   // Animations
@@ -98,11 +117,20 @@ function Banner({
       lgWidth={lg}
       lgHeight="34"
       mdWidth="980"
+      onMouseEnter={() => handleMouseEnter(movies[1])}
+      onMouseLeave={() => handleMouseLeave()}
     >
       {error && <H1>Error</H1>}
       {movies &&
         movies?.slice(currentHero.a, currentHero.b).map((movie) => {
-          return (
+          return trailerURL ? (
+            <Trailer
+              movie={movie}
+              loading={loading}
+              error={error}
+              trailerURL={trailerURL}
+            />
+          ) : (
             <Poster
               open={openMenu}
               opacity={opacity}

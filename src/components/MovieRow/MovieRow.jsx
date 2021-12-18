@@ -21,7 +21,7 @@ export const ArrowUp = styled(FiArrowUpCircle)`
   width: 2rem;
 `;
 
-function MovieRow({ request, title, id }) {
+function MovieRow({ request, title, id, user }) {
   const [url, setUrl] = useState('');
   const { data: movies, loading, error } = useFetch(url);
   const { xl, lg } = breakpoints;
@@ -89,7 +89,7 @@ function MovieRow({ request, title, id }) {
               flexDirection: 'row',
               alignItems: 'center',
             }}
-            to={`/genre/${id}`}
+            to={user ? '/profile' : `/genre/${id}`}
             onClick={handleClick}
           >
             <BigBody
@@ -100,7 +100,7 @@ function MovieRow({ request, title, id }) {
               cursor
               space="5"
             >
-              More {title}
+              {user ? 'My Account' : `More ${title}`}
             </BigBody>
             <Arrow />
           </Link>

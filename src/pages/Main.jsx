@@ -5,11 +5,17 @@ import Banner from '../components/Banner/HomeBanner/Banner';
 import MovieRow, { ArrowUp } from '../components/MovieRow/MovieRow';
 import { useParams } from 'react-router-dom';
 import Trailer from '../components/Trailer/Trailer';
-import { FETCH_ID, FETCH_GENRE, FETCH_CATEGORIES } from '../utils/request';
+import {
+  FETCH_ID,
+  FETCH_GENRE,
+  FETCH_CATEGORIES,
+  FETCH_RECOMMENDATIONS,
+} from '../utils/request';
 import useFetch from '../hooks/useFetch';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../utils/firebase';
 import { useAuth } from '../contexts/AuthContext';
+import useUser from '../hooks/useUser';
 
 function Main() {
   const { xl, lg, md } = breakpoints;
@@ -18,7 +24,7 @@ function Main() {
   const [trailerError, setTrailerError] = useState(false);
   const [genre, setGenre] = useState(null);
   const { data: movie, loading, error } = useFetch(FETCH_ID(id));
-  const { currentUser } = useAuth();
+  const { userData } = useUser();
 
   useEffect(() => {
     fetch(FETCH_GENRE())
@@ -47,28 +53,23 @@ function Main() {
 
   return (
     <Wrapper hidden width={xl} align="center" lgWidth={lg} mdWidth="980">
-      <Banner
-        opacity="0.35"
-        hOpacity="0.5"
-        trailerURL={trailerURL}
-        setTrailerURL={setTrailerURL}
-        trailerError={trailerError}
-        setTrailerError={setTrailerError}
-      />
-      {trailerURL && (
-        <Trailer
-          movie={movie}
-          loading={loading}
-          error={error}
-          trailerURL={trailerURL}
-        />
-      )}
-      {trailerError && <H1 lgFontSize={styledTheme.headline}>Error</H1>}
+      <Banner opacity="0.5" hOpacity="0" />
 
+      {userData?.id ? (
+        <MovieRow
+          request={FETCH_RECOMMENDATIONS(userData?.likes[0])}
+          title={'Just For You'}
+          id=""
+          user
+        />
+      ) : (
+        ''
+      )}
       {genre &&
-        genre?.map((g) => {
+        genre?.map((g, idx) => {
           return (
             <MovieRow
+              key={idx}
               request={FETCH_CATEGORIES(g.id, 1)}
               title={g.name}
               id={g.id}

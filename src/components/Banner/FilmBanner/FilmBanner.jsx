@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { breakpoints, styledTheme } from '../../../styles/Mixins';
 import { imgPath } from '../../../utils/request';
 import {
@@ -152,8 +152,8 @@ function Banner({
                 <Wrapper direction="row" align="center">
                   <ImHeart
                     style={{
-                      marginRight: '0.5rem',
-                      fontSize: '2rem',
+                      marginRight: '1rem',
+                      fontSize: '2.5rem',
                       cursor: 'pointer',
                       color: like ? styledTheme.error : '',
                     }}

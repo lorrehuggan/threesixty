@@ -15,6 +15,7 @@ import { GiFilmProjector } from 'react-icons/gi';
 import useUser from '../hooks/useUser';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../utils/firebase';
+import { useHistory } from 'react-router-dom';
 
 //styled components
 export const Play = styled(FaPlay)`
@@ -63,6 +64,7 @@ function Film() {
   const [userLikedFilms, setUserLikedFilm] = useState();
   const [like, setLike] = useState(false);
   const { userData } = useUser();
+  const history = useHistory();
 
   //set num of movies depending on screen size
   useEffect(() => {
@@ -119,7 +121,11 @@ function Film() {
   };
 
   const handleLike = () => {
-    updateLikes(userData.id, id);
+    if (!userData.id) {
+      history.push('/login');
+    } else {
+      updateLikes(userData.id, id);
+    }
   };
 
   // fetch genre for selected film

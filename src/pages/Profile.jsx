@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { H1, H4, H5, P, Wrapper } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme, media } from '../styles/Mixins';
-import FilmBanner from '../components/Banner/FilmBanner/FilmBanner';
-import { useParams } from 'react-router-dom';
-import Trailer from '../components/Trailer/Trailer';
 import { FETCH_GENRE, FETCH_ID, FETCH_RECOMMENDATIONS } from '../utils/request';
 import styled from 'styled-components';
-import { FaPlay } from 'react-icons/fa';
-import movieTrailer from 'movie-trailer';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card/Card';
-import { GridContainer } from '../components/MovieRow/MovieRow.styles';
-import { GiFilmProjector } from 'react-icons/gi';
 import useUser from '../hooks/useUser';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../utils/firebase';
-import useFetch from '../hooks/useFetch';
 import { motion } from 'framer-motion';
 import { SkeletonCard } from '../components/Card/Card.styles';
-
 export const Grid = styled(motion.div)`
   width: ${breakpoints.xl};
   display: grid;

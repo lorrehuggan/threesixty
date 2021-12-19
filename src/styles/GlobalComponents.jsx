@@ -265,6 +265,7 @@ export const Button = styled.button`
   border-radius: 4px;
   font-weight: 900;
   font-size: ${styledTheme.bodyBig};
+  width: ${({ width }) => (width ? width : '')};
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {

@@ -22,7 +22,7 @@ function Banner({ opacity, hOpacity }) {
   const { xl, lg } = breakpoints;
   const [bannerUrl, setBannerUrl] = useState(null);
   const history = useHistory();
-  const [currentHero, setCurrentHero] = useState({ a: 1, b: 2 });
+  const [currentHero, setCurrentHero] = useState({ a: 2, b: 3 });
   const { openMenu, setOpenMenu } = useContext(MenuContext);
   const [isHovered, setIsHovered] = useState(false);
   const [trailerURL, setTrailerURL] = useState('');
@@ -40,20 +40,8 @@ function Banner({ opacity, hOpacity }) {
     );
   }, [movies, currentHero]);
 
-  const handleClick = (movie) => {
-    setTrailerError(false);
-    if (trailerURL) {
-      setTrailerURL('');
-    } else {
-      movieTrailer(
-        movie?.title || movie?.original_name || movie?.original_title || '',
-        { id: true }
-      )
-        .then((url) => {
-          setTrailerURL(url);
-        })
-        .catch(() => setTrailerError(true));
-    }
+  const handleClick = () => {
+    history.push(`/film/${bannerUrl}`);
   };
 
   const handleBannerDetails = () => {
@@ -68,18 +56,18 @@ function Banner({ opacity, hOpacity }) {
         { id: true }
       )
         .then((url) => {
+          setIsHovered(true);
           setTrailerURL(url);
         })
         .catch(() => {
           setTrailerError(true);
         });
-    }, 600);
+    }, 4000);
   };
 
   const handleMouseLeave = () => {
-    setTimeout(() => {
-      setTrailerURL('');
-    }, 300);
+    setIsHovered(false);
+    movieTrailer('', { id: false });
   };
 
   // Animations
@@ -117,18 +105,21 @@ function Banner({ opacity, hOpacity }) {
       lgWidth={lg}
       lgHeight="34"
       mdWidth="980"
-      onMouseEnter={() => handleMouseEnter(movies[1])}
-      onMouseLeave={() => handleMouseLeave()}
+      cursor
+      // onMouseEnter={() => handleMouseEnter(movies[2])}
+      // onMouseLeave={handleMouseLeave}
     >
       {error && <H1>Error</H1>}
       {movies &&
         movies?.slice(currentHero.a, currentHero.b).map((movie) => {
-          return trailerURL ? (
+          return isHovered ? (
             <Trailer
               movie={movie}
               loading={loading}
               error={error}
               trailerURL={trailerURL}
+              onClick={handleClick}
+              height="544"
             />
           ) : (
             <Poster
@@ -136,7 +127,7 @@ function Banner({ opacity, hOpacity }) {
               opacity={opacity}
               hOpacity={hOpacity}
               src={imgPath + movie?.backdrop_path}
-              onClick={() => handleClick(movie)}
+              onClick={() => handleClick}
             >
               {openMenu && <BottomGradient top />}
               <H1
@@ -188,7 +179,7 @@ function Banner({ opacity, hOpacity }) {
                     align="left"
                     justify="left"
                   >
-                    <StyledBigBody
+                    {/* <StyledBigBody
                       lgWidth="30"
                       style={{
                         display: 'flex',
@@ -198,7 +189,7 @@ function Banner({ opacity, hOpacity }) {
                       onClick={() => handleClick(movie)}
                     >
                       {trailerURL ? 'Close' : 'Watch Trailer'}
-                    </StyledBigBody>
+                    </StyledBigBody> */}
 
                     <StyledBigBody
                       style={{

@@ -3,12 +3,12 @@ import { Wrapper } from '../../styles/GlobalComponents';
 import { breakpoints } from '../../styles/Mixins';
 import YouTube from 'react-youtube';
 
-function Trailer({ movie, loading, error, trailerURL }) {
+function Trailer({ movie, loading, error, trailerURL, height }) {
   const { xl, lg } = breakpoints;
 
   const opts = {
     width: '100%',
-    height: '490',
+    height: height ? height : '490',
     playerVars: {
       autoplay: 1,
       controls: 0,

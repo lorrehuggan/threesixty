@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { H1, H4, H5, P, Wrapper } from '../styles/GlobalComponents';
+import { Button, H1, H4, H5, P, Wrapper } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme, media } from '../styles/Mixins';
 import { FETCH_GENRE, FETCH_ID, FETCH_RECOMMENDATIONS } from '../utils/request';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Card from '../components/Card/Card';
 import useUser from '../hooks/useUser';
 import { motion } from 'framer-motion';
 import { SkeletonCard } from '../components/Card/Card.styles';
+import { useAuth } from '../contexts/AuthContext';
 export const Grid = styled(motion.div)`
   width: ${breakpoints.xl};
   display: grid;
@@ -28,6 +29,14 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [movieAmount, setMovieAmount] = useState(4);
   const [width, setWidth] = useState('');
+  const { logout, currentUser } = useAuth();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!currentUser) {
+      history.push('/');
+    }
+  }, [currentUser, history]);
 
   useEffect(() => {
     if (window.innerWidth <= xl) {
@@ -88,6 +97,10 @@ const Profile = () => {
     },
   };
 
+  const handleLogout = async (e) => {
+    logout().catch((e) => console.log(e.message));
+  };
+
   return (
     <Wrapper width={xl} align="center" lgWidth={lg} hidden mdWidth="980">
       <Wrapper width={xl} align="left" lgWidth={lg} hidden mdWidth="980">
@@ -103,6 +116,18 @@ const Profile = () => {
         >
           My Account
         </H1>
+      </Wrapper>
+      <Wrapper
+        width={xl}
+        align="left"
+        lgWidth={lg}
+        hidden
+        mdWidth="980"
+        mbottom="1"
+      >
+        <Button width="150px" onClick={handleLogout}>
+          Log Out
+        </Button>
       </Wrapper>
       <Wrapper width={xl} align="left" lgWidth={lg} hidden mdWidth="980">
         <P

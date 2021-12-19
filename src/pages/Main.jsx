@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper, H1, BigBody, H5 } from '../styles/GlobalComponents';
+import { Wrapper, BigBody, H5 } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
 import Banner from '../components/Banner/HomeBanner/Banner';
 import MovieRow, { ArrowUp } from '../components/MovieRow/MovieRow';
-import { useParams } from 'react-router-dom';
-import Trailer from '../components/Trailer/Trailer';
 import {
-  FETCH_ID,
   FETCH_GENRE,
   FETCH_CATEGORIES,
   FETCH_RECOMMENDATIONS,
 } from '../utils/request';
-import useFetch from '../hooks/useFetch';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { db } from '../utils/firebase';
-import { useAuth } from '../contexts/AuthContext';
 import useUser from '../hooks/useUser';
 
 function Main() {
-  const { xl, lg, md } = breakpoints;
-  const { id } = useParams();
-  const [trailerURL, setTrailerURL] = useState('');
-  const [trailerError, setTrailerError] = useState(false);
+  const { xl, lg } = breakpoints;
   const [genre, setGenre] = useState(null);
-  const { data: movie, loading, error } = useFetch(FETCH_ID(id));
   const { userData } = useUser();
+  const [userLikedFilms, setUserLikeFilms] = useState('');
 
   useEffect(() => {
     fetch(FETCH_GENRE())
@@ -47,6 +37,10 @@ function Main() {
       });
   }, []);
 
+  useEffect(() => {
+    setUserLikeFilms(userData.likes);
+  }, [userData]);
+
   const toTop = () => {
     window.scroll(0, 0);
   };
@@ -55,9 +49,9 @@ function Main() {
     <Wrapper hidden width={xl} align="center" lgWidth={lg} mdWidth="980">
       <Banner opacity="0.5" hOpacity="0" />
 
-      {userData?.id ? (
+      {userLikedFilms?.length > 0 ? (
         <MovieRow
-          request={FETCH_RECOMMENDATIONS(userData?.likes[0])}
+          request={FETCH_RECOMMENDATIONS(userLikedFilms[0])}
           title={'Just For You'}
           id=""
           user

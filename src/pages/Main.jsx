@@ -9,6 +9,7 @@ import {
   FETCH_RECOMMENDATIONS,
 } from '../utils/request';
 import useUser from '../hooks/useUser';
+import Footer from '../components/Footer';
 
 function Main() {
   const { xl, lg } = breakpoints;
@@ -113,6 +114,7 @@ function Main() {
           <ArrowUp />
         </div>
       </Wrapper>
+      <Footer />
     </Wrapper>
   );
 }

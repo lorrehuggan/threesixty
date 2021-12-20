@@ -80,7 +80,11 @@ function MovieRow({ request, title, id, user }) {
           lgWidth={lg}
           mdWidth="980"
         >
-          <H5 left="2" color={styledTheme.warning} weight="800">
+          <H5
+            left="2"
+            color={user ? styledTheme.error : styledTheme.warning}
+            weight="800"
+          >
             {title}
           </H5>
           <Link

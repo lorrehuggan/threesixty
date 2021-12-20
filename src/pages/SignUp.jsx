@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Wrapper, H3, Alert, Button, H5 } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
-import { FaExclamation, FaCheck } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../utils/firebase';
-import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
+import { collection, setDoc, doc } from 'firebase/firestore';
+import { Link, useHistory } from 'react-router-dom';
 import { emailCheck, passwordCheck, usernameCheck } from '../utils/regex';
-import { letterSpacing } from '@mui/system';
 
 const SignUp = () => {
   const [userSignUp, setUserSignUp] = useState({
@@ -21,6 +19,7 @@ const SignUp = () => {
   const { xl, lg, md } = breakpoints;
   const { register, currentUser } = useAuth();
   const collectionRef = collection(db, 'users');
+  const history = useHistory();
 
   useEffect(() => {}, []);
 
@@ -91,6 +90,7 @@ const SignUp = () => {
       })
       .finally(() => {
         setLoading(false);
+        history.push('/');
       });
     setUserSignUp({
       name: '',

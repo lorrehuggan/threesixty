@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button, H1, H4, H5, P, Wrapper } from '../styles/GlobalComponents';
+import { Button, H1, P, Wrapper } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme, media } from '../styles/Mixins';
-import { FETCH_GENRE, FETCH_ID, FETCH_RECOMMENDATIONS } from '../utils/request';
+import { FETCH_ID } from '../utils/request';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import Card from '../components/Card/Card';

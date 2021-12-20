@@ -29,7 +29,6 @@ function Trending() {
   const [numOfPages, setNumOfPages] = useState(10);
   const [page, setPage] = useState(1);
   const { data, loading, error, results } = useFetch(FETCH_TRENDING(page));
-  const [genre, setGenre] = useState({});
   const [width, setWidth] = useState('');
   const [movieAmount, setMovieAmount] = useState(4);
 

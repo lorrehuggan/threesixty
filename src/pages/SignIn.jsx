@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Wrapper, H3, Alert, Button, H5 } from '../styles/GlobalComponents';
 import { breakpoints, styledTheme } from '../styles/Mixins';
-import { FaExclamation, FaCheck } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 

@@ -11,7 +11,7 @@ import { VscThreeBars } from 'react-icons/vsc';
 import useUser from '../../hooks/useUser';
 
 function Nav() {
-  const { xl, md, sm, lg } = breakpoints;
+  const { xl, lg } = breakpoints;
   const { openMenu, setOpenMenu } = useContext(MenuContext);
   const { currentUser } = useAuth();
   const { userData } = useUser();
@@ -136,7 +136,6 @@ function Nav() {
             left: '0',
             fontSize: '1rem',
           }}
-          uppercase
           space="1"
           mdFontSize={styledTheme.body}
           weight="700"

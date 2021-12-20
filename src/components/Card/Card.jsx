@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MovieCard, BottomGradient, TopGradient } from './Card.styles';
+import { MovieCard, BottomGradient } from './Card.styles';
 import { H5, Image } from '../../styles/GlobalComponents';
 import { imgPath } from '../../utils/request';
 import { styledTheme } from '../../styles/Mixins';

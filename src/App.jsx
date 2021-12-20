@@ -3,13 +3,7 @@ import { useEffect, useState } from 'react';
 import Nav from './components/Nav/Nav';
 import { ThemeProvider } from 'styled-components';
 import { styledTheme } from './styles/Mixins';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Film from './pages/Film';
 import Genre from './pages/Genre';
 import Trending from './pages/Trending';
@@ -24,7 +18,7 @@ import appReducer, { initialState } from './reducers/appReducer';
 import { AppProvider } from '../src/contexts/AppProvider';
 import AuthContextProvider from './contexts/AuthContext';
 import SignIn from './pages/SignIn';
-import { useAuth } from '../src/contexts/AuthContext';
+
 import Profile from './pages/Profile';
 
 function App() {
@@ -63,41 +57,36 @@ function App() {
                 {isSmallScreen ? (
                   <SmallScreen />
                 ) : (
-                  <>
-                    <AppProvider
-                      initialState={initialState}
-                      reducer={appReducer}
-                    >
-                      <Nav />
-                      <Menu />
-                      <Switch>
-                        <Route path="/" exact>
-                          <Main />
-                        </Route>
-                        <Route path="/film/:id">
-                          <Film />
-                        </Route>
-                        <Route path="/genre/:id">
-                          <Genre />
-                        </Route>
-                        <Route path="/trending">
-                          <Trending />
-                        </Route>
-                        <Route path="/search">
-                          <Search />
-                        </Route>
-                        <Route path="/signup">
-                          <SignUp />
-                        </Route>
-                        <Route path="/login">
-                          <SignIn />
-                        </Route>
-                        <Route path="/profile">
-                          <Profile />
-                        </Route>
-                      </Switch>
-                    </AppProvider>
-                  </>
+                  <AppProvider initialState={initialState} reducer={appReducer}>
+                    <Nav />
+                    <Menu />
+                    <Switch>
+                      <Route path="/" exact>
+                        <Main />
+                      </Route>
+                      <Route path="/film/:id">
+                        <Film />
+                      </Route>
+                      <Route path="/genre/:id">
+                        <Genre />
+                      </Route>
+                      <Route path="/trending">
+                        <Trending />
+                      </Route>
+                      <Route path="/search">
+                        <Search />
+                      </Route>
+                      <Route path="/signup">
+                        <SignUp />
+                      </Route>
+                      <Route path="/login">
+                        <SignIn />
+                      </Route>
+                      <Route path="/profile">
+                        <Profile />
+                      </Route>
+                    </Switch>
+                  </AppProvider>
                 )}
               </QueryContext.Provider>
             </MenuContext.Provider>

@@ -5,7 +5,7 @@ import useFetch from '../hooks/useFetch';
 import { MenuContext } from '../contexts/MenuContext';
 import Card from '../components/Card/Card';
 import { breakpoints, styledTheme, media } from '../styles/Mixins';
-import { H1, H2, Wrapper } from '../styles/GlobalComponents';
+import { H1, Wrapper } from '../styles/GlobalComponents';
 import styled from 'styled-components';
 import Pagination from '@mui/material/Pagination';
 import { SkeletonCard } from '../components/Card/Card.styles';

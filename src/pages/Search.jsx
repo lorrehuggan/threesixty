@@ -11,7 +11,7 @@ import Pagination from '@mui/material/Pagination';
 function Search({ page, setPage }) {
   const { xl, lg } = breakpoints;
   const { searchData: data } = useContext(SearchContext);
-  const { queryData, setQueryData } = useContext(QueryContext);
+  const { queryData } = useContext(QueryContext);
   const [width, setWidth] = useState('');
   const [movieAmount, setMovieAmount] = useState(4);
 

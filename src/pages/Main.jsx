@@ -45,19 +45,22 @@ function Main() {
     window.scroll(0, 0);
   };
 
+  const userFilmSelector = () => {
+    const select = Math.floor(Math.random() * userLikedFilms?.length);
+    return select;
+  };
+
   return (
     <Wrapper hidden width={xl} align="center" lgWidth={lg} mdWidth="980">
       <Banner opacity="0.5" hOpacity="0" />
-
-      {userLikedFilms?.length > 0 ? (
+      {/* if there is a user logged in fetch users recommended film  */}
+      {userLikedFilms?.length > 0 && (
         <MovieRow
-          request={FETCH_RECOMMENDATIONS(userLikedFilms[0])}
+          request={FETCH_RECOMMENDATIONS(userLikedFilms[userFilmSelector()])}
           title={'Just For You'}
           id=""
           user
         />
-      ) : (
-        ''
       )}
       {genre &&
         genre?.map((g, idx) => {
@@ -79,7 +82,13 @@ function Main() {
         style={{ marginBottom: '5rem' }}
         lgWidth={lg}
       >
-        <H5 onClick={toTop} cursor color={styledTheme.warning} weight="800">
+        <H5
+          style={{ marginLeft: '2rem' }}
+          onClick={toTop}
+          cursor
+          color={styledTheme.warning}
+          weight="800"
+        >
           Back To Top
         </H5>
         <div

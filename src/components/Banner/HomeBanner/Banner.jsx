@@ -6,7 +6,7 @@ import useFetch from '../../../hooks/useFetch';
 import { FETCH_TRENDING, imgPath } from '../../../utils/request';
 import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
 import Trailer from '../../Trailer/Trailer';
-import movieTrailer from 'movie-trailer';
+// import movieTrailer from 'movie-trailer';
 import {
   Poster,
   StyledWrapper,
@@ -26,7 +26,7 @@ function Banner({ opacity, hOpacity }) {
   const { openMenu, setOpenMenu } = useContext(MenuContext);
   const [isHovered, setIsHovered] = useState(false);
   const [trailerURL, setTrailerURL] = useState('');
-  const [trailerError, setTrailerError] = useState(false);
+  // const [trailerError, setTrailerError] = useState(false);
 
   useEffect(() => {
     setUrl(FETCH_TRENDING(1));
@@ -49,26 +49,26 @@ function Banner({ opacity, hOpacity }) {
     history.push(`/film/${bannerUrl}`);
   };
 
-  const handleMouseEnter = (movie) => {
-    setTimeout(() => {
-      movieTrailer(
-        movie?.title || movie?.original_name || movie?.original_title || '',
-        { id: true }
-      )
-        .then((url) => {
-          setIsHovered(true);
-          setTrailerURL(url);
-        })
-        .catch(() => {
-          setTrailerError(true);
-        });
-    }, 4000);
-  };
+  // const handleMouseEnter = (movie) => {
+  //   setTimeout(() => {
+  //     movieTrailer(
+  //       movie?.title || movie?.original_name || movie?.original_title || '',
+  //       { id: true }
+  //     )
+  //       .then((url) => {
+  //         setIsHovered(true);
+  //         setTrailerURL(url);
+  //       })
+  //       .catch(() => {
+  //         setTrailerError(true);
+  //       });
+  //   }, 4000);
+  // };
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    movieTrailer('', { id: false });
-  };
+  // const handleMouseLeave = () => {
+  //   setIsHovered(false);
+  //   movieTrailer('', { id: false });
+  // };
 
   // Animations
 

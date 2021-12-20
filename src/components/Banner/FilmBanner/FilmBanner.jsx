@@ -1,14 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { breakpoints, styledTheme } from '../../../styles/Mixins';
 import { imgPath } from '../../../utils/request';
-import {
-  H1,
-  Wrapper,
-  Image,
-  P,
-  H5,
-  H2,
-} from '../../../styles/GlobalComponents';
+import { H1, Wrapper, Image, P, H5 } from '../../../styles/GlobalComponents';
 import {
   Poster,
   StyledWrapper,
